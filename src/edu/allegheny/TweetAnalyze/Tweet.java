@@ -148,27 +148,83 @@ public Tweet () {
 // GETTERS & SETTERS
 
 	public long getTweetID(){
-	  return property;
+	  return tweetID;
 	}
 	 
-	public void setTweetID(long property){
-	  this.property = property;
+	public void setTweetID(long tweetID){
+	  this.tweetID = tweetID;
 	}
 
 	public long getInReplyToStatusID(){
-	   return property;
+	   return inReplyToStatusID;
 	}
 	  
-	public void setInReplyToStatusID(long property){
-	   this.property = property;
+	public void setInReplyToStatusID(long inReplyToStatusID){
+	   this.inReplyToStatusID = inReplyToStatusID;
 	}
 
 	public long getInReplyToUserID(){
-	    return property;
+	    return getInReplyToUserID;
 	}
 	   
-	public void setInReplyToUserID(long property){
-	    this.property = property;
+	public void setInReplyToUserID(long getInReplyToUserID){
+	    this.setInReplyToUserID = getInReplyToUserID;
+	}
+
+	public long getRetweetedStatusID(){
+	  return retweetedStatusID;
+	}
+	 
+	public void setRetweetedStatusID(long retweetedStatusID){
+	  this.retweetedStatusID = retweetedStatusID;
+	}
+
+	public long getRetweetedUserID(){
+	  return retweetedUserID;
+	}
+
+	public void setRetweetedUserID(long retweetedUserID){
+	  this.retweetedUserID = retweetedUserID;
+	}
+
+	public Date getTimestamp(){
+	  return timestamp;
+	}
+	 
+	public void setTimestamp(Date timestamp){
+	  this.timestamp = timestamp;
+	}
+
+	public Date getRetweetedStatusTimestamp(){
+	   return retweetedStatusTimestamp;
+	}
+	  
+	public void setRetweetedStatusTimestamp(Date retweetedStatusTimestamp){
+	   this.retweetedStatusTimestamp = retweetedStatusTimestamp;
+	}
+
+	public String getSource(){
+		return source;
+	}
+	 
+	public void setSource(String source){
+		this.source = source;
+	}
+
+	public String getText(){
+		return text;
+	}
+	 
+	public void setText(String text){
+		this.text = text;
+	}
+
+	public String getExpandedURLs(){
+		return expandedURLs;
+	}
+	 
+	public void setExpandedURLs(String expandedURLs){
+		this.expandedURLs = expandedURLs;
 	}
 
 }
