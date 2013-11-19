@@ -41,6 +41,10 @@ public Tweet () {
 
 	/**
 	 * Constructor for a tweet that is not a retweet, not a reply, and contains no expanded urls.
+	 * @param	tweetID 	the ID for this tweet
+	 * @param 	timestamp 	a java.util.Date containing the date this tweet was posted
+	 * @param	source 		a String containing the source identifier for the tweet
+	 * @param	text 		the body text of the tweet
 	 */
 	public Tweet (long tweetID, Date timestamp, String source, String text) {
 		this.tweetID = tweetID;
@@ -51,6 +55,11 @@ public Tweet () {
 
 	/**
 	 * Constructor for a tweet that is not retweet, not a reply, and contains expanded urls.
+	 * @param	tweetID 		the ID for this tweet
+	 * @param 	timestamp 		a java.util.Date containing the date this tweet was posted
+	 * @param	source 			a String containing the source identifier for the tweet
+	 * @param	text 			a String containing the body text of the tweet
+	 * @param	expandedURLs 	a String containing the expanded URLs contained in the tweet
 	 */
 	public Tweet (long tweetID, Date timestamp, String source, String text, String expandedURLs) {
 		this.tweetID = tweetID;
@@ -62,6 +71,13 @@ public Tweet () {
 
 	/**
 	 * Constructor for a retweet that contains no expanded urls.
+	 * @param	tweetID 				the ID for this tweet
+	 * @param 	timestamp 				a java.util.Date containing the date this tweet was posted
+	 * @param	source 					a String containing the source identifier for the tweet
+	 * @param	text 					the body text of the tweet
+	 * @param	retweetedUserID 		the ID for the user who originally posted this status
+	 * @param	retweetedStatusID			the ID of the original status
+	 * @param	retweetedStatusTimestamp 	the timestamp of the original status
 	 */
 	public Tweet (long tweetID, Date timestamp, String source, String text, long retweetedUserID, long retweetedStatusID, Date retweetedStatusTimestamp) {
 		this.tweetID = tweetID;
@@ -75,6 +91,14 @@ public Tweet () {
 
 	/**
 	 * Constructor for a retweet that contains urls.
+	 * @param	tweetID 				the ID for this tweet
+	 * @param 	timestamp 				a java.util.Date containing the date this tweet was posted
+	 * @param	source 					a String containing the source identifier for the tweet
+	 * @param	text 					the body text of the tweet
+	 * @param	retweetedUserID 		the ID for the user who originally posted this status
+	 * @param	retweetedStatusID		the ID of the original status
+	 * @param	retweetedStatusTimestamp 	the timestamp of the original status
+	 * @param	expandedURLs 			a String containing the expanded URLs contained in the tweet
 	 */
 	public Tweet (long tweetID, Date timestamp, String source, String text, long retweetedUserID, long retweetedStatusID, Date retweetedStatusTimestamp, String expandedURLs) {
 		this.tweetID = tweetID;
@@ -89,6 +113,12 @@ public Tweet () {
 
 	/**
 	 * Constructor for a reply that contains no expanded urls.
+	 * @param	tweetID 			the ID for this tweet
+	 * @param 	timestamp 			a java.util.Date containing the date this tweet was posted
+	 * @param	source 				a String containing the source identifier for the tweet
+	 * @param	text 				the body text of the tweet
+	 * @param	inReplyToStatusID 	the ID of the status to which this is a reply
+	 * @param	inReplyToUserID 	the ID of the user who posted the status to which this is a reply to
 	 */
 	public Tweet (long tweetID, Date timestamp, String source, String text, long inReplyToStatusID, long inReplyToUserID) {
 		this.tweetID = tweetID;
@@ -103,6 +133,13 @@ public Tweet () {
 
 	/**
 	 * Constructor for a reply with URLs
+	 * @param	tweetID 			the ID for this tweet
+	 * @param 	timestamp 			a java.util.Date containing the date this tweet was posted
+	 * @param	source 				a String containing the source identifier for the tweet
+	 * @param	text 				the body text of the tweet
+	 * @param	inReplyToStatusID 	the ID of the status to which this is a reply
+	 * @param	inReplyToUserID 	the ID of the user who posted the status to which this is a reply to
+	 * @param	expandedURLs 		a String containing the expanded URLs contained in the tweet
 	 */
 	public Tweet (long tweetID, Date timestamp, String source, String text, long inReplyToStatusID, long inReplyToUserID, String expandedURLs) {
 		this.tweetID = tweetID;
