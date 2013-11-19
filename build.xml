@@ -86,12 +86,12 @@
 
 	<!-- RUNNING TASK - "ant run" -->
 	<target name="run">
-		<antcall target="datagen">
+		<antcall target="TweetAnalyze">
 		</antcall>
 	</target>
 
-	<!-- RUNNING TASK - "ant datagen" -->
-	<target name="datagen">
+	<!-- RUNNING TASK - "ant TweetAnalyze" -->
+	<target name="TweetAnalyze">
 		<java fork="true" classname="edu.allegheny.TweetAnalyze.CLI.CLI" maxmemory="1024m">
 			<arg line="${args}"/>
 			<classpath refid="run.classpath" />
