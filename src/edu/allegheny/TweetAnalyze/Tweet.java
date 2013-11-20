@@ -125,7 +125,6 @@ public Tweet () {
 		this.timestamp = timestamp;
 		this.source = source;
 		this.text = text;
-		this.expandedURLs = expandedURLs;
 		this.inReplyToUserID = inReplyToUserID;
 		this.inReplyToStatusID = inReplyToStatusID;
 	}
@@ -146,7 +145,6 @@ public Tweet () {
 		this.timestamp = timestamp;
 		this.source = source;
 		this.text = text;
-		this.expandedURLs = expandedURLs;
 		this.inReplyToUserID = inReplyToUserID;
 		this.inReplyToStatusID = inReplyToStatusID;
 		this.expandedURLs = expandedURLs;
