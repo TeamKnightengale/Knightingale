@@ -18,7 +18,7 @@ import 		java.util.Date;
  * @author	Hawk Weisman
  * @version	1.0
  */
-public Tweet () {
+public class Tweet {
 
 	private long tweetID;
 
@@ -159,15 +159,15 @@ public Tweet () {
 	 * @return	true if this Tweet is a reply, false otherwise
 	 */
 	public boolean isReply() {
-		return (inReplyToStatusID != null) && (inReplyToUserID != null);
+		return (inReplyToStatusID != 0) && (inReplyToUserID != 0);
 	}
 
 	/**
 	 * isRetweet()
 	 * @return	true if this Tweet is a retweet, false otherwise
 	 */
-	public boolean isReply() {
-		return (retweetedUserID != null) && (retweetedStatusID != null) && (retweetedStatusTimestamp != null);
+	public boolean isRetweet() {
+		return (retweetedUserID != 0) && (retweetedStatusID != 0) && (retweetedStatusTimestamp != null);
 	}
 
 	/**
@@ -199,11 +199,11 @@ public Tweet () {
 	}
 
 	public long getInReplyToUserID(){
-	    return getInReplyToUserID;
+	    return inReplyToUserID;
 	}
 	   
-	public void setInReplyToUserID(long getInReplyToUserID){
-	    this.setInReplyToUserID = getInReplyToUserID;
+	public void setInReplyToUserID(long inReplyToUserID){
+	    this.inReplyToUserID = inReplyToUserID;
 	}
 
 	public long getRetweetedStatusID(){
