@@ -68,7 +68,7 @@ public class ZipParser {
 				// Return the Tweet array list from the parser ParseFile method
 				output = parser.parseFile(temp);
 
-				if (temp.delete() = false) {
+				if (temp.delete() == false) {
 					logger.error("ZipParser: failed to delete temporary file %s", temp.getPath());
 				} else if (logger.isDebugEnabled()) {
 					logger.debug("ZipParser: deleted temporary file %s", temp.getPath());
