@@ -46,7 +46,7 @@
 
 	<!-- Javadoc task setup -->
 	<!-- Based on the demo Javadoc settings on the Ant web page. -->
-
+	<target name="javadoc">
 		<javadoc packagenames="edu.allegheny.TweetAnalyze"
 				 sourcepath="src"
 				 excludepackagenames="edu.allegheny.TweetAnalyze.test"
@@ -62,7 +62,8 @@
 			<link offline="true" href="http://docs.oracle.com/javase/7/docs/api/" packagelistLoc="C:\tmp"/>
 			<link href="http://docs.oracle.com/javase/7/docs/api/"/>
 		</javadoc>
-
+	</target>
+		
 	<!-- BASIC TARGETS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
 
 	<!-- CLEANING TASK - "ant clean" -->
