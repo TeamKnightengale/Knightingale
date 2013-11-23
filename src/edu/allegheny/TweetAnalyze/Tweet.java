@@ -8,17 +8,18 @@
  *
  */
 
-package		edu.allegheny.TweetAnalyze;
+package	edu.allegheny.TweetAnalyze;
 
-import 		java.util.Date;
+import 	java.util.Date;
+import	java.util.ArrayList;
 
 /**
  * Tweet.java: Represents a single Tweet.
  * 
  * @author	Hawk Weisman
- * @version	1.0
+ * @version	1.5
  */
-public Tweet () {
+public class Tweet {
 
 	private long tweetID;
 
@@ -34,7 +35,7 @@ public Tweet () {
 
 	private String source;
 	private String text;
-	private String expandedURLs;
+	private ArrayList<String> expandedURLs;
 
 //=============================================================================
 // CONSTRUCTORS
@@ -61,7 +62,7 @@ public Tweet () {
 	 * @param	text 			a String containing the body text of the tweet
 	 * @param	expandedURLs 	a String containing the expanded URLs contained in the tweet
 	 */
-	public Tweet (long tweetID, Date timestamp, String source, String text, String expandedURLs) {
+	public Tweet (long tweetID, Date timestamp, String source, String text, ArrayList<String> expandedURLs) {
 		this.tweetID = tweetID;
 		this.timestamp = timestamp;
 		this.source = source;
@@ -100,7 +101,7 @@ public Tweet () {
 	 * @param	retweetedStatusTimestamp 	the timestamp of the original status
 	 * @param	expandedURLs 			a String containing the expanded URLs contained in the tweet
 	 */
-	public Tweet (long tweetID, Date timestamp, String source, String text, long retweetedUserID, long retweetedStatusID, Date retweetedStatusTimestamp, String expandedURLs) {
+	public Tweet (long tweetID, Date timestamp, String source, String text, long retweetedUserID, long retweetedStatusID, Date retweetedStatusTimestamp, ArrayList<String> expandedURLs) {
 		this.tweetID = tweetID;
 		this.timestamp = timestamp;
 		this.source = source;
@@ -140,7 +141,7 @@ public Tweet () {
 	 * @param	inReplyToUserID 	the ID of the user who posted the status to which this is a reply to
 	 * @param	expandedURLs 		a String containing the expanded URLs contained in the tweet
 	 */
-	public Tweet (long tweetID, Date timestamp, String source, String text, long inReplyToStatusID, long inReplyToUserID, String expandedURLs) {
+	public Tweet (long tweetID, Date timestamp, String source, String text, long inReplyToStatusID, long inReplyToUserID, ArrayList<String> expandedURLs) {
 		this.tweetID = tweetID;
 		this.timestamp = timestamp;
 		this.source = source;
@@ -159,15 +160,15 @@ public Tweet () {
 	 * @return	true if this Tweet is a reply, false otherwise
 	 */
 	public boolean isReply() {
-		return (inReplyToStatusID != null) && (inReplyToUserID != null);
+		return (inReplyToStatusID != 0) && (inReplyToUserID != 0);
 	}
 
 	/**
 	 * isRetweet()
 	 * @return	true if this Tweet is a retweet, false otherwise
 	 */
-	public boolean isReply() {
-		return (retweetedUserID != null) && (retweetedStatusID != null) && (retweetedStatusTimestamp != null);
+	public boolean isRetweet() {
+		return (retweetedUserID != 0) && (retweetedStatusID != null) && (retweetedStatusTimestamp != null);
 	}
 
 	/**
@@ -254,11 +255,11 @@ public Tweet () {
 		this.text = text;
 	}
 
-	public String getExpandedURLs(){
+	public ArrayList<String> getExpandedURLs(){
 		return expandedURLs;
 	}
 	 
-	public void setExpandedURLs(String expandedURLs){
+	public void setExpandedURLs(ArrayList<String> expandedURLs){
 		this.expandedURLs = expandedURLs;
 	}
 
