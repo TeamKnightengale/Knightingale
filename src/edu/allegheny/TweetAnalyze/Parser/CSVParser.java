@@ -3,9 +3,14 @@ package src.edu.allegheny.TweetAnalyze.Parser;
 import au.com.bytecode.opencsv.*;
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import edu.allegheny.TweetAnalyze.Tweet;
+import java.util.Date;
 //import edu.allegheny.TweetAnalyze.Parser.Visitor.*;
-
+/**
+ * @authpr Gabe Kelly
+ * @.9
+ */
 
 public class CSVParser {
 
@@ -18,7 +23,7 @@ public class CSVParser {
 
    public ArrayList<Tweet> parseFile(File c) throws IOException
    {
-       CSVReader reader = new CSVReader(new FileReader(c.getString()));
+       CSVReader reader = new CSVReader(new FileReader(c.getName()));
 
        ArrayList<String[]> twtData = (ArrayList<String[]>) reader.readAll();
 
@@ -40,7 +45,7 @@ public class CSVParser {
 
            String text = loneTwt[5];
 
-           if (loneTwt[1] != null)
+           if (loneTwt[1] != null)//will replace at somepoint with visitor!
            {
                 Long ReplyStatus = new Long(loneTwt[1]);
 
@@ -55,10 +60,14 @@ public class CSVParser {
                    ArrayList<String> url = new ArrayList<String>(Arrays.asList(loneTwt[9].split(",")));
 
                    Tweet twt = new Tweet (id, timeStamp, source, text, replyStatus, replyUser, url);
+                   twtAnalyze.add(twt);
+
                }
                else
                {
                    Tweet twt = new Tweet (id, timeStamp, source, text, replyStatus, replyUser);
+                   twtAnalyze.add(twt);
+
                }
            }
            else{
@@ -79,10 +88,14 @@ public class CSVParser {
                     ArrayList<String> url = new ArrayList<String>(Arrays.asList(loneTwt[9].split(",")));
 
                     Tweet twt = new Tweet (id, timeStamp, source, text, retweetId, retweetUser, retweetDate, url);
+                    twtAnalyze.add(twt);
+
                 }
                 else
                 {
                     Tweet twt = new Tweet (id, timeStamp, source, text, retweetId, retweetUser, retweetDate);
+                    twtAnalyze.add(twt);
+
                 }
             }
          
@@ -92,13 +105,16 @@ public class CSVParser {
                 ArrayList<String> url = new ArrayList<String>(Arrays.asList(loneTwt[9].split(",")));
         
                 Tweet twt = new Tweet (id, timeStamp, source, text, url);
+                twtAnalyze.add(twt);
+
             }
             else
             {
                 Tweet twt = new Tweet (id, timeStamp, source, text);
+                twtAnalyze.add(twt);
+
             }
             }
-        twtAnalyze.add(twt);
         }
 
        return twtAnalyze;
