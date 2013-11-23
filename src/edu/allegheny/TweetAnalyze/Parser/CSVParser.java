@@ -4,7 +4,7 @@ import au.com.bytecode.opencsv.*;
 import java.io.*;
 import java.util.ArrayList;
 import edu.allegheny.TweetAnalyze.Tweet;
-import edu.allegheny.TweetAnalyze.Parser.Visitor.*;
+//import edu.allegheny.TweetAnalyze.Parser.Visitor.*;
 
 
 public class CSVParser {
@@ -64,20 +64,15 @@ public class CSVParser {
            else{
             if (loneTwt[6] != null)
             {
-                Long RetweetId = new long(loneTwt[6]);
+
+                Long RetweetId = new Long(loneTwt[6]);
                 long retweetId = RetweetId.longValue();
 
-                Long RetweetUser = new long (loneTwt[7]);
+                Long RetweetUser = new Long(loneTwt[7]);
                 long retweetUser = RetweetUser.longValue();
                 
                 Date retweetDate = new Date(loneTwt[8]);
 
-                if (loneTwt[9] != null)
-              
-                Long RetweetUser = new long (loneTwt[7]);
-                long retweetUser = RetweetUser.longValue();
-                
-                Date retweetDate = new Date(loneTwt[8]);
 
                 if (loneTwt[9] != null)
                 {
@@ -100,17 +95,14 @@ public class CSVParser {
             }
             else
             {
-                Tweet twt = new Tweet (id, timeStamp, source, text)
+                Tweet twt = new Tweet (id, timeStamp, source, text);
             }
             }
-           }
         twtAnalyze.add(twt);
         }
 
        return twtAnalyze;
-   }
-
-
-
+    }
+    }
 	
 }
