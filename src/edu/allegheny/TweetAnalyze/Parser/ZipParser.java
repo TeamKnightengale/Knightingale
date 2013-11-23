@@ -12,6 +12,7 @@ package edu.allegheny.TweetAnalyze.Parser;
 
 import	java.io.File;
 import	java.util.ArrayList;
+import	java.util.Formatter;
 import	java.io.IOException;
 
 import	edu.allegheny.TweetAnalyze.Tweet;

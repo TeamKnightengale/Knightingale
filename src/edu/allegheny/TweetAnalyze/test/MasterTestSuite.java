@@ -14,6 +14,7 @@ import org.junit.runners.Suite;
 
 //TestTweet.class,
 // ADD YOUR TEST CLASSES HERE
+TestParser.class
 
 })
 
