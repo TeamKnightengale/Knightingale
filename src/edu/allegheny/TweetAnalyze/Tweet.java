@@ -169,11 +169,7 @@ public class Tweet {
 	 * @return	true if this Tweet is a retweet, false otherwise
 	 */
 	public boolean isRetweet() {
-<<<<<<< HEAD
-		return (retweetedUserID != 0) && (retweetedStatusID != null) && (retweetedStatusTimestamp != null);
-=======
 		return (retweetedUserID != 0) && (retweetedStatusID != 0) && (retweetedStatusTimestamp != null);
->>>>>>> master
 	}
 
 	/**
