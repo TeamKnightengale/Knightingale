@@ -74,4 +74,4 @@ eclim/.eclimrc_k
 
 #Java
 *.class
-
+bin/*
