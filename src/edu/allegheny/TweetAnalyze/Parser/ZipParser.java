@@ -56,7 +56,7 @@ public class ZipParser {
 					logger.debug("ZipParser: Target file is %s", target);
 				}
 			
-				File 			temp 	= new File("TweetAnalyzeTemp/tweets.csv");
+				File 			temp 	= new File("TweetAnalyzeTemp/");
 				ZipFile 		archive = new ZipFile(target);
 				CSVParser 		parser  = new CSVParser();
 
@@ -101,7 +101,7 @@ public class ZipParser {
 	 * @param	target 	the ZipFile to extract the Tweets.csv from
 	 * @param	dest 	the directory into which the file is to be extracted
 	 */
-	private void extractTweetsCSV (ZipFile target, File dest) throws ZipException {
+	public void extractTweetsCSV (ZipFile target, File dest) throws ZipException {
 
 		if (logger.isDebugEnabled()) {
 			logger.debug("ZipParser: extracting Tweets.csv from %s", target);
