@@ -48,6 +48,8 @@ public class ZipParser {
 	 */
 	public ArrayList<Tweet> parse (File target) {
 
+		ArrayList<Tweet> output = null;	
+
 		try {
 				if (logger.isDebugEnabled()) {
 					logger.debug("ZipParser: Target file is %s", target);
@@ -56,7 +58,6 @@ public class ZipParser {
 				File 			temp 	= new File("TweetAnalyzeTemp/tweets.csv");
 				ZipFile 		archive = new ZipFile(target);
 				CSVParser 		parser  = new CSVParser();
-				ArrayList<Tweet>output;	
 
 				// Extract the CSV file from the archive
 				extractTweetsCSV(archive, temp);
@@ -72,9 +73,7 @@ public class ZipParser {
 					logger.error("ZipParser: failed to delete temporary file %s", temp.getPath());
 				} else if (logger.isDebugEnabled()) {
 					logger.debug("ZipParser: deleted temporary file %s", temp.getPath());
-				}
-
-				return output;
+				}				return output;
 		} 
 
 		// Log any ZipExceptions to error with stack traces.
@@ -91,6 +90,8 @@ public class ZipParser {
 		catch (Exception e) {
 			logger.error("ZipParser: Caught an unexpected exception", e);
 		}
+
+		return output;
 	}
 
 	/**
