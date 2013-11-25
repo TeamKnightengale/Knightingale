@@ -268,7 +268,7 @@ public class TestTweet
 
     /**
      * testGetText()
-     * Tests if getText works
+     * Tests if getText() works
      */
     @Test
     public void testGetText(){
@@ -285,7 +285,7 @@ public class TestTweet
 
     /**
      * testSetText()
-     * Tests if setText works
+     * Tests if setText() works
      */
     @Test
     public void testSetText(){
@@ -300,6 +300,255 @@ public class TestTweet
 
         assertEquals(expected, actual.getText());
     }
+
+    /**
+     * testGetSource()
+     * Tests if getSource() works
+     */
+    @Test
+    public void testGetSource(){
+        Date day = new Date("12/17/2013");
+        ArrayList<String> url = new ArrayList<String>();
+        url.add("http://junit.sourceforge.net/javadoc/org/junit/Assert.html");
+
+        Tweet actual = new Tweet (1l, day, "Name", "Things", 2l, 3l, url);
+
+        String expected = "Name";
+
+        assertEquals(expected, actual.getSource());
+    }
+
+    /**
+     * testSetSource()
+     * Tests if setSource() works
+     */
+    @Test
+    public void testSetSource(){
+        Date day = new Date("12/17/2013");
+        ArrayList<String> url = new ArrayList<String>();
+        url.add("http://junit.sourceforge.net/javadoc/org/junit/Assert.html");
+
+        Tweet actual = new Tweet (1l, day, "Name", "Things", 2l, 3l, url);
+
+        String expected = "Team1";
+        actual.setSource("Team1");
+
+        assertEquals(expected, actual.getSource());
+    }
+
+    /**
+     * testGetExpandedURLs()
+     * Tests if getExpandedURLs() works
+     */
+    @Test
+    public void testGetExpandedURLs(){
+        Date day = new Date("12/17/2013");
+        ArrayList<String> url = new ArrayList<String>();
+        url.add("http://junit.sourceforge.net/javadoc/org/junit/Assert.html");
+
+        Tweet actual = new Tweet (1l, day, "Name", "Things", 2l, 3l, url);
+
+        ArrayList<String> expected = url;
+
+        assertEquals(expected, actual.getExpandedURLs());
+    }
+
+    /**
+     * testSetExpandedURLs()
+     * Tests if setExpandedURLs() works
+     */
+    @Test
+    public void testSetExpandedURLs(){
+        Date day = new Date("12/17/2013");
+        ArrayList<String> url = new ArrayList<String>();
+        url.add("http://junit.sourceforge.net/javadoc/org/junit/Assert.html");
+
+        Tweet actual = new Tweet (1l, day, "Name", "Things", 2l, 3l, url);
+
+        ArrayList<String> expected = new ArrayList<String>();
+        expected.add("https://www.google.com/search?q=junit+assert&ie=UTF-8&sa=Search&channel=fe&client=browser-ubuntu&hl=en");
+
+        actual.setExpandedURLs(expected);
+
+        assertEquals(expected, actual.getExpandedURLs());
+    }
+
+
+    /**
+     * testGetInReplyToStatusID()
+     * Tests if getInReplyToStatusID() works
+     */
+    @Test
+    public void testGetInReplyToStatusID(){
+        Date day = new Date("12/17/2013");
+        ArrayList<String> url = new ArrayList<String>();
+        url.add("http://junit.sourceforge.net/javadoc/org/junit/Assert.html");
+
+        Tweet actual = new Tweet (1l, day, "Name", "Things", 2l, 3l, url);
+
+        long expected = 2l;
+
+        assertEquals(expected, actual.getInReplyToStatusID());
+    }
+
+    /**
+     * testSetInReplyToStatusID()
+     * Tests if setInReplyToStatusID() works
+     */
+    @Test
+    public void testSetInReplyToStatusID(){
+        Date day = new Date("12/17/2013");
+        ArrayList<String> url = new ArrayList<String>();
+        url.add("http://junit.sourceforge.net/javadoc/org/junit/Assert.html");
+
+        Tweet actual = new Tweet (1l, day, "Name", "Things", 2l, 3l, url);
+
+        long expected = 55l;
+        actual.setInReplyToStatusID(55l);
+
+        assertEquals(expected, actual.getInReplyToStatusID());
+    }
+
+    /**
+     * testGetInReplyToUserID()
+     * Tests if getInReplyToUserID() works
+     */
+    @Test
+    public void testGetInReplyToUserID(){
+        Date day = new Date("12/17/2013");
+        ArrayList<String> url = new ArrayList<String>();
+        url.add("http://junit.sourceforge.net/javadoc/org/junit/Assert.html");
+
+        Tweet actual = new Tweet (1l, day, "Name", "Things", 2l, 3l, url);
+
+        long expected = 3l;
+
+        assertEquals(expected, actual.getInReplyToUserID());
+    }
+
+    /**
+     * testSetInReplyToUserID()
+     * Tests if setInReplyToUserID() works
+     */
+    @Test
+    public void testSetInReplyToUserID(){
+        Date day = new Date("12/17/2013");
+        ArrayList<String> url = new ArrayList<String>();
+        url.add("http://junit.sourceforge.net/javadoc/org/junit/Assert.html");
+
+        Tweet actual = new Tweet (1l, day, "Name", "Things", 2l, 3l, url);
+
+        long expected = 67l;
+        actual.setInReplyToUserID(67l);
+
+        assertEquals(expected, actual.getInReplyToUserID());
+    }
+
+    /**
+     * testGetRetweetedUserID
+     * Tests if getRetweetedUserID() works
+     */
+    @Test
+    public void testGetRetweetedUserID(){
+        Date day = new Date("11/5/1111");
+
+        Date other = new Date("10/5/1111");
+
+        Tweet actual = new Tweet (1l, day, "Name", "Object", 2l, 3l, other);
+
+        long expected = 2l;
+
+        assertEquals(expected, actual.getRetweetedUserID());
+    }
+
+    /**
+     * testSetRetweetedUserID
+     * Tests if setRetweetedUserID() works
+     */
+    @Test
+    public void testSetRetweetedUserID(){
+        Date day = new Date("11/5/1111");
+
+        Date other = new Date("10/5/1111");
+
+        Tweet actual = new Tweet (1l, day, "Name", "Object", 2l, 3l, other);
+
+        long expected = 42l;
+        actual.setRetweetedUserID(42l);
+
+        assertEquals(expected, actual.getRetweetedUserID());
+    }
+
+    /**
+     * testGetRetweetedStatusID
+     * Tests if getRetweetedStatusID() works
+     */
+    @Test
+    public void testGetRetweetedStatusID(){
+        Date day = new Date("11/5/1111");
+
+        Date other = new Date("10/5/1111");
+
+        Tweet actual = new Tweet (1l, day, "Name", "Object", 2l, 3l, other);
+
+        long expected = 3l;
+
+        assertEquals(expected, actual.getRetweetedStatusID());
+    }
+
+    /**
+     * testSetRetweetedStatusID
+     * Tests if setRetweetedStatusID() works
+     */
+    @Test
+    public void testSetRetweetedStatusID(){
+        Date day = new Date("11/5/1111");
+
+        Date other = new Date("10/5/1111");
+
+        Tweet actual = new Tweet (1l, day, "Name", "Object", 2l, 3l, other);
+
+        long expected = 20l;
+        actual.setRetweetedStatusID(20l);
+
+        assertEquals(expected, actual.getRetweetedStatusID());
+    }
+
+        /**
+     * testGetRetweetedStatusTimestamp
+     * Tests if getRetweetedStatusTimesstamp() works
+     */
+    @Test
+    public void testGetRetweetedStatusTimestamp(){
+        Date day = new Date("11/5/1111");
+
+        Date other = new Date("10/5/1111");
+
+        Tweet actual = new Tweet (1l, day, "Name", "Object", 2l, 3l, other);
+
+        Date expected = other;
+
+        assertEquals(expected, actual.getRetweetedStatusTimestamp());
+    }
+
+    /**
+     * testSetRetweetedStatusTimestamp
+     * Tests if setRetweetedStatusTimestamp()
+     */
+    @Test
+    public void testSetRetweetedStatusTimestamp(){
+        Date day = new Date("11/5/1111");
+
+        Date other = new Date("10/5/1111");
+
+        Tweet actual = new Tweet (1l, day, "Name", "Object", 2l, 3l, other);
+
+        Date expected = new Date("11/24/2013");
+        actual.setRetweetedStatusTimestamp(expected);
+
+        assertEquals(expected, actual.getRetweetedStatusTimestamp());
+    }
+
 
 
 
