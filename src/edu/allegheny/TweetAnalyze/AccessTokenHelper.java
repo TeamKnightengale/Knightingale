@@ -24,50 +24,66 @@ import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.io.FileOutputStream;
 
+import	org.apache.logging.log4j.LogManager;
+import	org.apache.logging.log4j.Logger;
+
+
 public class AccessTokenHelper
 {
-	public static void main(String argv[]) throws Exception
-	{
+	private static Logger logger = LogManager.getFormatterLogger(AccessTokenHelper.class.getName());
 
-		deleteAccessTokens();
-		getnewTokens();
+	public static void main(String argv[]) 
+	{
+		AccessTokenHelper tokenHelper = new AccessTokenHelper();
+		tokenHelper.deleteAccessTokens();
+		tokenHelper.getnewTokens();
 	}
 
-	public static void getnewTokens() throws Exception
+	public void getnewTokens() 
 	{
 		deleteAccessTokens(); //First, delete old access tokens;
 		Twitter twitter = TwitterFactory.getSingleton();
-		RequestToken requestToken = twitter.getOAuthRequestToken();
 		AccessToken accessToken = null;
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		while (null == accessToken) {
-			System.out.println("Open the following URL and grant access to your account:");
-			System.out.println(requestToken.getAuthorizationURL());
-			System.out.print("Enter the PIN(if aviailable) or just hit enter.[PIN]:");
-			String pin = br.readLine();
-			try{
-				if(pin.length() > 0){
-					accessToken = twitter.getOAuthAccessToken(requestToken, pin);
-				}else{
-					accessToken = twitter.getOAuthAccessToken();
-				}
-			} catch (TwitterException te) {
-				if(401 == te.getStatusCode()){
-					System.out.println("Unable to get the access token.");
-				}else{
-					te.printStackTrace();
+		try
+		{
+			RequestToken requestToken = twitter.getOAuthRequestToken();
+			BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+			while (null == accessToken) {
+				System.out.println("Open the following URL and grant access to your account.\n");
+				System.out.print("Enter the PIN(if aviailable) or just hit enter.[PIN]:");
+				System.out.println(requestToken.getAuthorizationURL());
+				String pin = br.readLine();
+				try{
+					if(pin.length() > 0){
+						accessToken = twitter.getOAuthAccessToken(requestToken, pin);
+					}else{
+						accessToken = twitter.getOAuthAccessToken();
+					}
+				} catch (TwitterException te) {
+					if(401 == te.getStatusCode()){
+						System.out.println("Unable to get the access token.");
+					}else{
+						te.printStackTrace();
+					}
 				}
 			}
-		}
 
-		setTokens(accessToken);
+			setTokens(accessToken);	
+		}
+		catch(IOException e)
+		{
+			logger.error("AccessTokenHelper: Exception found in getnewTokens()", e);
+		}
+		catch(twitter4j.TwitterException te)
+		{
+			logger.error("AccessTokenHelper: TwitterException found in getnewTokens()", te);	
+		}		
 	}
 
-	private static void setTokens(AccessToken token)
+	private void setTokens(AccessToken token)
 	{
 		
 		String fileName = "twitter4j.properties";
-
 		BufferedReader br = null;
 		BufferedWriter bw = null;
 		try
@@ -90,13 +106,14 @@ public class AccessTokenHelper
 					bw.close();		
 			}
 		}
-		catch (IOException e) {
-            	e.printStackTrace();
+		catch (IOException e) 
+		{
+			logger.error("AccessTokenHelper: IOException found in setTokens()", e);
 		} 
 		
 	}
 
-	public static void deleteAccessTokens()
+	public void deleteAccessTokens()
 	{
 		String oldFileName = "twitter4j.properties";
 		String tmpFileName = "twitter4j.properties.temp";
@@ -127,7 +144,7 @@ public class AccessTokenHelper
 			}	
 		}
 		catch (IOException e) {
-            	e.printStackTrace();
+			logger.error("AccessTokenHelper: IOException found in deleteTokens()", e);
 		} 
 		
       // Once everything is complete, delete old file..
@@ -137,6 +154,44 @@ public class AccessTokenHelper
       // And rename tmp file's name to old file name
 		File newFile = new File(tmpFileName);
 		newFile.renameTo(oldFile); 
+	}
+
+	public boolean hasToken()
+	{
+		String oldFileName = "twitter4j.properties";
+		boolean hasAccessToken = false;
+		boolean hasAccessTokenSecret = false;
+		BufferedReader br = null;
+		try
+		{
+			try 
+			{
+				br = new BufferedReader(new FileReader(oldFileName));
+				String line;
+
+				while ((line = br.readLine()) != null) 
+				{
+					if (line.contains("oauth.accessToken="))
+					{
+						hasAccessToken = true;
+					}
+
+					if (line.contains("oauth.accessTokenSecret="))
+					{
+						hasAccessTokenSecret = true;
+					}
+				}
+			}
+			finally {
+				if(br != null)
+					br.close();		
+			}	
+		}
+		catch (IOException e) {
+			logger.error("AccessTokenHelper: IOException found in deleteTokens()", e);
+		}
+
+		return hasAccessToken && hasAccessTokenSecret; 
 	}
 
 }

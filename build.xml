@@ -88,7 +88,7 @@
 
 
 	<target name="refresh" depends="compile">
-		<java fork="true" classname="edu.allegheny.TweetAnalyze.TweetRefresh" maxmemory="1024m">
+		<java fork="true" classname="edu.allegheny.TweetAnalyze.TweetRefreshClient" maxmemory="1024m">
 			<arg line="${args}"/>
 			<classpath refid="run.classpath" />
         </java>
