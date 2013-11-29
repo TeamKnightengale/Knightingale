@@ -11,14 +11,48 @@ import twitter4j.*;
 public class TweetBuilder
 {	
 	/**
-	* @param statuses A list of statuses as returned by Twitter4j
+	* @param status A twitter4j.Status
 	* @return a Tweet
 	*/
-	// public Tweet buildTweet(List<Status> statuses)
-	// {
-	// 	//Is Retweet?
-	// 	//Is reply?
+	public Tweet buildTweet(Status status)
+	{
+		Tweet tweet = null;
 
-	// 	return new Tweet();
-	// }
+		long tweetID = status.getID(); 
+		Date timestamp = status.getCreatedAt();
+		String source = status.getSource();
+		String text = status.getText();
+
+		//Does this tweet have expanded URLs
+		
+		if(status.getURLEntities().length > 0)
+		{
+			for(URLEntity urlEntity : status.getURLEntities())
+			{
+				System.out.println(urlEntity.getExpandedURL());
+			}
+		}
+		else
+		{
+			if (status.isRetweet())
+			{	
+				long retweetedUserID = status.getRetweetedStatus().getId();
+				long retweetedStatusID = status.getRetweetedStatus().getUser().getId();
+				Date retweetedStatusTimestamp = status.getRetweetedStatus().getCreatedAt();
+				tweet = new Tweet(tweetID, timestamp, source, text,retweetedUserID, retweetedStatusID, retweetedStatusTimestamp );
+			}	
+			else if (status.getInReplyToUserID() != -1)
+			{
+				long inReplyToStatusID = status.getInReplyToUserID();
+				long inReplyToUserID = status.getInReplyToUserID();
+			}
+			else
+			{
+				tweet = new Tweet(tweetID, timestamp, source, text)
+			}
+		}
+		
+		return tweet;
+
+	}
 }
