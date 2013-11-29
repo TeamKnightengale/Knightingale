@@ -52,7 +52,7 @@ public class CSVParser {
 
 			String text = loneTwt[5];
 
-					 if (loneTwt[1] != null)//will replace at somepoint with visitor!
+					 if (loneTwt[1].isEmpty() == false)//will replace at somepoint with visitor!
 					 {
 					 	Long ReplyStatus = new Long(loneTwt[1]);
 
@@ -62,7 +62,7 @@ public class CSVParser {
 
 					 	long replyUser = ReplyUser.longValue();
 
-					 	if (loneTwt[9] != null)
+					 	if (loneTwt[9] != "")
 					 	{
 					 		ArrayList<String> url = new ArrayList<String>(Arrays.asList(loneTwt[9].split(",")));
 
@@ -78,7 +78,7 @@ public class CSVParser {
 					 	}
 					 }
 					 else{
-					 	if (loneTwt[6] != null)
+					 	if (loneTwt[6].isEmpty() == false)
 					 	{
 
 					 		Long RetweetId = new Long(loneTwt[6]);
@@ -90,7 +90,7 @@ public class CSVParser {
 					 		Date retweetDate = timestampFormat.parse(loneTwt[8]);
 
 
-					 		if (loneTwt[9] != null)
+					 		if (loneTwt[9].isEmpty() == false)
 					 		{
 					 			ArrayList<String> url = new ArrayList<String>(Arrays.asList(loneTwt[9].split(",")));
 
@@ -107,7 +107,7 @@ public class CSVParser {
 					 	}
 
 					 	else{
-					 		if (loneTwt[9] != null)
+					 		if (loneTwt[9].isEmpty() == false)
 					 		{
 					 			ArrayList<String> url = new ArrayList<String>(Arrays.asList(loneTwt[9].split(",")));
 
