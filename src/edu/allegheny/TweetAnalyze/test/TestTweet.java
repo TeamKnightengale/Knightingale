@@ -6,6 +6,7 @@ import edu.allegheny.TweetAnalyze.Tweet;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Random;
 import java.text.SimpleDateFormat;
 import java.text.ParseException;
 
@@ -19,7 +20,15 @@ import  org.junit.runners.JUnit4;
 public class TestTweet
 {
 
-    private SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy");
+    private SimpleDateFormat    format;
+    private Random              numberGenerator;    
+
+
+    @Before
+    public void setUp () {
+        format = new SimpleDateFormat("yyyy-MM-dd kk:mm:ss z");
+        numberGenerator = new Random();
+    }
 
     @Rule
     public ExpectedException exception = ExpectedException.none();
@@ -30,9 +39,9 @@ public class TestTweet
      */
     @Test
     public void testConstructorBasic () throws ParseException{
-        Date day = format.parse("11/20/1994");//values don't matter for constructor just data type
+        Date timestamp = format.parse("2013-10-15 03:01:16 +0000");//values don't matter for constructor just data type
         
-        Tweet actual = new Tweet (12031l, day , "Gabe", "This is a tweet");
+        Tweet actual = new Tweet (numberGenerator.nextLong(), timestamp , "Gabe", "This is a tweet");
 
         assertNotNull(actual);
     }
@@ -44,12 +53,12 @@ public class TestTweet
      */
     @Test
     public void testConstructorBasicUrl() throws ParseException {
-        Date today = format.parse("11/23/2013");
+        Date totimestamp = format.parse("2013-10-06 06:26:51 +0000");
         ArrayList<String> url = new ArrayList<String>();
 
         url.add("https://www.google.com/");
 
-        Tweet actual = new Tweet (12301l, today, "Hawk", "This is a tweet", url);
+        Tweet actual = new Tweet (numberGenerator.nextLong(), totimestamp, "Hawk", "This is a tweet", url);
 
         assertNotNull(actual);
     }
@@ -61,11 +70,11 @@ public class TestTweet
      */
     @Test
     public void testConstructorRetweet() throws ParseException {
-        Date day = format.parse("11/5/1111");
+        Date timestamp = format.parse("2012-12-05 22:22:59 +0000");
 
-        Date other = format.parse("10/5/1111");
+        Date otherTimestamp = format.parse("2012-12-05 22:22:59 +0000");
 
-        Tweet actual = new Tweet (1l, day, "Jake", "RA", 2l, 3l, other);
+        Tweet actual = new Tweet (numberGenerator.nextLong(), timestamp, "Jake", "RA", numberGenerator.nextLong(), numberGenerator.nextLong(), otherTimestamp);
 
         assertNotNull(actual);
     }
@@ -77,14 +86,14 @@ public class TestTweet
      */
     @Test
     public void testConstructorRetweetUrl() throws ParseException {
-        Date day = format.parse("11/5/1111");
+        Date timestamp = format.parse("2012-10-23 04:07:58 +0000");
         
-        Date other = format.parse("10/5/1111");
+        Date otherTimestamp = format.parse("2012-10-04 01:38:40 +0000");
 
         ArrayList<String> url = new ArrayList<String>();
         url.add("http://junit.sourceforge.net/javadoc/org/junit/Assert.html");
 
-        Tweet actual = new Tweet (1l, day, "Dibyo", "Tweet", 2l, 3l, other, url);
+        Tweet actual = new Tweet (numberGenerator.nextLong(), timestamp, "Dibyo", "Tweet", numberGenerator.nextLong(), numberGenerator.nextLong(), otherTimestamp, url);
 
         assertNotNull(actual);
     }
@@ -96,9 +105,9 @@ public class TestTweet
      */
     @Test
     public void testConstructorReply() throws ParseException {
-        Date day = format.parse("12/17/2013");
+        Date timestamp = format.parse("2012-12-05 22:22:59 +0000");
 
-        Tweet actual = new Tweet (1l, day, "Ian", "Database", 2l, 3l);
+        Tweet actual = new Tweet (numberGenerator.nextLong(), timestamp, "Ian", "Database", numberGenerator.nextLong(), numberGenerator.nextLong());
 
         assertNotNull(actual);
     }
@@ -110,12 +119,12 @@ public class TestTweet
      */
     @Test
     public void testConstructorReplyUrl() throws ParseException {
-        Date day = format.parse("8/29/2013");
+        Date timestamp = format.parse("2013-03-08 04:33:40 +0000");
 
         ArrayList<String> url = new ArrayList<String>();
         url.add("Greetings NSA");
 
-        Tweet actual = new Tweet (1l, day, "Name", "Thing", 2l, 3l, url);
+        Tweet actual = new Tweet (numberGenerator.nextLong(), timestamp, "Name", "Thing", numberGenerator.nextLong(), numberGenerator.nextLong(), url);
 
         assertNotNull(actual);
     }
@@ -127,9 +136,9 @@ public class TestTweet
      */
     @Test
     public void testIsRetweetFalse() throws ParseException {
-        Date day = format.parse("12/17/2013");
+        Date timestamp = format.parse("2010-06-20 00:00:00 +0000");
 
-        Tweet actual = new Tweet (1l, day, "Name", "Things", 2l, 3l);
+        Tweet actual = new Tweet (numberGenerator.nextLong(), timestamp, "Name", "Things", numberGenerator.nextLong(), numberGenerator.nextLong());
 
         assertFalse(actual.isRetweet());
     }
@@ -140,14 +149,14 @@ public class TestTweet
      */
     @Test
     public void testIsRetweetTrue() throws ParseException {
-        Date day = format.parse("11/5/1111");
+        Date timestamp = format.parse("2012-06-30 21:47:26 +0000");
         
-        Date other = format.parse("10/5/1111");
+        Date otherTimestamp = format.parse("2012-04-19 00:22:19 +0000");
 
         ArrayList<String> url = new ArrayList<String>();
         url.add("http://junit.sourceforge.net/javadoc/org/junit/Assert.html");
 
-        Tweet actual = new Tweet (1l, day, "Name", "Thing", 2l, 3l, other, url);
+        Tweet actual = new Tweet (numberGenerator.nextLong(), timestamp, "Name", "Thing", numberGenerator.nextLong(), numberGenerator.nextLong(), otherTimestamp, url);
 
         assertTrue(actual.isRetweet());
     }
@@ -158,14 +167,14 @@ public class TestTweet
      */
     @Test
     public void testIsReplyFalse() throws ParseException {
-        Date day = format.parse("11/5/1111");
+        Date timestamp = format.parse("2012-08-05 18:11:42 +0000");
         
-        Date other = format.parse("10/5/1111");
+        Date otherTimestamp = format.parse("2012-03-09 18:35:49 +0000");
 
         ArrayList<String> url = new ArrayList<String>();
         url.add("http://junit.sourceforge.net/javadoc/org/junit/Assert.html");
 
-        Tweet actual = new Tweet (1l, day, "Name", "Thing", 2l, 3l, other, url);
+        Tweet actual = new Tweet (numberGenerator.nextLong(), timestamp, "Name", "Thing", numberGenerator.nextLong(), numberGenerator.nextLong(), otherTimestamp, url);
         
         assertFalse(actual.isReply());
     }
@@ -176,9 +185,9 @@ public class TestTweet
      */
     @Test
     public void testIsReplyTrue() throws ParseException {
-        Date day = format.parse("12/17/2013");
+        Date timestamp = format.parse("2011-04-08 04:31:35 +0000");
 
-        Tweet actual = new Tweet (1l, day, "Name", "Things", 2l, 3l);
+        Tweet actual = new Tweet (numberGenerator.nextLong(), timestamp, "Name", "Things", numberGenerator.nextLong(), numberGenerator.nextLong());
 
         assertTrue(actual.isReply());
     }
@@ -189,8 +198,8 @@ public class TestTweet
      */
     @Test
     public void testContainsURLsFalse() throws ParseException {
-        Date day = format.parse("11/20/1994");        
-        Tweet actual = new Tweet (12031l, day , "Me", "This is a tweet");
+        Date timestamp = format.parse("2011-12-17 22:37:52 +0000");        
+        Tweet actual = new Tweet (numberGenerator.nextLong(), timestamp , "Me", "This is a tweet");
         
         assertFalse(actual.containsURLs());
     }
@@ -201,11 +210,11 @@ public class TestTweet
      */
     @Test
     public void testContainsURLsTrue() throws ParseException {
-        Date day = format.parse("12/17/2013");
+        Date timestamp = format.parse("2009-12-06 00:00:00 +0000");
         ArrayList<String> url = new ArrayList<String>();
         url.add("http://junit.sourceforge.net/javadoc/org/junit/Assert.html");
 
-        Tweet actual = new Tweet (1l, day, "Name", "Things", 2l, 3l, url);
+        Tweet actual = new Tweet (numberGenerator.nextLong(), timestamp, "Name", "Things", numberGenerator.nextLong(), numberGenerator.nextLong(), url);
 
         assertTrue(actual.containsURLs());
     }
@@ -216,13 +225,13 @@ public class TestTweet
      */
     @Test
     public void testGetTweetID() throws ParseException {
-        Date day = format.parse("12/17/2013");
+        Date timestamp = format.parse("2010-06-11 00:00:00 +0000");
         ArrayList<String> url = new ArrayList<String>();
         url.add("http://junit.sourceforge.net/javadoc/org/junit/Assert.html");
 
-        Tweet actual = new Tweet (1l, day, "Name", "Things", 2l, 3l, url);
+        Tweet actual = new Tweet (numberGenerator.nextLong(), timestamp, "Name", "Things", numberGenerator.nextLong(), numberGenerator.nextLong(), url);
 
-        long expected = 1l;
+        long expected = numberGenerator.nextLong();
 
         assertEquals(expected, actual.getTweetID());
     }
@@ -233,14 +242,14 @@ public class TestTweet
      */
     @Test
     public void testSetTweetId() throws ParseException {
-        Date day = format.parse("12/17/2013");
+        Date timestamp = format.parse("2012-07-01 15:54:54 +0000");
         ArrayList<String> url = new ArrayList<String>();
         url.add("http://junit.sourceforge.net/javadoc/org/junit/Assert.html");
 
-        Tweet actual = new Tweet (1l, day, "Name", "Things", 2l, 3l, url);
+        Tweet actual = new Tweet (numberGenerator.nextLong(), timestamp, "Name", "Things", numberGenerator.nextLong(), numberGenerator.nextLong(), url);
 
-        long expected = 11l;
-        actual.setTweetID(11l);
+        long expected = numberGenerator.nextLong();
+        actual.setTweetID(numberGenerator.nextLong());
 
         assertEquals(expected, actual.getTweetID());
     }
@@ -251,13 +260,13 @@ public class TestTweet
      */
     @Test
     public void testGetTimestamp() throws ParseException {
-        Date day = format.parse("12/17/2013");
+        Date timestamp = format.parse("2012-04-19 04:22:30 +0000");
         ArrayList<String> url = new ArrayList<String>();
         url.add("http://junit.sourceforge.net/javadoc/org/junit/Assert.html");
 
-        Tweet actual = new Tweet(1l, day, "Name", "Things", 2l, 3l, url);
+        Tweet actual = new Tweet(numberGenerator.nextLong(), timestamp, "Name", "Things", numberGenerator.nextLong(), numberGenerator.nextLong(), url);
 
-        Date expected = format.parse("12/17/2013");
+        Date expected = format.parse("2013-03-17 06:54:33 +0000");
         assertEquals(expected, actual.getTimestamp());
     }
 
@@ -267,13 +276,13 @@ public class TestTweet
      */
     @Test
     public void testSetTimestamp() throws ParseException {
-        Date day = format.parse("12/17/2013");
+        Date timestamp = format.parse("2013-05-31 17:34:37 +0000");
         ArrayList<String> url = new ArrayList<String>();
         url.add("http://junit.sourceforge.net/javadoc/org/junit/Assert.html");
 
-        Tweet actual = new Tweet (1l, day, "Name", "Things", 2l, 3l, url);
+        Tweet actual = new Tweet (numberGenerator.nextLong(), timestamp, "Name", "Things", numberGenerator.nextLong(), numberGenerator.nextLong(), url);
 
-        Date expected = format.parse("11/27/2013");
+        Date expected = format.parse("2012-12-23 20:02:19 +0000");
         actual.setTimestamp(expected);
 
         assertEquals(expected, actual.getTimestamp());
@@ -285,11 +294,11 @@ public class TestTweet
      */
     @Test
     public void testGetText() throws ParseException {
-        Date day = format.parse("12/17/2013");
+        Date timestamp = format.parse("12/17/2013");
         ArrayList<String> url = new ArrayList<String>();
         url.add("http://junit.sourceforge.net/javadoc/org/junit/Assert.html");
 
-        Tweet actual = new Tweet (1l, day, "Name", "Things", 2l, 3l, url);
+        Tweet actual = new Tweet (numberGenerator.nextLong(), timestamp, "Name", "Things", numberGenerator.nextLong(), numberGenerator.nextLong(), url);
 
         String expected = "Things";
 
@@ -302,11 +311,11 @@ public class TestTweet
      */
     @Test
     public void testSetText() throws ParseException {
-        Date day = format.parse("12/17/2013");
+        Date timestamp = format.parse("2012-09-17 02:39:55 +0000");
         ArrayList<String> url = new ArrayList<String>();
         url.add("http://junit.sourceforge.net/javadoc/org/junit/Assert.html");
 
-        Tweet actual = new Tweet (1l, day, "Name", "Things", 2l, 3l, url);
+        Tweet actual = new Tweet (numberGenerator.nextLong(), timestamp, "Name", "Things", numberGenerator.nextLong(), numberGenerator.nextLong(), url);
 
         String expected = "YAGNI";
         actual.setText("YAGNI");
@@ -320,11 +329,11 @@ public class TestTweet
      */
     @Test
     public void testGetSource() throws ParseException {
-        Date day = format.parse("12/17/2013");
+        Date timestamp = format.parse("2012-06-30 23:15:50 +0000");
         ArrayList<String> url = new ArrayList<String>();
         url.add("http://junit.sourceforge.net/javadoc/org/junit/Assert.html");
 
-        Tweet actual = new Tweet (1l, day, "Name", "Things", 2l, 3l, url);
+        Tweet actual = new Tweet (numberGenerator.nextLong(), timestamp, "Name", "Things", numberGenerator.nextLong(), numberGenerator.nextLong(), url);
 
         String expected = "Name";
 
@@ -337,11 +346,11 @@ public class TestTweet
      */
     @Test
     public void testSetSource() throws ParseException {
-        Date day = format.parse("12/17/2013");
+        Date timestamp = format.parse("2011-12-17 22:37:52 +0000");
         ArrayList<String> url = new ArrayList<String>();
         url.add("http://junit.sourceforge.net/javadoc/org/junit/Assert.html");
 
-        Tweet actual = new Tweet (1l, day, "Name", "Things", 2l, 3l, url);
+        Tweet actual = new Tweet (numberGenerator.nextLong(), timestamp, "Name", "Things", numberGenerator.nextLong(), numberGenerator.nextLong(), url);
 
         String expected = "Team1";
         actual.setSource("Team1");
@@ -355,11 +364,11 @@ public class TestTweet
      */
     @Test
     public void testGetExpandedURLs() throws ParseException {
-        Date day = format.parse("12/17/2013");
+        Date timestamp = format.parse("2012-09-15 17:46:46 +0000");
         ArrayList<String> url = new ArrayList<String>();
         url.add("http://junit.sourceforge.net/javadoc/org/junit/Assert.html");
 
-        Tweet actual = new Tweet (1l, day, "Name", "Things", 2l, 3l, url);
+        Tweet actual = new Tweet (numberGenerator.nextLong(), timestamp, "Name", "Things", numberGenerator.nextLong(), numberGenerator.nextLong(), url);
 
         ArrayList<String> expected = url;
 
@@ -372,11 +381,11 @@ public class TestTweet
      */
     @Test
     public void testSetExpandedURLs() throws ParseException {
-        Date day = format.parse("12/17/2013");
+        Date timestamp = format.parse("2013-03-17 06:54:33 +0000");
         ArrayList<String> url = new ArrayList<String>();
         url.add("http://junit.sourceforge.net/javadoc/org/junit/Assert.html");
 
-        Tweet actual = new Tweet (1l, day, "Name", "Things", 2l, 3l, url);
+        Tweet actual = new Tweet (numberGenerator.nextLong(), timestamp, "Name", "Things", numberGenerator.nextLong(), numberGenerator.nextLong(), url);
 
         ArrayList<String> expected = new ArrayList<String>();
         expected.add("https://www.google.com/search?q=junit+assert&ie=UTF-8&sa=Search&channel=fe&client=browser-ubuntu&hl=en");
@@ -393,13 +402,13 @@ public class TestTweet
      */
     @Test
     public void testGetInReplyToStatusID() throws ParseException {
-        Date day = format.parse("12/17/2013");
+        Date timestamp = format.parse("2013-06-26 13:32:06 +0000");
         ArrayList<String> url = new ArrayList<String>();
         url.add("http://junit.sourceforge.net/javadoc/org/junit/Assert.html");
 
-        Tweet actual = new Tweet (1l, day, "Name", "Things", 2l, 3l, url);
+        Tweet actual = new Tweet (numberGenerator.nextLong(), timestamp, "Name", "Things", numberGenerator.nextLong(), numberGenerator.nextLong(), url);
 
-        long expected = 2l;
+        long expected = numberGenerator.nextLong();
 
         assertEquals(expected, actual.getInReplyToStatusID());
     }
@@ -410,14 +419,14 @@ public class TestTweet
      */
     @Test
     public void testSetInReplyToStatusID() throws ParseException {
-        Date day = format.parse("12/17/2013");
+        Date timestamp = format.parse("2013-10-06 06:26:51 +0000");
         ArrayList<String> url = new ArrayList<String>();
         url.add("http://junit.sourceforge.net/javadoc/org/junit/Assert.html");
 
-        Tweet actual = new Tweet (1l, day, "Name", "Things", 2l, 3l, url);
+        Tweet actual = new Tweet (numberGenerator.nextLong(), timestamp, "Name", "Things", numberGenerator.nextLong(), numberGenerator.nextLong(), url);
 
-        long expected = 55l;
-        actual.setInReplyToStatusID(55l);
+        long expected = numberGenerator.nextLong();
+        actual.setInReplyToStatusID(expected);
 
         assertEquals(expected, actual.getInReplyToStatusID());
     }
@@ -428,13 +437,13 @@ public class TestTweet
      */
     @Test
     public void testGetInReplyToUserID() throws ParseException {
-        Date day = format.parse("12/17/2013");
+        Date timestamp = format.parse("2013-02-08 21:03:10 +0000");
         ArrayList<String> url = new ArrayList<String>();
         url.add("http://junit.sourceforge.net/javadoc/org/junit/Assert.html");
 
-        Tweet actual = new Tweet (1l, day, "Name", "Things", 2l, 3l, url);
+        Tweet actual = new Tweet (numberGenerator.nextLong(), timestamp, "Name", "Things", numberGenerator.nextLong(), numberGenerator.nextLong(), url);
 
-        long expected = 3l;
+        long expected = numberGenerator.nextLong();
 
         assertEquals(expected, actual.getInReplyToUserID());
     }
@@ -445,14 +454,14 @@ public class TestTweet
      */
     @Test
     public void testSetInReplyToUserID() throws ParseException {
-        Date day = format.parse("12/17/2013");
+        Date timestamp = format.parse("2013-10-05 12:53:53 +0000");
         ArrayList<String> url = new ArrayList<String>();
         url.add("http://junit.sourceforge.net/javadoc/org/junit/Assert.html");
 
-        Tweet actual = new Tweet (1l, day, "Name", "Things", 2l, 3l, url);
+        Tweet actual = new Tweet (numberGenerator.nextLong(), timestamp, "Name", "Things", numberGenerator.nextLong(), numberGenerator.nextLong(), url);
 
-        long expected = 67l;
-        actual.setInReplyToUserID(67l);
+        long expected = numberGenerator.nextLong();
+        actual.setInReplyToUserID(expected);
 
         assertEquals(expected, actual.getInReplyToUserID());
     }
@@ -463,13 +472,13 @@ public class TestTweet
      */
     @Test
     public void testGetRetweetedUserID() throws ParseException {
-        Date day = format.parse("11/5/1111");
+        Date timestamp = format.parse("2012-06-30 23:20:55 +0000");
 
-        Date other = format.parse("10/5/1111");
+        Date otherTimestamp = format.parse("2013-10-05 12:53:53 +0000");
 
-        Tweet actual = new Tweet (1l, day, "Name", "Object", 2l, 3l, other);
+        Tweet actual = new Tweet (numberGenerator.nextLong(), timestamp, "Name", "Object", numberGenerator.nextLong(), numberGenerator.nextLong(), otherTimestamp);
 
-        long expected = 2l;
+        long expected = numberGenerator.nextLong();
 
         assertEquals(expected, actual.getRetweetedUserID());
     }
@@ -480,14 +489,14 @@ public class TestTweet
      */
     @Test
     public void testSetRetweetedUserID() throws ParseException {
-        Date day = format.parse("11/5/1111");
+        Date timestamp = format.parse("2012-03-09 18:35:49 +0000");
 
-        Date other = format.parse("10/5/1111");
+        Date otherTimestamp = format.parse("2012-07-19 02:19:57 +0000");
 
-        Tweet actual = new Tweet (1l, day, "Name", "Object", 2l, 3l, other);
+        Tweet actual = new Tweet (numberGenerator.nextLong(), timestamp, "Name", "Object", numberGenerator.nextLong(), numberGenerator.nextLong(), otherTimestamp);
 
-        long expected = 42l;
-        actual.setRetweetedUserID(42l);
+        long expected = numberGenerator.nextLong();
+        actual.setRetweetedUserID(numberGenerator.nextLong());
 
         assertEquals(expected, actual.getRetweetedUserID());
     }
@@ -498,13 +507,13 @@ public class TestTweet
      */
     @Test
     public void testGetRetweetedStatusID() throws ParseException {
-        Date day = format.parse("11/5/1111");
+        Date timestamp = format.parse("2012-07-19 02:19:57 +0000");
 
-        Date other = format.parse("10/5/1111");
+        Date otherTimestamp = format.parse("2012-06-30 21:49:04 +0000");
 
-        Tweet actual = new Tweet (1l, day, "Name", "Object", 2l, 3l, other);
+        Tweet actual = new Tweet (numberGenerator.nextLong(), timestamp, "Name", "Object", numberGenerator.nextLong(), numberGenerator.nextLong(), otherTimestamp);
 
-        long expected = 3l;
+        long expected = numberGenerator.nextLong();
 
         assertEquals(expected, actual.getRetweetedStatusID());
     }
@@ -515,14 +524,14 @@ public class TestTweet
      */
     @Test
     public void testSetRetweetedStatusID() throws ParseException {
-        Date day = format.parse("11/5/1111");
+        Date timestamp = format.parse("2012-06-30 21:49:04 +0000");
 
-        Date other = format.parse("10/5/1111");
+        Date otherTimestamp = format.parse("2012-07-19 02:19:57 +0000");
 
-        Tweet actual = new Tweet (1l, day, "Name", "Object", 2l, 3l, other);
+        Tweet actual = new Tweet (numberGenerator.nextLong(), timestamp, "Name", "Object", numberGenerator.nextLong(), numberGenerator.nextLong(), otherTimestamp);
 
-        long expected = 20l;
-        actual.setRetweetedStatusID(20l);
+        long expected = numberGenerator.nextLong();
+        actual.setRetweetedStatusID(expected);
 
         assertEquals(expected, actual.getRetweetedStatusID());
     }
@@ -533,13 +542,13 @@ public class TestTweet
      */
     @Test
     public void testGetRetweetedStatusTimestamp() throws ParseException {
-        Date day = format.parse("11/5/1111");
+        Date timestamp = format.parse("2013-05-11 05:31:46 +0000");
 
-        Date other = format.parse("10/5/1111");
+        Date otherTimestamp = format.parse("2013-10-05 21:33:13 +0000");
 
-        Tweet actual = new Tweet (1l, day, "Name", "Object", 2l, 3l, other);
+        Tweet actual = new Tweet (numberGenerator.nextLong(), timestamp, "Name", "Object", numberGenerator.nextLong(), numberGenerator.nextLong(), otherTimestamp);
 
-        Date expected = other;
+        Date expected = otherTimestamp;
 
         assertEquals(expected, actual.getRetweetedStatusTimestamp());
     }
@@ -550,13 +559,13 @@ public class TestTweet
      */
     @Test
     public void testSetRetweetedStatusTimestamp() throws ParseException {
-        Date day = format.parse("11/5/1111");
+        Date timestamp = format.parse("2010-06-16 00:00:00 +0000");
 
-        Date other = format.parse("10/5/1111");
+        Date otherTimestamp = format.parse("2010-07-21 00:00:00 +0000");
 
-        Tweet actual = new Tweet (1l, day, "Name", "Object", 2l, 3l, other);
+        Tweet actual = new Tweet (numberGenerator.nextLong(), timestamp, "Name", "Object", numberGenerator.nextLong(), numberGenerator.nextLong(), otherTimestamp);
 
-        Date expected = format.parse("11/24/2013");
+        Date expected = format.parse("2012-06-30 14:17:09 +0000");
         actual.setRetweetedStatusTimestamp(expected);
 
         assertEquals(expected, actual.getRetweetedStatusTimestamp());
