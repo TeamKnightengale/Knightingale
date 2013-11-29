@@ -44,9 +44,6 @@
 		<classpath path="${lib.dir}/jacocoant.jar"/>
 	</taskdef>
 
-	<!-- Javadoc task setup -->
-
-		
 	<!-- BASIC TARGETS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
 
 	<!-- CLEANING TASK - "ant clean" -->
@@ -147,7 +144,7 @@
 				 sourcepath="src"
 				 excludepackagenames="edu.allegheny.TweetAnalyze.test"
 				 defaultexcludes="yes"
-				 destdir="doc/api"
+				 destdir="bin/doc/api"
 				 author="true"
 				 version="true"
 				 use="true"
