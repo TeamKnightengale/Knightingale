@@ -15,51 +15,41 @@ public class TweetRefresh
 		getRecentTweets(since_id);
 	}
 
+	public static void refresh()
+	{
+
+	}
+
 	/**
 	 * @param since_id 
 	 * @return 	a list of statuses since since_id
 	*/
-	public static List<Status> getRecentTweets(long since_id) 
+	private static List<Tweet> getRecentTweets(long since_id) 
 	{
 		Twitter twitter = TwitterFactory.getSingleton();
-		try{
-			List<Status> statuses;
+		List<Status> statuses = null;
+		List<Tweet> tweets = null;
+		TweetBuilder tweetBuilder = new TweetBuilder();
+		try
+		{
 			String user = twitter.verifyCredentials().getScreenName();
-			statuses = twitter.getUserTimeline(new Paging(since_id));
-			System.out.println("Showing @" + user + "'s user timeline.");
-			for (Status status : statuses) {
-				Format formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-				//String timestamp = formatter.format();
-				System.out.println(status.getId() + "\t" +
-					status.getInReplyToStatusId() + "\t" +
-					status.getInReplyToUserId() + "\t" +
-					formatter.format(status.getCreatedAt()) + "\t" +
-					status.getSource() + 
-					status.getText() + "\t"
-				);
-
-				if (status.isRetweet())
-				{	
-					System.out.println("\n");
-					System.out.println(status.getRetweetedStatus().getId() + "\t" +
-					status.getRetweetedStatus().getUser().getId() + "\t" +
-					status.getRetweetedStatus().getCreatedAt() + "\t"
-					);
-				}	//status.getURLEntities() 
-
-				if(status.getURLEntities().length > 0)
-				{
-					for(URLEntity urlEntity : status.getURLEntities())
-					{
-						System.out.println(urlEntity.getExpandedURL());
-					}
-				}
-					
+			statuses = twitter.getUserTimeline(new Paging(since_id));			
+			for (Status status : statuses)
+			{
+				Tweet tweet = tweetBuilder.buildTweet(status);
+				tweets.add(tweet);
 			}
-		} catch (TwitterException te) {
+			
+		} 
+		catch (TwitterException te) 
+		{
 			te.printStackTrace();
 			System.out.println("Failed to get timeline: " + te.getMessage());
 			System.exit(-1);
 		}
+
+		return tweets;
 	}
+
+
 }

@@ -8,6 +8,8 @@
 package edu.allegheny.TweetAnalyze;
 import java.util.List;
 import twitter4j.*;
+import java.util.Date;
+
 public class TweetBuilder
 {	
 	/**
@@ -18,13 +20,12 @@ public class TweetBuilder
 	{
 		Tweet tweet = null;
 
-		long tweetID = status.getID(); 
+		long tweetID = status.getId(); 
 		Date timestamp = status.getCreatedAt();
 		String source = status.getSource();
 		String text = status.getText();
 
 		//Does this tweet have expanded URLs
-		
 		if(status.getURLEntities().length > 0)
 		{
 			for(URLEntity urlEntity : status.getURLEntities())
@@ -32,6 +33,7 @@ public class TweetBuilder
 				System.out.println(urlEntity.getExpandedURL());
 			}
 		}
+		//Does not have expanded URLs
 		else
 		{
 			if (status.isRetweet())
@@ -40,19 +42,20 @@ public class TweetBuilder
 				long retweetedStatusID = status.getRetweetedStatus().getUser().getId();
 				Date retweetedStatusTimestamp = status.getRetweetedStatus().getCreatedAt();
 				tweet = new Tweet(tweetID, timestamp, source, text,retweetedUserID, retweetedStatusID, retweetedStatusTimestamp );
-			}	
-			else if (status.getInReplyToUserID() != -1)
-			{
-				long inReplyToStatusID = status.getInReplyToUserID();
-				long inReplyToUserID = status.getInReplyToUserID();
 			}
+			//Is it a reply?	
+			else if (status.getInReplyToUserId() != -1)
+			{
+				long inReplyToStatusID = status.getInReplyToUserId();
+				long inReplyToUserID = status.getInReplyToUserId();
+			}
+			//Tweet that is not reply, not a retweet, and has no expandedURLs
 			else
 			{
-				tweet = new Tweet(tweetID, timestamp, source, text)
+				tweet = new Tweet(tweetID, timestamp, source, text);
 			}
 		}
 		
 		return tweet;
-
 	}
 }
