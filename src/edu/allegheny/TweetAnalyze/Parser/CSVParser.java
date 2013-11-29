@@ -1,15 +1,24 @@
 package edu.allegheny.TweetAnalyze.Parser;
 
 import au.com.bytecode.opencsv.*;
-import java.io.*;
+import edu.allegheny.TweetAnalyze.Tweet;
+
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+
 import java.util.ArrayList;
 import java.util.Arrays;
-import edu.allegheny.TweetAnalyze.Tweet;
 import java.util.Date;
+
+import java.text.SimpleDateFormat;
+import java.text.ParseException;
+
 //import edu.allegheny.TweetAnalyze.Parser.Visitor.*;
 /**
  * @authpr Gabe Kelly
- * @.9
+ * @author Hawk Weisman
+ * @1.0
  */
 
 public class CSVParser {
@@ -17,8 +26,11 @@ public class CSVParser {
 	public CSVParser() {
 	}
 
-	public ArrayList<Tweet> parseFile(File c) throws IOException {
-		CSVReader reader = new CSVReader(new FileReader(c.getName()));
+	public ArrayList<Tweet> parseFile(File c) throws IOException, ParseException {
+
+		SimpleDateFormat timestampFormat = new SimpleDateFormat("yyyy-MM-dd kk:mm:ss z");
+
+		CSVReader reader = new CSVReader(new FileReader(c));
 
 		ArrayList<String[]> twtData = (ArrayList<String[]>) reader.readAll();
 
@@ -34,7 +46,7 @@ public class CSVParser {
 
 			long id = Id.longValue();
 
-			Date timeStamp = new Date(loneTwt[4]);
+			Date timeStamp = timestampFormat.parse(loneTwt[3]);
 
 			String source = loneTwt[4];
 
@@ -75,7 +87,7 @@ public class CSVParser {
 					 		Long RetweetUser = new Long(loneTwt[7]);
 					 		long retweetUser = RetweetUser.longValue();
 
-					 		Date retweetDate = new Date(loneTwt[8]);
+					 		Date retweetDate = timestampFormat.parse(loneTwt[8]);
 
 
 					 		if (loneTwt[9] != null)
