@@ -12,9 +12,8 @@ import org.junit.runners.Suite;
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
 
-//TestTweet.class,
-// ADD YOUR TEST CLASSES HERE
-TestParser.class
+TestTweet.class,
+TestParser.class,
 
 })
 

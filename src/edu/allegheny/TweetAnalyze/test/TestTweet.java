@@ -229,9 +229,9 @@ public class TestTweet
         ArrayList<String> url = new ArrayList<String>();
         url.add("http://junit.sourceforge.net/javadoc/org/junit/Assert.html");
 
-        Tweet actual = new Tweet (numberGenerator.nextLong(), timestamp, "Name", "Things", numberGenerator.nextLong(), numberGenerator.nextLong(), url);
-
         long expected = numberGenerator.nextLong();
+
+        Tweet actual = new Tweet (expected, timestamp, "Name", "Things", numberGenerator.nextLong(), numberGenerator.nextLong(), url);
 
         assertEquals(expected, actual.getTweetID());
     }
@@ -249,7 +249,7 @@ public class TestTweet
         Tweet actual = new Tweet (numberGenerator.nextLong(), timestamp, "Name", "Things", numberGenerator.nextLong(), numberGenerator.nextLong(), url);
 
         long expected = numberGenerator.nextLong();
-        actual.setTweetID(numberGenerator.nextLong());
+        actual.setTweetID(expected);
 
         assertEquals(expected, actual.getTweetID());
     }
@@ -266,8 +266,7 @@ public class TestTweet
 
         Tweet actual = new Tweet(numberGenerator.nextLong(), timestamp, "Name", "Things", numberGenerator.nextLong(), numberGenerator.nextLong(), url);
 
-        Date expected = format.parse("2013-03-17 06:54:33 +0000");
-        assertEquals(expected, actual.getTimestamp());
+        assertEquals(timestamp, actual.getTimestamp());
     }
 
     /**
@@ -294,7 +293,7 @@ public class TestTweet
      */
     @Test
     public void testGetText() throws ParseException {
-        Date timestamp = format.parse("12/17/2013");
+        Date timestamp = format.parse("2013-05-31 17:34:37 +0000");
         ArrayList<String> url = new ArrayList<String>();
         url.add("http://junit.sourceforge.net/javadoc/org/junit/Assert.html");
 
@@ -406,9 +405,9 @@ public class TestTweet
         ArrayList<String> url = new ArrayList<String>();
         url.add("http://junit.sourceforge.net/javadoc/org/junit/Assert.html");
 
-        Tweet actual = new Tweet (numberGenerator.nextLong(), timestamp, "Name", "Things", numberGenerator.nextLong(), numberGenerator.nextLong(), url);
-
         long expected = numberGenerator.nextLong();
+
+        Tweet actual = new Tweet (numberGenerator.nextLong(), timestamp, "Name", "Things", expected, numberGenerator.nextLong(), url);
 
         assertEquals(expected, actual.getInReplyToStatusID());
     }
@@ -423,9 +422,10 @@ public class TestTweet
         ArrayList<String> url = new ArrayList<String>();
         url.add("http://junit.sourceforge.net/javadoc/org/junit/Assert.html");
 
+        long expected = numberGenerator.nextLong();
+
         Tweet actual = new Tweet (numberGenerator.nextLong(), timestamp, "Name", "Things", numberGenerator.nextLong(), numberGenerator.nextLong(), url);
 
-        long expected = numberGenerator.nextLong();
         actual.setInReplyToStatusID(expected);
 
         assertEquals(expected, actual.getInReplyToStatusID());
@@ -441,9 +441,9 @@ public class TestTweet
         ArrayList<String> url = new ArrayList<String>();
         url.add("http://junit.sourceforge.net/javadoc/org/junit/Assert.html");
 
-        Tweet actual = new Tweet (numberGenerator.nextLong(), timestamp, "Name", "Things", numberGenerator.nextLong(), numberGenerator.nextLong(), url);
-
         long expected = numberGenerator.nextLong();
+
+        Tweet actual = new Tweet (numberGenerator.nextLong(), timestamp, "Name", "Things", numberGenerator.nextLong(), expected, url);
 
         assertEquals(expected, actual.getInReplyToUserID());
     }
@@ -476,9 +476,9 @@ public class TestTweet
 
         Date otherTimestamp = format.parse("2013-10-05 12:53:53 +0000");
 
-        Tweet actual = new Tweet (numberGenerator.nextLong(), timestamp, "Name", "Object", numberGenerator.nextLong(), numberGenerator.nextLong(), otherTimestamp);
-
         long expected = numberGenerator.nextLong();
+
+        Tweet actual = new Tweet (numberGenerator.nextLong(), timestamp, "Name", "Object", expected, numberGenerator.nextLong(), otherTimestamp);
 
         assertEquals(expected, actual.getRetweetedUserID());
     }
@@ -496,7 +496,8 @@ public class TestTweet
         Tweet actual = new Tweet (numberGenerator.nextLong(), timestamp, "Name", "Object", numberGenerator.nextLong(), numberGenerator.nextLong(), otherTimestamp);
 
         long expected = numberGenerator.nextLong();
-        actual.setRetweetedUserID(numberGenerator.nextLong());
+
+        actual.setRetweetedUserID(expected);
 
         assertEquals(expected, actual.getRetweetedUserID());
     }
@@ -511,9 +512,9 @@ public class TestTweet
 
         Date otherTimestamp = format.parse("2012-06-30 21:49:04 +0000");
 
-        Tweet actual = new Tweet (numberGenerator.nextLong(), timestamp, "Name", "Object", numberGenerator.nextLong(), numberGenerator.nextLong(), otherTimestamp);
-
         long expected = numberGenerator.nextLong();
+
+        Tweet actual = new Tweet (numberGenerator.nextLong(), timestamp, "Name", "Object", numberGenerator.nextLong(), expected, otherTimestamp);
 
         assertEquals(expected, actual.getRetweetedStatusID());
     }
