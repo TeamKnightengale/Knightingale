@@ -7,8 +7,9 @@
 	<property name="src.dir" location="src/" />
 	<property name="build.dir" location="bin/" />
 	<property name="dist.dir" location="dist/" />
-	<property name="dist.name" value="Datagen" />
+	<property name="dist.name" value="TweetAnalyze" />
 	<property name="config.logging.dir" value="config/logging" />
+	<property name="config.logging.test.dir" value="config/logging/test" />
 	<property name="config.dir" value="config" />
 	<property name="version" value="1.0" />
 
@@ -35,6 +36,13 @@
 		<fileset dir="${lib.dir}" includes="*.jar"/>
 	</path>
 
+	<!--The classpath for running a task and including the log4j testing properties-->
+	<path id="test.classpath.logging">
+		<pathelement path="${build.dir}"/>
+		<file file="${config.logging.test.dir}" />
+		<fileset dir="${lib.dir}" includes="*.jar"/>
+	</path>
+
 	<property name="result.dir" location="./bin" />
 	<property name="result.classes.dir" location="${result.dir}/" />
 	<property name="result.report.dir" location="${result.dir}/site/jacoco" />
@@ -55,14 +63,34 @@
 				 author="true"
 				 version="true"
 				 use="true"
-				 windowtitle="Datagen API">
-			<doctitle><![CDATA[<h1>Datagen</h1>]]></doctitle>
+				 windowtitle="TweetAnalyze API">
+			<doctitle><![CDATA[<h1>TweetAnalyze</h1>]]></doctitle>
 			<bottom><![CDATA[<i>Copyright &#169; 2013, Hawk Weisman, Dibyajoti Mukherjee, Ian MacMillan, Gabriel Kelly, and Jake Ballinger</i>]]></bottom>
 			<tag name="todo" scope="all" description="To do:"/>
 			<link offline="true" href="http://docs.oracle.com/javase/7/docs/api/" packagelistLoc="C:\tmp"/>
 			<link href="http://docs.oracle.com/javase/7/docs/api/"/>
 		</javadoc>
 	</target>
+
+	<!-- Generates Javadoc for the JUnit testing classes. -->
+	<target name="javadoc-test">
+		<javadoc packagenames="edu.allegheny.TweetAnalyze.test"
+				 sourcepath="src"
+				 defaultexcludes="yes"
+				 destdir="bin/doc/api"
+				 author="true"
+				 version="true"
+				 use="true"
+				 windowtitle="TweetAnalyze Testing API">
+			<doctitle><![CDATA[<h1>TweetAnalyze Testing</h1>]]></doctitle>
+			<bottom><![CDATA[<i>Copyright &#169; 2013, Hawk Weisman, Dibyajoti Mukherjee, Ian MacMillan, Gabriel Kelly, and Jake Ballinger</i>]]></bottom>
+			<tag name="todo" scope="all" description="To do:"/>
+			<link offline="true" href="http://docs.oracle.com/javase/7/docs/api/" packagelistLoc="C:\tmp"/>
+			<link href="http://docs.oracle.com/javase/7/docs/api/"/>
+		</javadoc>
+	</target>
+
+
 		
 	<!-- BASIC TARGETS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
 
@@ -103,7 +131,7 @@
 	<target name="test" depends="compile">
 		<junit fork="yes">
 			<test name="edu.allegheny.TweetAnalyze.test.MasterTestSuite" />
-			<classpath refid="run.classpath.logging" />
+			<classpath refid="test.classpath.logging" />
 			<formatter type="brief" usefile="false" />
 		</junit>
 	</target>
