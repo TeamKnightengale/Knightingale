@@ -51,13 +51,13 @@
 				 sourcepath="src"
 				 excludepackagenames="edu.allegheny.TweetAnalyze.test"
 				 defaultexcludes="yes"
-				 destdir="doc/api"
+				 destdir="bin/doc/api"
 				 author="true"
 				 version="true"
 				 use="true"
 				 windowtitle="Datagen API">
 			<doctitle><![CDATA[<h1>Datagen</h1>]]></doctitle>
-			<bottom><![CDATA[<i>Copyright &#169; 2013, Hawk Weisman, Dibyojoti Mukherjee, Ian MacMillan, Gabriel Kelly, and Jake Ballinger</i>]]></bottom>
+			<bottom><![CDATA[<i>Copyright &#169; 2013, Hawk Weisman, Dibyajoti Mukherjee, Ian MacMillan, Gabriel Kelly, and Jake Ballinger</i>]]></bottom>
 			<tag name="todo" scope="all" description="To do:"/>
 			<link offline="true" href="http://docs.oracle.com/javase/7/docs/api/" packagelistLoc="C:\tmp"/>
 			<link href="http://docs.oracle.com/javase/7/docs/api/"/>
