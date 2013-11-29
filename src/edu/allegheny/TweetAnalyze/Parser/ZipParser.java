@@ -11,9 +11,12 @@
 package edu.allegheny.TweetAnalyze.Parser;
 
 import	java.io.File;
+import	java.io.IOException;
+
 import	java.util.ArrayList;
 import	java.util.Formatter;
-import	java.io.IOException;
+
+import	java.text.ParseException;
 
 import	edu.allegheny.TweetAnalyze.Tweet;
 
@@ -56,12 +59,13 @@ public class ZipParser {
 					logger.debug("ZipParser: Target file is %s", target);
 				}
 			
-				File 			temp 	= new File("TweetAnalyzeTemp/");
-				ZipFile 		archive = new ZipFile(target);
-				CSVParser 		parser  = new CSVParser();
+				File 		tempDir = new File(getRelativePath() + "/TweetAnalyzeTemp/");
+				File 		temp = new File (getRelativePath() + "/TweetAnalyzeTemp/tweets.csv");
+				ZipFile 	archive = new ZipFile(target);
+				CSVParser 	parser  = new CSVParser();
 
 				// Extract the CSV file from the archive
-				extractTweetsCSV(archive, temp);
+				extractTweetsCSV(archive, tempDir);
 
 				if (logger.isDebugEnabled()) {
 					logger.debug("ZipParser: Tweets.csv extracted, passing control to CSVParser");
@@ -79,12 +83,17 @@ public class ZipParser {
 
 		// Log any ZipExceptions to error with stack traces.
 		catch (ZipException e) {
-			logger.error("ZipParser: Caught ZipException", e);
+			logger.error("ZipParser: Caught ZipException while decompressing tweets.zip", e);
 		}
 
 		// Log any IOExceptions to error with stack traces
 		catch (IOException e) {
-			logger.error("ZipParser: Caught IOException", e);
+			logger.error("ZipParser: Caught IOException while opening tweets.csv", e);
+		}
+
+		// Log any ParseExceptions to error with stack traces
+		catch (ParseException e) {
+			logger.error("ZipParser: Caught a ParseException while parsing dates from tweets.csv", e);
 		}
 
 		// Log any other exceptions with stack traces
@@ -106,7 +115,10 @@ public class ZipParser {
 		if (logger.isDebugEnabled()) {
 			logger.debug("ZipParser: extracting Tweets.csv from %s", target);
 		}
-
 		target.extractFile("tweets.csv", dest.getPath());
+	}
+
+	private String getRelativePath () {
+		return new File("").getAbsolutePath().toString();
 	}
 }
