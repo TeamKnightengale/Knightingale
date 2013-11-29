@@ -62,7 +62,7 @@ public class CSVParser {
 
 					 	long replyUser = ReplyUser.longValue();
 
-					 	if (loneTwt[9] != "")
+					 	if (loneTwt[9].isEmpty() == false)
 					 	{
 					 		ArrayList<String> url = new ArrayList<String>(Arrays.asList(loneTwt[9].split(",")));
 
