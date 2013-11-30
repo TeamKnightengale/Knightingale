@@ -24,18 +24,25 @@ import 	org.junit.runners.JUnit4;
  */
 
 @RunWith(JUnit4.class)
-public class TestParser {
+public class TestParser extends LoggingTest {
 
 	private String		testTweetPath;
   	private ZipFile 	target;
-  	private File 		temp = new File("TweetAnalyzeTemp/");
-  	private ZipParser	parserUnderTest = new ZipParser();
+  	private File 		temp;
+  	private ZipParser	parserUnderTest;
 	
 	@Rule
   	public ExpectedException exception = ExpectedException.none();
 
   	@Before
   	public void setUp () throws ZipException {
+
+  		// initialize the parser 
+  		parserUnderTest = new ZipParser();
+
+  		// set temp equal to the TweetAnalyzeTemp folder
+  		temp = new File("TweetAnalyzeTemp/");
+
   		// get the relative path to the target
   		testTweetPath = new File("").getAbsolutePath();
   		testTweetPath = testTweetPath + "/src/edu/allegheny/TweetAnalyze/test/tweets.zip";
@@ -64,13 +71,28 @@ public class TestParser {
   	}
 
   	/**
-  	 * Test ZipParsing
+  	 * Test ZipParser correctly creating an ArrayList from the tweets.csv
   	 */
   	@Test 
   	public void testZipParsing () {
   		org.junit.Assert.assertNotNull("FAIL: zip parser returned a null ArrayList<Tweet>",  parserUnderTest.parse(new File (testTweetPath)));
   	}
 
+  	/**
+  	 * Tests ZipParser correctly logging exceptions
+  	 */
+  	@Test
+  	public void testExceptionLogging () {
+
+  	}
+
+  	/**
+  	 * Tests ZipParser correctly logging info
+  	 */
+  	@Test
+  	public void testDebugLogging () {
+  		
+  	}
   	@After
   	public void tearDown() {
 

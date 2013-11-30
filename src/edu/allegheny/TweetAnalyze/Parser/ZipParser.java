@@ -31,12 +31,12 @@ import	org.apache.logging.log4j.Logger;
  * files, and controlling the Twitter archive import process.
  *
  * @author	Hawk Weisman
- * @version	0.1
+ * @version	1.0
  * @see		edu.allegheny.TweetAnalyze.Parser.CSVParser
  */
 public class ZipParser {
 
-	private static Logger logger = LogManager.getFormatterLogger(ZipParser.class.getName());
+	public static Logger logger = LogManager.getFormatterLogger(ZipParser.class.getName());
 
 	/**
 	 * Constructor: instantiates a new ZipParser

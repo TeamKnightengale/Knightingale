@@ -32,93 +32,93 @@ public class CSVParser {
 
 		CSVReader reader = new CSVReader(new FileReader(c));
 
-		ArrayList<String[]> twtData = (ArrayList<String[]>) reader.readAll();
+		ArrayList<String[]> tweetData = (ArrayList<String[]>) reader.readAll();
 
-		String[] loneTwt = new String[twtData.size()];
+		String[] lonetweet = new String[tweetData.size()];
 
-		ArrayList<Tweet> twtAnalyze = new ArrayList<Tweet>();
+		ArrayList<Tweet> tweetAnalyze = new ArrayList<Tweet>();
 
-		for (int i = 1; i < twtData.size(); i++)
+		for (int i = 1; i < tweetData.size(); i++)
 		{
-			loneTwt = twtData.get(i);
+			lonetweet = tweetData.get(i);
 
-			Long Id = new Long(loneTwt[0]);
+			Long Id = new Long(lonetweet[0]);
 
 			long id = Id.longValue();
 
-			Date timeStamp = timestampFormat.parse(loneTwt[3]);
+			Date timeStamp = timestampFormat.parse(lonetweet[3]);
 
-			String source = loneTwt[4];
+			String source = lonetweet[4];
 
-			String text = loneTwt[5];
+			String text = lonetweet[5];
 
-					 if (loneTwt[1].isEmpty() == false)//will replace at somepoint with visitor!
+					 if (lonetweet[1].isEmpty() == false)//will replace at somepoint with visitor!
 					 {
-					 	Long ReplyStatus = new Long(loneTwt[1]);
+					 	Long ReplyStatus = new Long(lonetweet[1]);
 
 					 	long replyStatus = ReplyStatus.longValue();
 
-					 	Long ReplyUser = new Long(loneTwt[2]);
+					 	Long ReplyUser = new Long(lonetweet[2]);
 
 					 	long replyUser = ReplyUser.longValue();
 
-					 	if (loneTwt[9] != "")
+					 	if (lonetweet[9].isEmpty() == false)
 					 	{
-					 		ArrayList<String> url = new ArrayList<String>(Arrays.asList(loneTwt[9].split(",")));
+					 		ArrayList<String> url = new ArrayList<String>(Arrays.asList(lonetweet[9].split(",")));
 
-					 		Tweet twt = new Tweet (id, timeStamp, source, text, replyStatus, replyUser, url);
-					 		twtAnalyze.add(twt);
+					 		Tweet tweet = new Tweet (id, timeStamp, source, text, replyStatus, replyUser, url);
+					 		tweetAnalyze.add(tweet);
 
 					 	}
 					 	else
 					 	{
-					 		Tweet twt = new Tweet (id, timeStamp, source, text, replyStatus, replyUser);
-					 		twtAnalyze.add(twt);
+					 		Tweet tweet = new Tweet (id, timeStamp, source, text, replyStatus, replyUser);
+					 		tweetAnalyze.add(tweet);
 
 					 	}
 					 }
 					 else{
-					 	if (loneTwt[6].isEmpty() == false)
+					 	if (lonetweet[6].isEmpty() == false)
 					 	{
 
-					 		Long RetweetId = new Long(loneTwt[6]);
+					 		Long RetweetId = new Long(lonetweet[6]);
 					 		long retweetId = RetweetId.longValue();
 
-					 		Long RetweetUser = new Long(loneTwt[7]);
+					 		Long RetweetUser = new Long(lonetweet[7]);
 					 		long retweetUser = RetweetUser.longValue();
 
-					 		Date retweetDate = timestampFormat.parse(loneTwt[8]);
+					 		Date retweetDate = timestampFormat.parse(lonetweet[8]);
 
 
-					 		if (loneTwt[9].isEmpty() == false)
+					 		if (lonetweet[9].isEmpty() == false)
 					 		{
-					 			ArrayList<String> url = new ArrayList<String>(Arrays.asList(loneTwt[9].split(",")));
+					 			ArrayList<String> url = new ArrayList<String>(Arrays.asList(lonetweet[9].split(",")));
 
-					 			Tweet twt = new Tweet (id, timeStamp, source, text, retweetId, retweetUser, retweetDate, url);
-					 			twtAnalyze.add(twt);
+					 			Tweet tweet = new Tweet (id, timeStamp, source, text, retweetId, retweetUser, retweetDate, url);
+					 			tweetAnalyze.add(tweet);
 
 					 		}
 					 		else
 					 		{
-					 			Tweet twt = new Tweet (id, timeStamp, source, text, retweetId, retweetUser, retweetDate);
-					 			twtAnalyze.add(twt);
+					 			Tweet tweet = new Tweet (id, timeStamp, source, text, retweetId, retweetUser, retweetDate);
+					 			tweetAnalyze.add(tweet);
 
 					 		}
 					 	}
 
 					 	else{
-					 		if (loneTwt[9].isEmpty() == false)
+					 		if (lonetweet[9].isEmpty() == false)
 					 		{
-					 			ArrayList<String> url = new ArrayList<String>(Arrays.asList(loneTwt[9].split(",")));
+					 			ArrayList<String> url = new ArrayList<String>(Arrays.asList(lonetweet[9].split(",")));
 
-					 			Tweet twt = new Tweet (id, timeStamp, source, text, url);
-					 			twtAnalyze.add(twt);
+					 			Tweet tweet = new Tweet (id, timeStamp, source, text, url);
+					 			tweetAnalyze.add(tweet);
 
 					 		}
 					 		else
 					 		{
-					 			Tweet twt = new Tweet (id, timeStamp, source, text);
-					 			twtAnalyze.add(twt);
+					 			Tweet tweet = new Tweet (id, timeStamp, source, text);
+					 			tweetAnalyze.add(tweet);
 
 					 		}
 					 	}
@@ -126,7 +126,7 @@ public class CSVParser {
 
 
 					}
-					return twtAnalyze;
+					return tweetAnalyze;
 				}
 
 			}
