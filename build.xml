@@ -73,7 +73,6 @@
 	
 	<!-- COMPILING TASK - "ant compile" -->  
 	<target name="compile">
-		<NCSSCheck />
 		<mkdir dir="${build.dir}"/>
 		<javac srcdir="${src.dir}" destdir="${build.dir}" includeantruntime="false" debug="true" debuglevel="vars,lines,source">
 			<classpath refid="build.classpath"/>
