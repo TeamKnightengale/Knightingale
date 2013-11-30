@@ -52,6 +52,16 @@
 		<classpath path="${lib.dir}/jacocoant.jar"/>
 	</taskdef>
 
+	<!-- based on the example given on the JavaNCSS site -->
+	<taskdef name="CCNCheck" classname="javancss.JavancssAntTask">
+		<classpath refid="build.classpath"/>
+	</taskdef>
+
+  	 <CCNCheck srcdir="${src.dir}"
+            abortOnFail="true" ccnPerFuncMax="10"
+            includes="**/*.java"/>
+  
+
 	<!-- BASIC TARGETS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
 
 	<!-- CLEANING TASK - "ant clean" -->
@@ -63,6 +73,7 @@
 	
 	<!-- COMPILING TASK - "ant compile" -->  
 	<target name="compile">
+		<NCSSCheck />
 		<mkdir dir="${build.dir}"/>
 		<javac srcdir="${src.dir}" destdir="${build.dir}" includeantruntime="false" debug="true" debuglevel="vars,lines,source">
 			<classpath refid="build.classpath"/>
