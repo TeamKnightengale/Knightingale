@@ -12,10 +12,9 @@ package edu.allegheny.TweetAnalyze.Parser;
 
 import	java.io.File;
 import	java.io.IOException;
-
+import	java.util.List;
 import	java.util.ArrayList;
 import	java.util.Formatter;
-
 import	java.text.ParseException;
 
 import	edu.allegheny.TweetAnalyze.Tweet;
@@ -39,20 +38,14 @@ public class ZipParser {
 	public static Logger logger = LogManager.getFormatterLogger(ZipParser.class.getName());
 
 	/**
-	 * Constructor: instantiates a new ZipParser
-	 */
-	public ZipParser () {
-	}
-
-	/**
 	 * Parse: runs the complete parsing process.
 	 * 
 	 * @param	target	a java.io.File object containing a path to the target Zip file.
 	 * @return	an ArrayList containing the Tweets from the Tweets.csv file in the target Zip.
 	 */
-	public ArrayList<Tweet> parse (File target) {
+	public static List<Tweet> parse (File target) {
 
-		ArrayList<Tweet> output = null;	
+		List<Tweet> output = null;
 
 		try {
 				if (logger.isDebugEnabled()) {
@@ -62,7 +55,6 @@ public class ZipParser {
 				File 		tempDir = new File(getRelativePath() + "/TweetAnalyzeTemp/");
 				File 		temp = new File (getRelativePath() + "/TweetAnalyzeTemp/tweets.csv");
 				ZipFile 	archive = new ZipFile(target);
-				CSVParser 	parser  = new CSVParser();
 
 				// Extract the CSV file from the archive
 				extractTweetsCSV(archive, tempDir);
@@ -72,7 +64,7 @@ public class ZipParser {
 				}
 				
 				// Return the Tweet array list from the parser ParseFile method
-				output = parser.parseFile(temp);
+				output = CSVParser.parseFile(temp);
 
 				if (temp.delete() == false) {
 					logger.error("ZipParser: failed to delete temporary file %s", temp.getPath());
@@ -110,7 +102,7 @@ public class ZipParser {
 	 * @param	target 	the ZipFile to extract the Tweets.csv from
 	 * @param	dest 	the directory into which the file is to be extracted
 	 */
-	public void extractTweetsCSV (ZipFile target, File dest) throws ZipException {
+	public static void extractTweetsCSV (ZipFile target, File dest) throws ZipException {
 
 		if (logger.isDebugEnabled()) {
 			logger.debug("ZipParser: extracting Tweets.csv from %s", target);
@@ -118,7 +110,7 @@ public class ZipParser {
 		target.extractFile("tweets.csv", dest.getPath());
 	}
 
-	private String getRelativePath () {
+	private static String getRelativePath () {
 		return new File("").getAbsolutePath().toString();
 	}
 }
