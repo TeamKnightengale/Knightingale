@@ -1,7 +1,3 @@
-/**
- * Use Twitter4J to get new OAuthAccessToken and OAuthAccessTokenSecret. 
- * Tokens are stored in the twitter4j.properties file.
-*/
 package edu.allegheny.TweetAnalyze;
 
 import twitter4j.Status;
@@ -27,7 +23,11 @@ import java.io.FileOutputStream;
 import	org.apache.logging.log4j.LogManager;
 import	org.apache.logging.log4j.Logger;
 
-
+/**
+ * Use Twitter4J to get new OAuthAccessToken and OAuthAccessTokenSecret. 
+ * Tokens are stored in the twitter4j.properties file.
+ * @author Dibyo Mukherjee
+ */
 public class AccessTokenHelper
 {
 	private static Logger logger = LogManager.getFormatterLogger(AccessTokenHelper.class.getName());

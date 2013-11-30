@@ -1,12 +1,5 @@
-/**
-* Build a tweet given a Status
-* @author	Dibyo Mukherjee
-* @author	Hawk Weisman
-* @version	1.5
-* @since	November 30, 1013
-*/
-
 package edu.allegheny.TweetAnalyze;
+
 import java.util.List;
 import java.util.Date;
 import java.util.Arrays;
@@ -15,6 +8,13 @@ import java.text.SimpleDateFormat;
 import java.text.ParseException;
 import twitter4j.*;
 
+/**
+* Builds Tweets
+*
+* @author	Dibyo Mukherjee
+* @version	1.5
+* @since	November 30, 1013
+*/
 
 public class TweetBuilder
 {	

@@ -1,9 +1,3 @@
-/**
- * Get recent tweets and store them in the db
- * @author Dibyo Mukherjee
- * @version 0.1
- * @since November 29, 2013
- */
 package edu.allegheny.TweetAnalyze;
 
 import twitter4j.*;
@@ -14,6 +8,12 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.ArrayList;
 
+/**
+ * Get recent tweets and store them in the db
+ * @author Dibyo Mukherjee
+ * @version 0.1
+ * @since November 29, 2013
+ */
 public class TweetRefreshClient
 {
 	private AccessTokenHelper tokenHelper;
