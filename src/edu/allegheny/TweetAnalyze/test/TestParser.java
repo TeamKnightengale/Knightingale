@@ -26,19 +26,15 @@ import 	org.junit.runners.JUnit4;
 @RunWith(JUnit4.class)
 public class TestParser extends LoggingTest {
 
-	private String		testTweetPath;
+    private String		testTweetPath;
   	private ZipFile 	target;
   	private File 		temp;
-  	private ZipParser	parserUnderTest;
 	
 	@Rule
   	public ExpectedException exception = ExpectedException.none();
 
   	@Before
   	public void setUp () throws ZipException {
-
-  		// initialize the parser 
-  		parserUnderTest = new ZipParser();
 
   		// set temp equal to the TweetAnalyzeTemp folder
   		temp = new File("TweetAnalyzeTemp/");
@@ -66,7 +62,7 @@ public class TestParser extends LoggingTest {
   	public void testExtraction () throws ZipException {
 
   		// assert that a tweets.csv file exists in the temp directory
-  		parserUnderTest.extractTweetsCSV(target,temp);
+  		ZipParser.extractTweetsCSV(target,temp);
   		org.junit.Assert.assertTrue(temp.exists());
   	}
 
@@ -75,7 +71,7 @@ public class TestParser extends LoggingTest {
   	 */
   	@Test 
   	public void testZipParsing () {
-  		org.junit.Assert.assertNotNull("FAIL: zip parser returned a null ArrayList<Tweet>",  parserUnderTest.parse(new File (testTweetPath)));
+  		org.junit.Assert.assertNotNull("FAIL: zip parser returned a null ArrayList<Tweet>",  ZipParser.parse(new File (testTweetPath)));
   	}
 
   	/**
