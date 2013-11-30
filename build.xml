@@ -52,47 +52,7 @@
 		<classpath path="${lib.dir}/jacocoant.jar"/>
 	</taskdef>
 
-	<!-- Javadoc task setup -->
-	<!-- Based on the demo Javadoc settings on the Ant web page. -->
-	<target name="javadoc">
-		<javadoc packagenames="edu.allegheny.TweetAnalyze"
-				 sourcepath="src"
-				 excludepackagenames="edu.allegheny.TweetAnalyze.test"
-				 defaultexcludes="yes"
-				 destdir="bin/doc/api"
-				 author="true"
-				 version="true"
-				 use="true"
-				 windowtitle="TweetAnalyze API">
-			<doctitle><![CDATA[<h1>TweetAnalyze</h1>]]></doctitle>
-			<bottom><![CDATA[<i>Copyright &#169; 2013, Hawk Weisman, Dibyajoti Mukherjee, Ian MacMillan, Gabriel Kelly, and Jake Ballinger</i>]]></bottom>
-			<tag name="todo" scope="all" description="To do:"/>
-			<link offline="true" href="http://docs.oracle.com/javase/7/docs/api/" packagelistLoc="C:\tmp"/>
-			<link href="http://docs.oracle.com/javase/7/docs/api/"/>
-		</javadoc>
-	</target>
-
-	<!-- Generates Javadoc for the JUnit testing classes. -->
-	<target name="javadoc-test">
-		<javadoc packagenames="edu.allegheny.TweetAnalyze.test"
-				 sourcepath="src"
-				 defaultexcludes="yes"
-				 destdir="bin/doc/api"
-				 author="true"
-				 version="true"
-				 use="true"
-				 windowtitle="TweetAnalyze Testing API">
-			<doctitle><![CDATA[<h1>TweetAnalyze Testing</h1>]]></doctitle>
-			<bottom><![CDATA[<i>Copyright &#169; 2013, Hawk Weisman, Dibyajoti Mukherjee, Ian MacMillan, Gabriel Kelly, and Jake Ballinger</i>]]></bottom>
-			<tag name="todo" scope="all" description="To do:"/>
-			<link offline="true" href="http://docs.oracle.com/javase/7/docs/api/" packagelistLoc="C:\tmp"/>
-			<link href="http://docs.oracle.com/javase/7/docs/api/"/>
-		</javadoc>
-	</target>
-
-
-		
-	<!-- BASIC TARGETS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- BASIC TARGETS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
 
 	<!-- CLEANING TASK - "ant clean" -->
 	<target name="clean">
@@ -122,6 +82,21 @@
 	<!-- RUNNING TASK - "ant TweetAnalyze" -->
 	<target name="TweetAnalyze">
 		<java fork="true" classname="edu.allegheny.TweetAnalyze.CLI.CLI" maxmemory="1024m">
+			<arg line="${args}"/>
+			<classpath refid="run.classpath" />
+        </java>
+	</target>
+
+	<target name="token" depends="compile">
+		<java fork="true" classname="edu.allegheny.TweetAnalyze.AccessTokenHelper" maxmemory="1024m">
+			<arg line="${args}"/>
+			<classpath refid="run.classpath" />
+        </java>
+	</target>
+
+
+	<target name="refresh" depends="compile">
+		<java fork="true" classname="edu.allegheny.TweetAnalyze.TweetRefreshClient" maxmemory="1024m">
 			<arg line="${args}"/>
 			<classpath refid="run.classpath" />
         </java>
@@ -169,6 +144,25 @@
 			<csv destfile="${result.report.dir}/TweetAnalyzeTest/report.csv" />
 			<xml destfile="${result.report.dir}/TweetAnalyzeTest/report.xml" />
 		</jacoco:report>
+	</target>
+
+	<!-- Based on the demo Javadoc settings on the Ant web page. -->
+	<target name="javadoc">
+		<javadoc packagenames="edu.allegheny.TweetAnalyze"
+				 sourcepath="src"
+				 excludepackagenames="edu.allegheny.TweetAnalyze.test"
+				 defaultexcludes="yes"
+				 destdir="bin/doc/api"
+				 author="true"
+				 version="true"
+				 use="true"
+				 windowtitle="Datagen API">
+			<doctitle><![CDATA[<h1>Datagen</h1>]]></doctitle>
+			<bottom><![CDATA[<i>Copyright &#169; 2013, Hawk Weisman, Dibyojoti Mukherjee, Ian MacMillan, Gabriel Kelly, and Jake Ballinger</i>]]></bottom>
+			<tag name="todo" scope="all" description="To do:"/>
+			<link offline="true" href="http://docs.oracle.com/javase/7/docs/api/" packagelistLoc="C:\tmp"/>
+			<link href="http://docs.oracle.com/javase/7/docs/api/"/>
+		</javadoc>
 	</target>
 
 </project>
