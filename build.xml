@@ -7,8 +7,9 @@
 	<property name="src.dir" location="src/" />
 	<property name="build.dir" location="bin/" />
 	<property name="dist.dir" location="dist/" />
-	<property name="dist.name" value="Datagen" />
+	<property name="dist.name" value="TweetAnalyze" />
 	<property name="config.logging.dir" value="config/logging" />
+	<property name="config.logging.test.dir" value="config/logging/test" />
 	<property name="config.dir" value="config" />
 	<property name="version" value="1.0" />
 
@@ -35,6 +36,13 @@
 		<fileset dir="${lib.dir}" includes="*.jar"/>
 	</path>
 
+	<!--The classpath for running a task and including the log4j testing properties-->
+	<path id="test.classpath.logging">
+		<pathelement path="${build.dir}"/>
+		<file file="${config.logging.test.dir}" />
+		<fileset dir="${lib.dir}" includes="*.jar"/>
+	</path>
+
 	<property name="result.dir" location="./bin" />
 	<property name="result.classes.dir" location="${result.dir}/" />
 	<property name="result.report.dir" location="${result.dir}/site/jacoco" />
@@ -44,26 +52,17 @@
 		<classpath path="${lib.dir}/jacocoant.jar"/>
 	</taskdef>
 
-	<!-- Javadoc task setup -->
-	<!-- Based on the demo Javadoc settings on the Ant web page. -->
+	<!-- based on the example given on the JavaNCSS site -->
+	<taskdef name="CCNCheck" classname="javancss.JavancssAntTask">
+		<classpath refid="build.classpath"/>
+	</taskdef>
 
-		<javadoc packagenames="edu.allegheny.TweetAnalyze"
-				 sourcepath="src"
-				 excludepackagenames="edu.allegheny.TweetAnalyze.test"
-				 defaultexcludes="yes"
-				 destdir="doc/api"
-				 author="true"
-				 version="true"
-				 use="true"
-				 windowtitle="Datagen API">
-			<doctitle><![CDATA[<h1>Datagen</h1>]]></doctitle>
-			<bottom><![CDATA[<i>Copyright &#169; 2013, Hawk Weisman, Dibyojoti Mukherjee, Ian MacMillan, Gabriel Kelly, and Jake Ballinger</i>]]></bottom>
-			<tag name="todo" scope="all" description="To do:"/>
-			<link offline="true" href="http://docs.oracle.com/javase/7/docs/api/" packagelistLoc="C:\tmp"/>
-			<link href="http://docs.oracle.com/javase/7/docs/api/"/>
-		</javadoc>
+  	 <CCNCheck srcdir="${src.dir}"
+            abortOnFail="true" ccnPerFuncMax="10"
+            includes="**/*.java"/>
+  
 
-	<!-- BASIC TARGETS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- BASIC TARGETS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
 
 	<!-- CLEANING TASK - "ant clean" -->
 	<target name="clean">
@@ -98,11 +97,26 @@
         </java>
 	</target>
 
+	<target name="token" depends="compile">
+		<java fork="true" classname="edu.allegheny.TweetAnalyze.AccessTokenHelper" maxmemory="1024m">
+			<arg line="${args}"/>
+			<classpath refid="run.classpath" />
+        </java>
+	</target>
+
+
+	<target name="refresh" depends="compile">
+		<java fork="true" classname="edu.allegheny.TweetAnalyze.TweetRefreshClient" maxmemory="1024m">
+			<arg line="${args}"/>
+			<classpath refid="run.classpath" />
+        </java>
+	</target>
+
 	<!-- RUNNING TASK - "ant test" -->
 	<target name="test" depends="compile">
 		<junit fork="yes">
 			<test name="edu.allegheny.TweetAnalyze.test.MasterTestSuite" />
-			<classpath refid="run.classpath.logging" />
+			<classpath refid="test.classpath.logging" />
 			<formatter type="brief" usefile="false" />
 		</junit>
 	</target>
@@ -140,6 +154,25 @@
 			<csv destfile="${result.report.dir}/TweetAnalyzeTest/report.csv" />
 			<xml destfile="${result.report.dir}/TweetAnalyzeTest/report.xml" />
 		</jacoco:report>
+	</target>
+
+	<!-- Based on the demo Javadoc settings on the Ant web page. -->
+	<target name="javadoc">
+		<javadoc packagenames="edu.allegheny.TweetAnalyze.*"
+				 sourcepath="src"
+				 excludepackagenames="edu.allegheny.TweetAnalyze.test"
+				 defaultexcludes="yes"
+				 destdir="bin/doc/api"
+				 author="true"
+				 version="true"
+				 use="true"
+				 windowtitle="TweetAnalyze API">
+			<doctitle><![CDATA[<h1>TweetAnalyze</h1>]]></doctitle>
+			<bottom><![CDATA[<i>Copyright &#169; 2013, Hawk Weisman, Dibyojoti Mukherjee, Ian MacMillan, Gabriel Kelly, and Jake Ballinger</i>]]></bottom>
+			<tag name="todo" scope="all" description="To do:"/>
+			<link offline="true" href="http://docs.oracle.com/javase/7/docs/api/" packagelistLoc="C:\tmp"/>
+			<link href="http://docs.oracle.com/javase/7/docs/api/"/>
+		</javadoc>
 	</target>
 
 </project>
