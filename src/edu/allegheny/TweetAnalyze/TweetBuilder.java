@@ -1,24 +1,32 @@
 /**
 * Build a tweet given a Status
-* @author Dibyo Mukherjee
-* @version 1.0
-* @since November 28, 1013
+* @author	Dibyo Mukherjee
+* @author	Hawk Weisman
+* @version	1.5
+* @since	November 30, 1013
 */
 
 package edu.allegheny.TweetAnalyze;
 import java.util.List;
 import java.util.Date;
+import java.util.Arrays;
 import java.util.ArrayList;
+import java.text.SimpleDateFormat;
+import java.text.ParseException;
 import twitter4j.*;
 
 
 public class TweetBuilder
 {	
+
+	private static SimpleDateFormat timestampFormat = new SimpleDateFormat("yyyy-MM-dd kk:mm:ss z");
+
 	/**
 	* @param status A twitter4j.Status
 	* @return a Tweet
+	* @author Dibyo Mukherjee
 	*/
-	public Tweet buildTweet(Status status)
+	public static Tweet buildTweet(Status status)
 	{
 		Tweet tweet = null;
 
@@ -80,6 +88,79 @@ public class TweetBuilder
 			}
 		}
 		
+		return tweet;
+	}
+
+	/**
+	* @param 	line An array containing the components of a tweet in the order they are given in a tweets.csv file
+	* @return 	a Tweet
+	* @author 	Hawk Weisman
+	*/
+	public static Tweet buildTweet(String[] line) throws ParseException
+	{
+		Tweet tweet = null;
+		long tweetID = Long.parseLong(line[0]);
+		Date timestamp = timestampFormat.parse(line[3]);
+		String source = line[4];
+		String text = line[5];
+
+		// does this tweet have extended URLs?
+		if (line[9].isEmpty() == false)
+		{
+			ArrayList<String> expandedURLs;
+			expandedURLs = new ArrayList<String>(Arrays.asList(line[9].split(",")));
+
+			// is the tweet a retweet?
+			if (line[6].isEmpty() == false)
+			{
+				long retweetedUserID = Long.parseLong(line[7]);
+				long retweetedStatusID = Long.parseLong(line[6]);
+				Date retweetedStatusTimestamp = timestampFormat.parse(line[8]);
+
+				tweet = new Tweet(tweetID, timestamp, source, text,retweetedUserID, retweetedStatusID, retweetedStatusTimestamp, expandedURLs);
+			}
+
+			// ...is it a reply, then?
+			else if (line[1].isEmpty() == false) 
+			{
+				long inReplyToStatusID = Long.parseLong(line[1]);
+				long inReplyToUserID = Long.parseLong(line[2]);
+
+				tweet = new Tweet(tweetID, timestamp, source, text, inReplyToStatusID, inReplyToUserID, expandedURLs);
+			}
+
+			// well, it must be a regular status, then.
+			else {
+				tweet = new Tweet(tweetID, timestamp, source, text, expandedURLs);
+			}
+		}
+
+		else {
+			// is the tweet a retweet?
+			if (line[6].isEmpty() == false)
+			{
+				long retweetedUserID = Long.parseLong(line[7]);
+				long retweetedStatusID = Long.parseLong(line[6]);
+				Date retweetedStatusTimestamp = timestampFormat.parse(line[8]);
+
+				tweet = new Tweet(tweetID, timestamp, source, text,retweetedUserID, retweetedStatusID, retweetedStatusTimestamp);
+			}
+
+			// ...is it a reply, then?
+			else if (line[1].isEmpty() == false) 
+			{
+				long inReplyToStatusID = Long.parseLong(line[1]);
+				long inReplyToUserID = Long.parseLong(line[2]);
+
+				tweet = new Tweet(tweetID, timestamp, source, text, inReplyToStatusID, inReplyToUserID);
+			}
+
+			// well, it must be a regular status, then.
+			else {
+				tweet = new Tweet(tweetID, timestamp, source, text);
+			}
+		}
+
 		return tweet;
 	}
 }
