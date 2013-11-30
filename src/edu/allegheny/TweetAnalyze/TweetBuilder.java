@@ -12,6 +12,7 @@ import twitter4j.*;
 * Builds Tweets
 *
 * @author	Dibyo Mukherjee
+* @author	Hawk Weisman
 * @version	1.5
 * @since	November 30, 1013
 */
@@ -93,6 +94,7 @@ public class TweetBuilder
 
 	/**
 	* @param 	line An array containing the components of a tweet in the order they are given in a tweets.csv file
+	* @throws	ParseException in the event of a problem parsing timestamps
 	* @return 	a Tweet
 	* @author 	Hawk Weisman
 	*/

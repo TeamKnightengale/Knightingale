@@ -12,18 +12,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Date;
 
-import java.text.ParseException;
-
 /**
  * @authpr	Gabe Kelly
  * @author	Hawk Weisman
+ * @throws	IOException in the event of a problem finding the file to be parsed.
  * @version	2.0
  * @since	November 30, 2013
  */
 
 public class CSVParser {
 
-	public static List<Tweet> parseFile(File c) throws IOException, ParseException {
+	public static List<Tweet> parseFile(File c) throws IOException {
 
 		CSVReader reader = new CSVReader(new FileReader(c));
 

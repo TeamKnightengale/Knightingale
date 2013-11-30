@@ -101,6 +101,7 @@ public class ZipParser {
 	 *
 	 * @param	target 	the ZipFile to extract the Tweets.csv from
 	 * @param	dest 	the directory into which the file is to be extracted
+	 * @throws	ZipException in the event of a problem unzipping the target
 	 */
 	public static void extractTweetsCSV (ZipFile target, File dest) throws ZipException {
 
