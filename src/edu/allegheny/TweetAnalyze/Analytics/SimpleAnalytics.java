@@ -59,4 +59,56 @@ public class SimpleAnalytics {
 		return tweetsWithHyperlinks;
 	}
 
+
+	/**
+	 * @return the percentage of replied tweets
+	 */
+	public static int repliedTweets {
+		int numTweets, numReplied;
+		String numTweetsQuery = "SELECT COUNT(*)
+								FROM Tweets";
+		String numRepliedQuery = "SELECT COUNT(*)
+								FROM Tweets
+								WHERE in_reply_to_status_id IS NOT NULL AND
+								WHERE in_reply_to_user_id IS NOT NULL";
+
+
+		return numTweets/numReplied;
+	}
+
+	/**
+	 * @return a List containg all users that have been replied to
+	 */
+	public static List<Tweet> repliedToUsers {
+		List<Tweet> repliedToUsers;
+		String repliedToUsersQuery = "SELECT DISTINCT in_reply_to_user_id
+								FROM Tweets";
+
+		return repliedToUsers;
+	}
+
+	/**
+	 * @return list of tweets in october
+	 */
+	public static List<Tweet> tweetsInOctober {
+		List<Tweet> tweetsInOctober;
+		String tweetsInOctoberQuery = "SELECT * 
+								FROM Tweets
+								WHERE timestamp 
+								BETWEEN '2013-09-30 23:59:59 PST' AND '2013-11-01 00:00:01 PST'";
+
+	return tweetsInOctober; 
+	}
+
+	/**
+	 * @return list of tweets with hashtags(#)
+	 */
+	public static List<Tweet> tweetsWithHashtag {
+		List<Tweet> tweetsWithHashtag;
+		String tweetsWithHashtagQuery = "SELECT * 
+								FROM Tweets
+								WHERE text LIKE '#%'
+
+		return tweetsWithHashtag;
+
 }
