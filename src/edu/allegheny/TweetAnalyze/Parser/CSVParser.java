@@ -7,7 +7,8 @@ import edu.allegheny.TweetAnalyze.TweetBuilder;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.ParseException;
+
+import java.text.ParseException;
 
 import java.util.ArrayList;
 import java.util.List;
