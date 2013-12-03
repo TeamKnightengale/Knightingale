@@ -23,7 +23,7 @@ public class DataCreation {
 			    "retweeted_status_id REAL," +
     			    "retweeted_status_user_id REAL," +
     			    "retweeted_status_user_timestamp DATETIME," +
-    			    "expanded_urls VARCHAR);"
+    			    "expanded_urls VARCHAR)";
                 stmt.executeUpdate(sql);
                 stmt.close();
                 c.close();
@@ -69,6 +69,4 @@ public class DataCreation {
 			}
 			return tweets;
 		}
-
-
 }
