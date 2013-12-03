@@ -2,25 +2,34 @@ package  edu.allegheny.TweetAnalyze.Database;
 
 import java.sql.*;
 import java.util.ArrayList;
-import edu.allegheny.TweetAnalyze.*;
 import java.text.ParseException;
-
+import java.io.File;
+import edu.allegheny.TweetAnalyze.*;
+import edu.allegheny.TweetAnalyze.Parser.*;
 
 public class DatabaseHelper
 {
     static Connection c = null;
     static Statement stmt = null;
     static ResultSet rs = null;
+    public static Logger logger = LogManager.getFormatterLogger(DatabaseHelper.class.getName());
 
-    //setting up table initially
-    public static void createTable() 
+    
+    public static void main(String[] argv) throws Exception
+    {
+        File zipFile = new File("tweets.zip");
+        //createTweetsTable();
+        insertTweets((ArrayList<Tweet>) ZipParser.parse(zipFile));
+    }
+
+    public static void createTweetsTable() 
     {
         try 
         {
             Class.forName("org.sqlite.JDBC");
-            c = DriverManager.getConnection("jdbc:sqlite:tweet_db");
+            c = DriverManager.getConnection("jdbc:sqlite:tweets.db");
             stmt = c.createStatement();
-            String sql = "Create Table Tweets(" +
+            String sql = "Create Table tweets(" +
                 "tweet_id REAL PRIMARY KEY,"+
                 "in_reply_status_id REAL," +
                 "in_reply_to_user_id REAL," +
@@ -29,7 +38,7 @@ public class DatabaseHelper
                 "text VARCHAR," +
                 "retweeted_status_id REAL," +
                 "retweeted_status_user_id REAL," +
-                "retweeted_status_timestamp DATETIME," +
+                "retweeted_status_user_timestamp DATETIME," +
                 "expanded_urls VARCHAR);";
             stmt.executeUpdate(sql);
             stmt.close();
@@ -40,12 +49,13 @@ public class DatabaseHelper
         }
     }
 
-    public static ResultSet execute(String query){        
+    public static ResultSet execute(String query)
+    {
         ResultSet rs = null;
         try
         {
             Class.forName("org.sqlite.JDBC");
-            c = DriverManager.getConnection("jdbc:sqlite:tweet_db");
+            c = DriverManager.getConnection("jdbc:sqlite:tweets.db");
             stmt = c.createStatement();
             rs = (ResultSet) stmt.executeQuery(query);
             stmt.close();
@@ -62,32 +72,73 @@ public class DatabaseHelper
         return rs;
     }
 
-    public static void insertTweetsIntoTable(ArrayList<Tweet> tweetInfo) 
+    public static void insertTweets(ArrayList<Tweet> tweetInfo) 
     {
         try {
             Class.forName("org.sqlite.JDBC");
-            c = DriverManager.getConnection("jdbc:sqlite:tweet_db.db");
+            c = DriverManager.getConnection("jdbc:sqlite:tweets.db");
             c.setAutoCommit(false);
-            stmt = c.createStatement();
+            PreparedStatement statement = null;
+            //System.out.println("Created Statement");
             for(Tweet tweet : tweetInfo) {
-                String sql = "INSERT INTO TWEETS (id, in_replay_status_id," + 
+                String sql = "INSERT INTO tweets (tweet_id, in_reply_status_id," + 
                     " in_reply_to_user_id, timestamp, source, text, retweeted_status_id, retweeted_status_user_id," +
-                    " retweeted_status_user_timestamp, expanded_urls)" + "VALUES(" + 
-                     tweet.getTweetID()                  + "," +
-                     tweet.getInReplyToStatusID()   + "," + 
-                     tweet.getInReplyToUserID()     + "," + 
-                     tweet.getTimestamp()           + "," + 
-                     "'"+ tweet.getSource()   + "'" + "," + 
-                     "'"+ tweet.getText()     + "'" + "," +
-                     tweet.getRetweetedUserID()     + "," +
-                     tweet.getRetweetedStatusTimestamp() + 
-                     " ); ";
-                stmt.executeUpdate(sql);
+                    " retweeted_status_user_timestamp, expanded_urls)" + " VALUES( ?,?,?,?,?,?,?,?,?,?);"; 
+                     statement = c.prepareStatement(sql);
+                     statement.setLong(1, tweet.getTweetID());
+                     //System.out.println("Passesd" + tweet.getTweetID());
+                     statement.setLong(2, tweet.getInReplyToStatusID());
+                     //System.out.println("Passesd" + tweet.getInReplyToStatusID());
+                     statement.setLong(3, tweet.getInReplyToUserID());
+                     //System.out.println("Passesd" + tweet.getInReplyToUserID());
+                     if(tweet.getTimestamp() != null)
+                        statement.setDate(4, new java.sql.Date(tweet.getTimestamp().getTime()));         
+                    else
+                        statement.setDate(4,null);
+                     //System.out.println("Passesd" + tweet.getTimestamp());
+                     statement.setString(5,tweet.getSource());
+                     //System.out.println("Passesd" + tweet.getSource());
+                     statement.setString(6,tweet.getText());
+                     //System.out.println("Passesd" + tweet.getText());
+                     statement.setLong(7, tweet.getRetweetedStatusID());
+                     //System.out.println("Passesd" + tweet.getRetweetedStatusID());
+                     statement.setLong(8, tweet.getRetweetedUserID());
+                     //System.out.println("Passesd" + tweet.getRetweetedUserID());
+                     if(tweet.getRetweetedStatusTimestamp() != null)
+                        statement.setDate(9,  new java.sql.Date(tweet.getRetweetedStatusTimestamp().getTime()));
+                    else
+                        statement.setDate(9,null);
+                     //System.out.println("Passesd" + tweet.getRetweetedStatusTimestamp());
+                     statement.setString(10, "Expanded_URLS");
+                     
+                //System.out.println("About to execute statement");
+                System.out.println(sql);
+                int number = statement.executeUpdate();
+                //System.out.println("Just executed statement");
+                System.out.println(number);
             }   
-            stmt.close();
+            statement.close();
             c.commit();
             c.close();
         } catch(Exception e) 
+        {
+            System.out.println("\n\nProblem Updating Tweet Entries \n");
+            e.printStackTrace();
+        }
+    }
+
+    public static void dropTweetsTable()
+    {
+        try {
+            Class.forName("org.sqlite.JDBC");
+            c = DriverManager.getConnection("jdbc:sqlite:tweets.db");
+            c.setAutoCommit(false);
+            stmt = c.createStatement();
+            stmt.executeUpdate("DROP TABLE IF EXISTS Tweets");   
+            stmt.close();
+            c.commit();
+            c.close();
+        }catch(Exception e) 
         {
             System.out.println("\n\nProblem Updating Tweet Entries \n");
             e.printStackTrace();
