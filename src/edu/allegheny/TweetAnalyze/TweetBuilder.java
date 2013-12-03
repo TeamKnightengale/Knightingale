@@ -180,20 +180,20 @@ public class TweetBuilder
 		ArrayList<Tweet> tweets = new ArrayList<Tweet>(); 
 		while (rs.next()) 
 		{	
+			
 			line[0] = new Long(rs.getLong("tweet_id")).toString();
-			line[1] = new Long(rs.getLong("in_reply_status_id")).toString();
-			line[2] = new Long(rs.getLong("in_reply_user_id")).toString();
-			line[3] = rs.getDate("timestamp").toString();
+			line[1] = new Long(rs.getLong("in_reply_to_status_id")).toString();
+			line[2] = new Long(rs.getLong("in_reply_to_user_id")).toString();
+			line[3] = timestampFormat.format(new Date(rs.getLong("timestamp")));
 			line[4] = rs.getString("source");
 			line[5] = rs.getString("text");
 			line[6] = new Long(rs.getLong("retweeted_status_id")).toString();
 			line[7] = new Long(rs.getLong("retweeted_status_user_id")).toString();
-			line[8] = new Long(rs.getLong("retweeted_status_timestamp")).toString();
-			line[9] = new Long(rs.getLong("expanded_urls")).toString();
+			line[8] = timestampFormat.format(new Date(rs.getLong("retweeted_status_timestamp")));
+			line[9] = rs.getString("expanded_urls");
 			System.out.println(line[0] + line[1] + line[2]);
 			tweets.add(buildTweet(line));			
 		}
-
 		return tweets;
 	}
 	
