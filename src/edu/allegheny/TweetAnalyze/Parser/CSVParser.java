@@ -8,6 +8,8 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 
+import java.text.ParseException;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Date;
@@ -22,7 +24,8 @@ import java.util.Date;
 
 public class CSVParser {
 
-	public static List<Tweet> parseFile(File c) throws IOException ParseException{
+
+	public static List<Tweet> parseFile(File c) throws IOException, ParseException {
 
 		CSVReader reader = new CSVReader(new FileReader(c));
 
