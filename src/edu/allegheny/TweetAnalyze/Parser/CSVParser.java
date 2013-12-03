@@ -24,6 +24,7 @@ import java.util.Date;
 
 public class CSVParser {
 
+
 	public static List<Tweet> parseFile(File c) throws IOException, ParseException {
 
 		CSVReader reader = new CSVReader(new FileReader(c));

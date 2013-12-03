@@ -52,16 +52,6 @@
 		<classpath path="${lib.dir}/jacocoant.jar"/>
 	</taskdef>
 
-	<!-- based on the example given on the JavaNCSS site -->
-	<taskdef name="CCNCheck" classname="javancss.JavancssAntTask">
-		<classpath refid="build.classpath"/>
-	</taskdef>
-
-  	 <CCNCheck srcdir="${src.dir}"
-            abortOnFail="true" ccnPerFuncMax="10"
-            includes="**/*.java"/>
-  
-
 	<!-- BASIC TARGETS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
 
 	<!-- CLEANING TASK - "ant clean" -->
@@ -96,7 +86,16 @@
 			<classpath refid="run.classpath" />
         </java>
 	</target>
+	
+	<!-- RUNNING TASK - "ant db" -->
+	<target name="db" depends="compile">
+		<java fork="true" classname="edu.allegheny.TweetAnalyze.Database.DatabaseHelper" maxmemory="1024m">
+			<arg line="${args}"/>
+			<classpath refid="run.classpath" />
+        </java>
+	</target>
 
+	<!-- RUNNING TASK - "ant token" -->
 	<target name="token" depends="compile">
 		<java fork="true" classname="edu.allegheny.TweetAnalyze.AccessTokenHelper" maxmemory="1024m">
 			<arg line="${args}"/>
@@ -104,7 +103,7 @@
         </java>
 	</target>
 
-
+	<!-- RUNNING TASK - "ant refresh" -->
 	<target name="refresh" depends="compile">
 		<java fork="true" classname="edu.allegheny.TweetAnalyze.TweetRefreshClient" maxmemory="1024m">
 			<arg line="${args}"/>
@@ -155,6 +154,17 @@
 			<xml destfile="${result.report.dir}/TweetAnalyzeTest/report.xml" />
 		</jacoco:report>
 	</target>
+	
+	<!-- based on the example given on the JavaNCSS site -->
+	<target name="ncss" depends="compile">
+		<taskdef name="CCNCheck" classname="javancss.JavancssAntTask">
+			<classpath refid="build.classpath"/>
+		</taskdef>
+
+	  	 <CCNCheck srcdir="${src.dir}"
+	            abortOnFail="true" ccnPerFuncMax="10"
+	            includes="**/*.java"/>
+  	</target>
 
 	<!-- Based on the demo Javadoc settings on the Ant web page. -->
 	<target name="javadoc">

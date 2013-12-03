@@ -1,0 +1,10 @@
+	clean
+	compile
+	run
+	TweetAnalyze
+	token
+	refresh
+	test
+	coveragetest
+	coverage
+	javadoc
