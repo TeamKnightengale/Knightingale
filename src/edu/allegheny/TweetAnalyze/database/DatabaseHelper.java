@@ -17,19 +17,20 @@ import edu.allegheny.TweetAnalyze.Parser.*;
 
 public class DatabaseHelper
 {
-    static Connection c = null;
-    static Statement stmt = null;
-    static ResultSet rs = null;
-        private static SimpleDateFormat timestampFormat = new SimpleDateFormat("yyyy-MM-dd kk:mm:ss z");
+    private static Connection c = null;
+    private static Statement stmt = null;
+    private static ResultSet rs = null;
+    private static SimpleDateFormat timestampFormat = new SimpleDateFormat("yyyy-MM-dd kk:mm:ss z");
 
 
     public static void main(String[] argv) throws Exception
     {
+        DatabaseHelper db = new DatabaseHelper();
         File zipFile = new File("tweets.zip");
-        dropTweetsTable();
-        createTweetsTable();
-        insertTweets((ArrayList<Tweet>) ZipParser.parse(zipFile));
-        getAllTweets();
+        db.dropTweetsTable();
+        db.createTweetsTable();
+        db.insertTweets((ArrayList<Tweet>) ZipParser.parse(zipFile));
+        db.getAllTweets();
     }
 
     public static void createTweetsTable() 
@@ -57,6 +58,24 @@ public class DatabaseHelper
                 System.out.println("-------Problems Creating Table-------");
                 e.printStackTrace();
             }
+    }
+
+    public static void dropTweetsTable()
+    {
+        try {
+            Class.forName("org.sqlite.JDBC");
+            c = DriverManager.getConnection("jdbc:sqlite:tweets.db");
+            c.setAutoCommit(false);
+            stmt = c.createStatement();
+            stmt.executeUpdate("DROP TABLE IF EXISTS Tweets");   
+            stmt.close();
+            c.commit();
+            c.close();
+        }catch(Exception e) 
+        {
+            System.out.println("\n\nProblem Updating Tweet Entries \n");
+            e.printStackTrace();
+        }
     }
 
     public static ResultSet execute(String query) throws SQLException, ClassNotFoundException
@@ -133,24 +152,6 @@ public class DatabaseHelper
                 System.out.println("\n\nProblem Updating Tweet Entries \n");
                 e.printStackTrace();
             }
-    }
-
-    public static void dropTweetsTable()
-    {
-        try {
-            Class.forName("org.sqlite.JDBC");
-            c = DriverManager.getConnection("jdbc:sqlite:tweets.db");
-            c.setAutoCommit(false);
-            stmt = c.createStatement();
-            stmt.executeUpdate("DROP TABLE IF EXISTS Tweets");   
-            stmt.close();
-            c.commit();
-            c.close();
-        }catch(Exception e) 
-        {
-            System.out.println("\n\nProblem Updating Tweet Entries \n");
-            e.printStackTrace();
-        }
     }
 
     public static ArrayList<Tweet> getAllTweets() throws ParseException

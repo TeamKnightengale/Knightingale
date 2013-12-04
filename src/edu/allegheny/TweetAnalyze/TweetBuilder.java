@@ -191,7 +191,6 @@ public class TweetBuilder
 			line[7] = new Long(rs.getLong("retweeted_status_user_id")).toString();
 			line[8] = timestampFormat.format(new Date(rs.getLong("retweeted_status_timestamp")));
 			line[9] = rs.getString("expanded_urls");
-			System.out.println(line[0] + line[1] + line[2]);
 			tweets.add(buildTweet(line));			
 		}
 		return tweets;
