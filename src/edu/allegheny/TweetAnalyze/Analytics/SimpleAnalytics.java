@@ -126,6 +126,18 @@ public class SimpleAnalytics {
 		return repliedToUserIDs;
 	}
 
+	public static int getReplyCount (Long userID) throws SQLException, ParseException {
+		int replyCount = 0;
+		String replyCountQuery = "SELECT COUNT(*) FROM Tweets WHERE in_reply_to_user_id LIKE '" + userID.toString() +"'";
+
+		ResultSet replyCountResultSet = DatabaseHelper.execute(replyCountQuery);
+
+		while (replyCountResultSet.next())
+			replyCount = replyCountResultSet.getInt(1);
+
+		return replyCount;
+	}
+
 	/**
 	 * @return list of tweets in october
 	 * @FIXME: doesn't work

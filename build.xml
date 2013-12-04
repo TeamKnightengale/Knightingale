@@ -95,6 +95,14 @@
         </java>
 	</target>
 
+
+	<target name="replyFreq" depends="compile">
+		<java fork="true" classname="edu.allegheny.TweetAnalyze.Analytics.ComplexAnalytics" maxmemory="1024m">
+			<arg line="${args}"/>
+			<classpath refid="run.classpath" />
+        </java>
+	</target>
+	
 	<!-- RUNNING TASK - "ant db" -->
 	<target name="db" depends="compile">
 		<java fork="true" classname="edu.allegheny.TweetAnalyze.Database.DatabaseHelper" maxmemory="1024m">
