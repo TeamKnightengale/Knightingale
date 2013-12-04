@@ -20,10 +20,16 @@ public class SimpleAnalytics {
 	
 	public static void main(String argv[]) throws Exception
 	{
-		List<Tweet> tweets = tweetsWithHashtag();
+		List<Tweet> tweets = search(argv[0]);
 		for (Tweet t : tweets)
 		{
 			System.out.println(t.getText());
+		}
+
+		List<Long> repliedUsers = repliedToUsers();
+		for (Long l : repliedUsers)
+		{
+			System.out.println(l);
 		}
 
 		System.out.printf("\n%d%% of your tweets are retweets, and %d%% are replies.\n", percentRetweets(), percentReplies());
@@ -67,6 +73,7 @@ public class SimpleAnalytics {
 
 	/**
 	 * @return a List containing all tweets in the user's database that contain hyperlinks.
+	 * @FIXME: throws java.sql.SQLException: [SQLITE_ERROR] SQL error or missing database (near "expanded_urls": syntax error)
 	 */
 	public static List<Tweet> tweetsWithHyperlinks () throws SQLException, ParseException {
 
@@ -105,13 +112,18 @@ public class SimpleAnalytics {
 	/**
 	 * @return a List containg all users that have been replied to
 	 */
-	public static List<Tweet> repliedToUsers () throws SQLException, ParseException {
-		List<Tweet> repliedToUsers = new ArrayList<Tweet>();;
-		String repliedToUsersQuery = "SELECT DISTINCT in_reply_to_user_id FROM Tweets";
+	public static List<Long> repliedToUsers () throws SQLException, ParseException {
+		List<Long> repliedToUserIDs = new ArrayList<Long>();
+		String repliedToUsersQuery = "SELECT DISTINCT in_reply_to_user_id "
+									+ "FROM Tweets " 
+									+ "WHERE in_reply_to_user_id IS NOT 0";
 
-		repliedToUsers = TweetBuilder.buildTweetFromResultSet(DatabaseHelper.execute(repliedToUsersQuery));	  
+		ResultSet repliedToUserIDsResultSet = DatabaseHelper.execute(repliedToUsersQuery);	  
 
-		return repliedToUsers;
+		while (repliedToUserIDsResultSet.next())
+			repliedToUserIDs.add(new Long(repliedToUserIDsResultSet.getLong(1)));
+
+		return repliedToUserIDs;
 	}
 
 	/**
