@@ -20,7 +20,7 @@ public class SimpleAnalytics {
 	
 	public static void main(String argv[]) throws Exception
 	{
-		List<Tweet> tweets = search("HackMIT");
+		List<Tweet> tweets = search(argv[0]);
 		for (Tweet t : tweets)
 		{
 			System.out.println(t.getText());
