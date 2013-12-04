@@ -13,8 +13,8 @@ import java.text.ParseException;
  * @author	Hawk Weisman
  * @author  Ian McMillan
  * @author  Dibyo Mukherjee
- * @version	0.1
- * @since	December 2, 2013
+ * @version	1.0
+ * @since	December 4, 2013
  */
 public class SimpleAnalytics {
 	
@@ -43,13 +43,11 @@ public class SimpleAnalytics {
 	/**
 	 * @return the percentage of retweets in the user's database.
 	 */
-	public static int percentRetweets () {
+	public static int percentRetweets() throws SQLException, ParseException {
 		int numTweets = 0; 
 		int numRetweets = 0;
 		String numTweetsQuery 	=  "SELECT COUNT(*) FROM tweets";
 		String numRetweetsQuery =  "SELECT COUNT(*) FROM tweets WHERE retweets_id IS NOT NULL";
-
-		// some magic happens
 
 		return numTweets/numRetweets;
 	}
@@ -57,10 +55,12 @@ public class SimpleAnalytics {
 	/**
 	 * @return a List containing all tweets in the user's database that contain hyperlinks.
 	 */
-	public static List<Tweet> tweetsWithHyperlinks () {
+	public static List<Tweet> tweetsWithHyperlinks () throws SQLException, ParseException {
+
 		List<Tweet> tweetsWithHyperlinks = new ArrayList<Tweet>();;
-		String hyperlinksQuery =   "SELECT * FROM tweets WHERE id IN (SELECT DISTINCT tweet_id FROM expanded_urls";
-		// db access layer takes place
+		String hyperlinksQuery = "SELECT * FROM tweets WHERE id IN (SELECT DISTINCT tweet_id FROM expanded_urls";
+
+		tweetsWithHyperlinks = TweetBuilder.buildTweetFromResultSet(DatabaseHelper.execute(hyperlinksQuery));	                                      
 
 		return tweetsWithHyperlinks;
 	}
@@ -68,7 +68,7 @@ public class SimpleAnalytics {
 	/**
 	 * @return the percentage of replied tweets
 	 */
-	public static int repliedTweets () {
+	public static int repliedTweets () throws SQLException, ParseException {
 		int numTweets = 0 ;
 		int numReplied = 0;
 		String numTweetsQuery = "SELECT COUNT(*)FROM Tweets";
@@ -82,9 +82,11 @@ public class SimpleAnalytics {
 	/**
 	 * @return a List containg all users that have been replied to
 	 */
-	public static List<Tweet> repliedToUsers () {
+	public static List<Tweet> repliedToUsers () throws SQLException, ParseException {
 		List<Tweet> repliedToUsers = new ArrayList<Tweet>();;
 		String repliedToUsersQuery = "SELECT DISTINCT in_reply_to_user_id FROM Tweets";
+
+		repliedToUsers = TweetBuilder.buildTweetFromResultSet(DatabaseHelper.execute(repliedToUsersQuery));	  
 
 		return repliedToUsers;
 	}
@@ -92,10 +94,12 @@ public class SimpleAnalytics {
 	/**
 	 * @return list of tweets in october
 	 */
-	public static List<Tweet> tweetsInOctober (){
+	public static List<Tweet> tweetsInOctober () throws SQLException, ParseException {
 		List<Tweet> tweetsInOctober = new ArrayList<Tweet>();;
 		String tweetsInOctoberQuery = "SELECT * FROM Tweets WHERE timestamp " + 
 									"BETWEEN '2013-09-30 23:59:59 PST' AND '2013-11-01 00:00:01 PST'";
+
+	tweetsInOctober = TweetBuilder.buildTweetFromResultSet(DatabaseHelper.execute(tweetsInOctoberQuery));	 
 
 	return tweetsInOctober; 
 	}
@@ -103,9 +107,11 @@ public class SimpleAnalytics {
 	/**
 	 * @return list of tweets with hashtags(#)
 	 */
-	public static List<Tweet> tweetsWithHashtag (){
+	public static List<Tweet> tweetsWithHashtag () throws SQLException, ParseException {
 		List<Tweet> tweetsWithHashtag = new ArrayList<Tweet>();;
 		String tweetsWithHashtagQuery = "SELECT * FROM Tweets WHERE text LIKE '#%'";
+
+		tweetsWithHashtag = TweetBuilder.buildTweetFromResultSet(DatabaseHelper.execute(tweetsWithHashtagQuery));	
 
 		return tweetsWithHashtag;
 	}
