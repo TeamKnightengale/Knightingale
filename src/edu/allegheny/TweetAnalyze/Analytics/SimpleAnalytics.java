@@ -128,6 +128,7 @@ public class SimpleAnalytics {
 
 	/**
 	 * @return list of tweets in october
+	 * @FIXME: doesn't work
 	 */
 	public static List<Tweet> tweetsInOctober () throws SQLException, ParseException {
 		List<Tweet> tweetsInOctober = new ArrayList<Tweet>();
