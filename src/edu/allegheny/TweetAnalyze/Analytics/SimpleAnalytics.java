@@ -49,7 +49,10 @@ public class SimpleAnalytics {
 		String numTweetsQuery 	=  "SELECT COUNT(*) FROM tweets";
 		String numRetweetsQuery =  "SELECT COUNT(*) FROM tweets WHERE retweets_id IS NOT NULL";
 
-		return numTweets/numRetweets;
+		numTweets = DatabaseHelper.execute(numTweetsQuery).getInt(1);
+		numRetweets = DatabaseHelper.execute(numRetweetsQuery).getInt(1);
+
+		return numTweets/numRetweets * 100;
 	}
 
 	/**
@@ -68,15 +71,17 @@ public class SimpleAnalytics {
 	/**
 	 * @return the percentage of replied tweets
 	 */
-	public static int repliedTweets () throws SQLException, ParseException {
+	public static int percentReplies () throws SQLException, ParseException {
 		int numTweets = 0 ;
 		int numReplied = 0;
 		String numTweetsQuery = "SELECT COUNT(*)FROM Tweets";
 		String numRepliedQuery = "SELECT COUNT(*)FROM Tweets WHERE in_reply_to_status_id IS NOT NULL AND" + 
 									"in_reply_to_user_id IS NOT NULL";
 
+		numTweets = DatabaseHelper.execute(numTweetsQuery).getInt(1);
+		numReplied = DatabaseHelper.execute(numRepliedQuery).getInt(1);
 
-		return numTweets/numReplied;
+		return numTweets/numReplied * 100;
 	}
 
 	/**
@@ -99,9 +104,9 @@ public class SimpleAnalytics {
 		String tweetsInOctoberQuery = "SELECT * FROM Tweets WHERE timestamp " + 
 									"BETWEEN '2013-09-30 23:59:59 PST' AND '2013-11-01 00:00:01 PST'";
 
-	tweetsInOctober = TweetBuilder.buildTweetFromResultSet(DatabaseHelper.execute(tweetsInOctoberQuery));	 
+		tweetsInOctober = TweetBuilder.buildTweetFromResultSet(DatabaseHelper.execute(tweetsInOctoberQuery));	 
 
-	return tweetsInOctober; 
+		return tweetsInOctober; 
 	}
 
 	/**
