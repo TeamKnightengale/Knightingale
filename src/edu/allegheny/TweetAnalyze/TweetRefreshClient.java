@@ -8,7 +8,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.ArrayList;
 
-import edu.allegheny.TweetAnalyze.Database.DatabaseHelper;
+import edu.allegheny.TweetAnalyze.database.DatabaseHelper;
 
 /**
  * Get recent tweets and store them in the db

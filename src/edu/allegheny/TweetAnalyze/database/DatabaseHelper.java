@@ -1,4 +1,4 @@
-package  edu.allegheny.TweetAnalyze.Database;
+package  edu.allegheny.TweetAnalyze.database;
 
 import java.sql.*;
 import javax.sql.rowset.*;

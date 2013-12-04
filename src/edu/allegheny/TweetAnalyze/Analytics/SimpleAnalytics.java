@@ -1,7 +1,7 @@
-package edu.allegheny.TweetAnalyze.Analytics;
+package edu.allegheny.TweetAnalyze.analytics;
 
 import edu.allegheny.TweetAnalyze.*;
-import edu.allegheny.TweetAnalyze.Database.DatabaseHelper;
+import edu.allegheny.TweetAnalyze.database.DatabaseHelper;
 import java.util.List;
 import java.util.ArrayList;
 import java.sql.*;
