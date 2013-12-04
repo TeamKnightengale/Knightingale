@@ -20,19 +20,32 @@ public class SimpleAnalytics {
 	
 	public static void main(String argv[]) throws Exception
 	{
+		System.out.println("Tweets having " + argv[0] + " : \n");
 		List<Tweet> tweets = search(argv[0]);
 		for (Tweet t : tweets)
 		{
 			System.out.println(t.getText());
 		}
+		
+		System.out.printf("\n%d%% of your tweets are retweets, and %d%% are replies.\n", percentRetweets(), percentReplies());
 
+		System.out.println("\n\nYour tweets with hashtags are: \n");
+
+		List<Tweet> hashtags = tweetsWithHashtag();
+
+		for(Tweet t : hashtags)
+		{
+			System.out.println(t.getText());
+		}
+
+		System.out.println("\n\nList of people you reply to : \n");
+		
 		List<Long> repliedUsers = repliedToUsers();
 		for (Long l : repliedUsers)
 		{
 			System.out.println(l);
 		}
 
-		System.out.printf("\n%d%% of your tweets are retweets, and %d%% are replies.\n", percentRetweets(), percentReplies());
 	}
 
 	/**
