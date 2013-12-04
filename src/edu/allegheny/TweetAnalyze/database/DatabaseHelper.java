@@ -31,7 +31,7 @@ public class DatabaseHelper
         db.createTweetsTable();
         db.insertTweets((ArrayList<Tweet>) ZipParser.parse(zipFile));
         db.getAllTweets();
-        System.out.println(db.getLastTweet());
+        System.out.println(db.getLastTweetID());
     }
 
     public static void createTweetsTable() 
@@ -187,15 +187,23 @@ public class DatabaseHelper
         return tweets;
     }
 
-    public static long getLastTweet() throws SQLException
+    public static long getLastTweetID()
     {
         String query = "select tweet_id from tweets order by tweet_id desc limit 1";
         ResultSet resultset = execute(query);
         long latest_tweet = 0;
-        while (resultset.next())
+        try
         {
-            latest_tweet = resultset.getLong(1);
+            while (resultset.next())
+            {
+                latest_tweet = resultset.getLong(1);
+            }    
         }
+        catch(SQLException se)
+        {
+            se.printStackTrace();
+        }
+        
         return  latest_tweet;
     }
 }

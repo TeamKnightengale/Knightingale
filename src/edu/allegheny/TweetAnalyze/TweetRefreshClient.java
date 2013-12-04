@@ -8,6 +8,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.ArrayList;
 
+import edu.allegheny.TweetAnalyze.Database.DatabaseHelper;
+
 /**
  * Get recent tweets and store them in the db
  * @author Dibyo Mukherjee
@@ -25,12 +27,12 @@ public class TweetRefreshClient
 
 	public static void main(String argv[]) 
 	{
-		long since_id = Long.parseLong("386276101074714624");
 		TweetRefreshClient client = new TweetRefreshClient();
-		client.refreshTweets();
+		int numberOfNewTweets = client.refreshTweets();
+		System.out.println("\n" + numberOfNewTweets + " new tweets\n");
 	}
 
-	public void refreshTweets()
+	public int refreshTweets()
 	{
 		//Make sure you have the right Access Tokens
 		if (! tokenHelper.hasToken())
@@ -39,14 +41,19 @@ public class TweetRefreshClient
 			this.refreshCredentials();
 		}
 		
-		long since_id = Long.parseLong("386276101074714624");
-		List<Tweet> tweets = this.getRecentTweets(since_id);
-		for(Tweet tweet : tweets)
+		//Get the last tweet id
+		long since_id = DatabaseHelper.getLastTweetID();
+
+		//Get the tweets
+		ArrayList<Tweet> newTweets = (ArrayList<Tweet>) this.getRecentTweets(since_id);
+		
+		//Save it to db
+		if(newTweets.size() > 0)
 		{
-			System.out.println(tweet.getText());
+			DatabaseHelper.insertTweets(newTweets);	
 		}
 		
-		//Store them in dB
+		return newTweets.size();
 	}
 
 	/**
@@ -89,7 +96,5 @@ public class TweetRefreshClient
 
 		return tweets;
 	}
-
-
 
 }
