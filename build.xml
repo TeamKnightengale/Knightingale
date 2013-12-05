@@ -104,7 +104,7 @@
 	</target>
 	
 	<target name="cloud" depends="compile">
-		<java fork="true" classname="edu.allegheny.TweetAnalyze.analytics.DemoCloudRunner" maxmemory="1024m">
+		<java fork="true" classname="edu.allegheny.TweetAnalytics.analytics.DemoCloudRunner" maxmemory="1024m">
 			<arg line="${args}"/>
 			<classpath refid="run.classpath" />
         </java>
