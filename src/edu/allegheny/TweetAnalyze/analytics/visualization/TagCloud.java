@@ -12,6 +12,7 @@ import org.mcavallo.opencloud.Tag;
 
 import java.util.Map;
 import java.util.HashMap;
+import java.io.IOException;
 
 import twitter4j.*;
 
@@ -22,7 +23,7 @@ public class TagCloud implements FrequencyVisualization{
 	protected JPanel panel;
 	protected Cloud cloud;
 
-	public TagCloud (Map<String, Integer> hashtags, String title) {
+	public TagCloud (Map<String, Integer> hashtags, String title) throws IOException {
 		contents = hashtags;
 		frame = new JFrame(title);
 	    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

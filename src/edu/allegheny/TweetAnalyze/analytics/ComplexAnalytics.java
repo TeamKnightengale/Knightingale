@@ -2,6 +2,9 @@ package edu.allegheny.TweetAnalyze.analytics;
 
 import edu.allegheny.TweetAnalyze.database.DatabaseHelper;
 
+import edu.allegheny.TweetAnalyze.analytics.*;
+import edu.allegheny.TweetAnalyze.analytics.visualization.*;
+
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Map;
@@ -21,10 +24,8 @@ import twitter4j.*;
 
 public class ComplexAnalytics {
 
-	public static void main(String argv[]) {
-		
+	public static void main(String[] argv) {
 		try {
-			
 			Map<User, Integer> globalReplyFrequency = getGlobalReplyFrequency();
 			Map<User, Integer> globalRetweetFrequency = getGlobalRetweetFrequency();
 

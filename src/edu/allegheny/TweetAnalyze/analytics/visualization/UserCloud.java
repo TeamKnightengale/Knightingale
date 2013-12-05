@@ -1,6 +1,8 @@
 package edu.allegheny.TweetAnalyze.analytics.visualization;
-
+//package edu.allegheny.TweetAnalyze.analytics;
 import edu.allegheny.TweetAnalyze.analytics.ComplexAnalytics;
+import edu.allegheny.TweetAnalyze.analytics.visualization.UserLabel;
+import edu.allegheny.TweetAnalyze.analytics.visualization.FrequencyVisualization;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -12,6 +14,8 @@ import org.mcavallo.opencloud.Tag;
 
 import java.util.Map;
 import java.util.HashMap;
+
+import java.io.IOException;
 
 import twitter4j.*;
 
@@ -32,11 +36,9 @@ public class UserCloud implements FrequencyVisualization{
 	    for (Map.Entry<User, Integer> entry : contents.entrySet())
 	        cloud.addTag(new Tag("@" + entry.getKey().getScreenName(), entry.getValue()));
 
-	    for (Tag tag : cloud.tags()) {
-	        final JLabel label = new JLabel(tag.getName());
-	        label.setOpaque(false);
-	        label.setFont(label.getFont().deriveFont((float) tag.getWeight() * 10));
-	        panel.add(label);
+        for (Tag tag : cloud.tags()) {
+	        final UserLabel label = new UserLabel(tag);
+	       	panel.add(label);
 		}
 
 	    frame.add(panel);
@@ -45,5 +47,19 @@ public class UserCloud implements FrequencyVisualization{
 
     public void visualize() {
 		frame.setVisible(true);
+    }
+
+    public static void main(String[] argv) {
+    	try {
+	   	    FrequencyVisualization a = new UserCloud(ComplexAnalytics.getGlobalRetweetFrequency(), "Demo RetweetCloud");
+	   	   	FrequencyVisualization b = new UserCloud(ComplexAnalytics.getGlobalReplyFrequency(), "Demo ReplyCloud");
+	    	
+	    	a.visualize();
+	    	b.visualize();
+
+	    } catch (Exception ex) {
+	    	System.out.println ("Something bad happened in a demo method. If you see this message in a production build, "
+	    	                    + "find Hawk Weisman and beat the shit out of him");
+	    }
     }
 }

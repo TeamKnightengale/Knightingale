@@ -89,7 +89,7 @@
 	
 	<!-- RUNNING TASK - "ant analyze" -->
 	<target name="analyze" depends="compile">
-		<java fork="true" classname="edu.allegheny.TweetAnalyze.Analytics.SimpleAnalytics" maxmemory="1024m">
+		<java fork="true" classname="edu.allegheny.TweetAnalyze.analytics.SimpleAnalytics" maxmemory="1024m">
 			<arg line="${args}"/>
 			<classpath refid="run.classpath" />
         </java>
@@ -103,8 +103,8 @@
         </java>
 	</target>
 	
-	<target name="cloud" depends="compile">
-		<java fork="true" classname="edu.allegheny.TweetAnalytics.analytics.DemoCloudRunner" maxmemory="1024m">
+	<target name="usercloud" depends="compile">
+		<java fork="true" classname="edu.allegheny.TweetAnalyze.analytics.visualization.UserCloud" maxmemory="1024m">
 			<arg line="${args}"/>
 			<classpath refid="run.classpath" />
         </java>
