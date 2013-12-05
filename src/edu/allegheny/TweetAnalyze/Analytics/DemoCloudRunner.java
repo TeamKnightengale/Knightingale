@@ -1,6 +1,7 @@
-package edu.allegheny.TweetAnalytics.analytics;
+package edu.allegheny.TweetAnalyze.analytics;
 
-import edu.allegheny.analytics.*;
+import edu.allegheny.TweetAnalyze.analytics.*;
+import edu.allegheny.TweetAnalyze.analytics.visualization.*;
 
 /**
  * @author Hawk Weisman
@@ -8,6 +9,7 @@ import edu.allegheny.analytics.*;
  */
 
 // DEMO MAIN METHOD PLEASE DELETE
+
 public class DemoCloudRunner {
 	public static void main(String[] argv) {
 	    try {

@@ -31,7 +31,7 @@ public class ReplyCloud implements IFrequencyCloud {
 	
 	
 		for (Map.Entry<User, Integer> entry : users.entrySet())
-	           cloud.addTag(new Tag(entry.getKey().getScreenName(), entry.getValue()));
+	           cloud.addTag(new Tag("@" + entry.getKey().getScreenName(), entry.getValue()));
 
 	    for (Tag tag : cloud.tags()) {
 	            final JLabel label = new JLabel(tag.getName());

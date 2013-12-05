@@ -1,9 +1,7 @@
 package edu.allegheny.TweetAnalyze.analytics;
 
-import edu.allegheny.TweetAnalyze.*;
 import edu.allegheny.TweetAnalyze.database.DatabaseHelper;
 
-import java.util.Iterator;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Map;
@@ -28,8 +26,16 @@ public class ComplexAnalytics {
 		try {
 			
 			Map<User, Integer> globalReplyFrequency = getGlobalReplyFrequency();
+			Map<User, Integer> globalRetweetFrequency = getGlobalRetweetFrequency();
+
+			System.out.println("#-----Printing raw reply data:\n");
 
 			for (Map.Entry<User, Integer> entry : globalReplyFrequency.entrySet())
+       			System.out.println(entry.getKey().getScreenName() + " has been replied to " + entry.getValue() + " times.");
+
+       		System.out.println("\n#-----Printing raw reply data:\n");
+
+       		for (Map.Entry<User, Integer> entry : globalRetweetFrequency.entrySet())
        			System.out.println(entry.getKey().getScreenName() + " has been retweeted " + entry.getValue() + " times.");
 
 		} catch (Exception e) {
@@ -40,6 +46,9 @@ public class ComplexAnalytics {
 
 	private static Twitter twitter = TwitterFactory.getSingleton();
 
+	/**
+	 * @return a HashMap<User, Integer> where the Integers associated with each user represents the number of times that user has been replied to.
+	 */
 	public static HashMap<User, Integer> getGlobalReplyFrequency () throws SQLException, ParseException, TwitterException{
 
 		HashMap<User, Integer> frequencyMap = new HashMap<User, Integer>();
@@ -48,6 +57,22 @@ public class ComplexAnalytics {
 
 		for (Long id : repliedIDs) {
 			frequencyMap.put(twitter.showUser(id), new Integer(SimpleAnalytics.getReplyCount(id)));
+		}
+
+		return frequencyMap;
+	}
+
+	/**
+	 * @return a HashMap<User, Integer> where the Integers associated with each user represents the number of times that user has been retweeted to.
+	 */
+	public static HashMap<User, Integer> getGlobalRetweetFrequency () throws SQLException, ParseException, TwitterException{
+
+		HashMap<User, Integer> frequencyMap = new HashMap<User, Integer>();
+
+		List<Long> retweetedIDs = SimpleAnalytics.retweetedUsers();
+
+		for (Long id : retweetedIDs) {
+			frequencyMap.put(twitter.showUser(id), new Integer(SimpleAnalytics.getRetweetCount(id)));
 		}
 
 		return frequencyMap;
