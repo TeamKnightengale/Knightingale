@@ -1,6 +1,8 @@
 package edu.allegheny.TweetAnalyze.analytics.visualization;
 
 import edu.allegheny.TweetAnalyze.analytics.ComplexAnalytics;
+import edu.allegheny.TweetAnalyze.analytics.visualization.HashtagLabel;
+import edu.allegheny.TweetAnalyze.analytics.visualization.FrequencyVisualization;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -31,13 +33,11 @@ public class TagCloud implements FrequencyVisualization{
 	    cloud = new Cloud();
 
 	    for (Map.Entry<String, Integer> entry : contents.entrySet())
-	        cloud.addTag(new Tag("#" + entry.getKey(), entry.getValue()));
+	        cloud.addTag(new Tag(entry.getKey(), entry.getValue()));
 
-	    for (Tag tag : cloud.tags()) {
-	        final JLabel label = new JLabel(tag.getName());
-	        label.setOpaque(false);
-	        label.setFont(label.getFont().deriveFont((float) tag.getWeight() * 10));
-	        panel.add(label);
+        for (Tag tag : cloud.tags()) {
+	        final HashtagLabel label = new HashtagLabel(tag);
+	       	panel.add(label);
 		}
 
 	    frame.add(panel);
