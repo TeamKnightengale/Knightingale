@@ -1,4 +1,4 @@
-package  edu.allegheny.TweetAnalyze.database;
+package  edu.allegheny.TweetAnalyze.Database;
 
 import java.sql.*;
 import javax.sql.rowset.*;
@@ -13,27 +13,30 @@ import java.text.SimpleDateFormat;
 import java.io.File;
 
 import edu.allegheny.TweetAnalyze.*;
-import edu.allegheny.TweetAnalyze.parser.*;
+import edu.allegheny.TweetAnalyze.Parser.*;
 
 public class DatabaseHelper
 {
+    private static Connection c = null;
+    private static Statement stmt = null;
+    private static ResultSet rs = null;
     private static SimpleDateFormat timestampFormat = new SimpleDateFormat("yyyy-MM-dd kk:mm:ss z");
-    private  Connection c = null;
-    private  Statement stmt = null;
-    private  ResultSet rs = null;
-    
-    public void main(String[] argv) throws Exception
+
+
+    public static void main(String[] argv) throws Exception
     {
         DatabaseHelper db = new DatabaseHelper();
         File zipFile = new File("tweets.zip");
         db.dropTweetsTable();
         db.createTweetsTable();
+	db.createUsersTable();
+//	db.createTrigger();
         db.insertTweets((ArrayList<Tweet>) ZipParser.parse(zipFile));
         db.getAllTweets();
         System.out.println(db.getLastTweetID());
     }
 
-    public void createTweetsTable() 
+    public static void createTweetsTable() 
     {
         try 
         {
@@ -60,7 +63,55 @@ public class DatabaseHelper
             }
     }
 
-    public void dropTweetsTable()
+    public static void createUsersTable()
+    {
+	try
+	{
+	    Class.forName("org.sqlite.JDBC");
+            c = DriverManager.getConnection("jdbc:sqlite:tweets.db");
+            stmt = c.createStatement();
+            String sql = "Create Table users(" +
+                "user_id INTEGER PRIMARY KEY,"+
+		"user_name VARCHAR," +
+                "hashtag VARCHAR," +
+		"retweet_count INTEGER," +
+		"reply_count INTEGER);";
+            stmt.executeUpdate(sql);
+            stmt.close();
+            c.close();
+            } catch(Exception e) {
+                System.out.println("-------Problems Creating Table-------");
+                e.printStackTrace();
+            }
+     
+	}
+
+/*
+    public static void createTrigger()
+    {
+	try
+	{
+	    Class.forName("org.sqlite.JDBC");
+	    c = DriverManager.getConnection("jdbc:sqlite:tweets.db");
+	    stmt = c.createStatement();
+	    String retweetcount = "SELECT COUNT (*) FROM tweets WHERE " +
+				  "retweeted_status_id IS NOT 0";
+	    String replycount = "SELECT COUNT (*) FROM tweets WHERE " +
+				"in_reply_to_status_id IS NOT 0";
+
+	    String sql = "Create TRIGGER usersBuild AFTER INSERT ON tweets" +
+			 " BEGIN INSERT INTO users (user_id, user_name, retweet_count, " +
+			 "reply_count);" + "VALUES(New.tweet_id, New.user_name , retweetcount," + 				 "replycount); END";
+	    stmt.executeUpdate(sql);
+	    stmt.close();
+	    } catch(Exception e) {
+		System.out.println("-------Problems Creating Table-------");
+                e.printStackTrace();
+            }
+     
+	}
+*/
+    public static void dropTweetsTable()
     {
         try {
             Class.forName("org.sqlite.JDBC");
@@ -78,7 +129,7 @@ public class DatabaseHelper
         }
     }
 
-    public ResultSet execute(String query)
+    public static ResultSet execute(String query)
     {
         try
         {
@@ -104,7 +155,7 @@ public class DatabaseHelper
         return null;
     }
 
-    public void insertTweets(ArrayList<Tweet> tweets) 
+    public static void insertTweets(ArrayList<Tweet> tweets) 
     {
         try 
         {
@@ -166,7 +217,7 @@ public class DatabaseHelper
             }
     }
 
-    public ArrayList<Tweet> getAllTweets() throws ParseException
+    public static ArrayList<Tweet> getAllTweets() throws ParseException
     {
         ArrayList<Tweet> tweets = new ArrayList<Tweet>();
         try 
@@ -186,7 +237,7 @@ public class DatabaseHelper
         return tweets;
     }
 
-    public long getLastTweetID()
+    public static long getLastTweetID()
     {
         String query = "select tweet_id from tweets order by tweet_id desc limit 1";
         ResultSet resultset = execute(query);

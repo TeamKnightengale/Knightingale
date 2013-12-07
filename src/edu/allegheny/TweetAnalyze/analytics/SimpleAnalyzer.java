@@ -102,7 +102,7 @@ public class SimpleAnalyzer {
 	public List<Tweet> tweetsWithHyperlinks () throws SQLException, ParseException {
 
 		List<Tweet> tweetsWithHyperlinks = new ArrayList<Tweet>();;
-		String hyperlinksQuery = "SELECT * FROM tweets WHERE id IN (SELECT DISTINCT tweet_id FROM expanded_urls";
+		String hyperlinksQuery = "SELECT * FROM tweets WHERE expanded_urls IS NOT 0";
 
 		tweetsWithHyperlinks = TweetBuilder.buildTweetFromResultSet(db.execute(hyperlinksQuery));	                                      
 
@@ -207,7 +207,7 @@ public class SimpleAnalyzer {
 	public List<Tweet> tweetsInOctober () throws SQLException, ParseException {
 		List<Tweet> tweetsInOctober = new ArrayList<Tweet>();
 		String tweetsInOctoberQuery = "SELECT * FROM Tweets WHERE timestamp " + 
-									"BETWEEN '2013-09-30 23:59:59 PST' AND '2013-11-01 00:00:01 PST'";
+									"BETWEEN '2013-09-30 23:59:59' AND '2013-11-01 00:00:01'";
 
 		tweetsInOctober = TweetBuilder.buildTweetFromResultSet(db.execute(tweetsInOctoberQuery));	 
 
