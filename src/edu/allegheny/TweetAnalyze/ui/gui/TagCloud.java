@@ -18,6 +18,17 @@ import java.io.IOException;
 
 import twitter4j.*;
 
+/**
+ * Swing frequency visualization for hashtags.
+ *
+ * Please note that, as a GUI element, this class is not a target 
+ * for test automation, as it will be tested manually during the 
+ * user testing and acceptance testing phases.
+ *
+ * @author 	Hawk Weisman
+ * @version 1.0
+ * @since 	December 7th, 2013
+ */
 public class TagCloud implements FrequencyVisualization{
 
 	protected Map<String, Integer> contents;
@@ -25,6 +36,10 @@ public class TagCloud implements FrequencyVisualization{
 	protected JPanel panel;
 	protected Cloud cloud;
 
+	/**
+	 * @param users A frequency map of Strings representing hashtags.
+	 * @param title A title for the UserCloud window
+	 */
 	public TagCloud (Map<String, Integer> hashtags, String title) throws IOException {
 		contents = hashtags;
 		frame = new JFrame(title);
@@ -43,7 +58,10 @@ public class TagCloud implements FrequencyVisualization{
 	    frame.add(panel);
 	    frame.setSize(800, 600);
 	}
-
+	
+	/**
+	 * Executes the visualization.
+	 */
     public void visualize() {
 		frame.setVisible(true);
     }

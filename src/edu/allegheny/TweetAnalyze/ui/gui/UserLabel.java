@@ -16,13 +16,27 @@ import java.awt.event.MouseMotionListener;
 
 import org.mcavallo.opencloud.Tag;
 
+/**
+ * Wrapper element for user JLabels in frequency clouds to allow 
+ * interaction behaviour.
+ *
+ * Please note that, as a GUI element, this class is not a target 
+ * for test automation, as it will be tested manually during the 
+ * user testing and acceptance testing phases.
+ *
+ * @author 	Hawk Weisman
+ * @version 1.0
+ * @since 	December 7th, 2013
+ */
 public class UserLabel extends JPanel implements MouseListener {
 
 	protected Desktop desktop;
-	int nbOver = 0, nbClick = 0;
 	JLabel label;
 	Tag tag;
 	
+	/**
+	 * @param tag the OpenCloud tag element containing the text and weight for this label
+	 */
 	public UserLabel(Tag tag) {
 		super();
 	    label = new JLabel(tag.getName());
