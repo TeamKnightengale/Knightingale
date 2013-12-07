@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.sql.*;
 import java.text.ParseException;
 
+import edu.allegheny.TweetAnalyze.LogConfigurator; // REMOVE WHEN MAIN METHOD IS REMOVED
+
 /**
  * Provides simple analytic methods for the TweetAnalyze database.
  *
@@ -22,6 +24,7 @@ public class SimpleAnalytics {
 	
 	public static void main(String argv[]) throws Exception
 	{
+		LogConfigurator.setup(); // setup the logger.
 		List<Tweet> tweets = search(argv[0]);
 		for (Tweet t : tweets)
 		{

@@ -15,6 +15,8 @@ import java.io.File;
 import edu.allegheny.TweetAnalyze.*;
 import edu.allegheny.TweetAnalyze.parser.*;
 
+import edu.allegheny.TweetAnalyze.LogConfigurator; // REMOVE WHEN MAIN METHOD IS REMOVED
+
 public class DatabaseHelper
 {
     private static Connection c = null;
@@ -25,6 +27,11 @@ public class DatabaseHelper
 
     public static void main(String[] argv) throws Exception
     {
+        try {
+            LogConfigurator.setup(); // setup the logger.
+        } catch (Exception e) {
+           e.printStackTrace();
+        }
         DatabaseHelper db = new DatabaseHelper();
         File zipFile = new File("tweets.zip");
         db.dropTweetsTable();

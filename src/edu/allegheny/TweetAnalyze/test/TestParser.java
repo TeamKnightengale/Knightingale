@@ -15,12 +15,12 @@ import 	org.junit.runner.RunWith;
 import 	org.junit.runners.JUnit4;
 
 /**
- * Tests for {@link edu.allegheny.TweetAnalyze.Parser}
+ * Tests for {@link edu.allegheny.TweetAnalyze.parser}
  * 
  * @author	Hawk Weisman
  * @version	0.1
- * @see		edu.allegheny.TweetAnalyze.Parser.CSVParser
- * @see		edu.allegheny.TweetAnalyze.Parser.ZipParser
+ * @see		edu.allegheny.TweetAnalyze.parser.CSVParser
+ * @see		edu.allegheny.TweetAnalyze.parser.ZipParser
  */
 
 @RunWith(JUnit4.class)
