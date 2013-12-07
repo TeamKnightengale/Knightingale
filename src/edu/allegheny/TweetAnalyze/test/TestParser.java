@@ -3,7 +3,7 @@ package edu.allegheny.TweetAnalyze.test;
 import 	static org.junit.Assert.fail;
 import 	static org.junit.Assert.*;
 
-import 	edu.allegheny.TweetAnalyze.Parser.*;
+import 	edu.allegheny.TweetAnalyze.parser.*;
 
 import	net.lingala.zip4j.core.ZipFile;
 import	net.lingala.zip4j.exception.ZipException;

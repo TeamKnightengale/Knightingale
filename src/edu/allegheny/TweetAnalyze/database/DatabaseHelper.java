@@ -1,4 +1,4 @@
-package  edu.allegheny.TweetAnalyze.Database;
+package  edu.allegheny.TweetAnalyze.database;
 
 import java.sql.*;
 import javax.sql.rowset.*;
@@ -13,7 +13,7 @@ import java.text.SimpleDateFormat;
 import java.io.File;
 
 import edu.allegheny.TweetAnalyze.*;
-import edu.allegheny.TweetAnalyze.Parser.*;
+import edu.allegheny.TweetAnalyze.parser.*;
 
 public class DatabaseHelper
 {

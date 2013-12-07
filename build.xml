@@ -89,11 +89,27 @@
 	
 	<!-- RUNNING TASK - "ant analyze" -->
 	<target name="analyze" depends="compile">
-		<java fork="true" classname="edu.allegheny.TweetAnalyze.Analytics.SimpleAnalytics" maxmemory="1024m">
+		<java fork="true" classname="edu.allegheny.TweetAnalyze.analytics.SimpleAnalytics" maxmemory="1024m">
 			<arg line="${args}"/>
 			<classpath refid="run.classpath" />
         </java>
 	</target>
+
+
+	<target name="replyFreq" depends="compile">
+		<java fork="true" classname="edu.allegheny.TweetAnalyze.analytics.ComplexAnalytics" maxmemory="1024m">
+			<arg line="${args}"/>
+			<classpath refid="run.classpath" />
+        </java>
+	</target>
+	
+	<target name="usercloud" depends="compile">
+		<java fork="true" classname="edu.allegheny.TweetAnalyze.ui.gui.UserCloud" maxmemory="1024m">
+			<arg line="${args}"/>
+			<classpath refid="run.classpath" />
+        </java>
+	</target>
+
 
 	<!-- RUNNING TASK - "ant db" -->
 	<target name="db" depends="compile">

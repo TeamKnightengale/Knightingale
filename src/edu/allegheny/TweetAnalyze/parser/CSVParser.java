@@ -1,4 +1,4 @@
-package edu.allegheny.TweetAnalyze.Parser;
+package edu.allegheny.TweetAnalyze.parser;
 
 import au.com.bytecode.opencsv.*;
 import edu.allegheny.TweetAnalyze.Tweet;

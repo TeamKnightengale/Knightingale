@@ -8,7 +8,7 @@
  *
  */
 
-package edu.allegheny.TweetAnalyze.Parser;
+package edu.allegheny.TweetAnalyze.parser;
 
 import	java.io.File;
 import	java.io.IOException;

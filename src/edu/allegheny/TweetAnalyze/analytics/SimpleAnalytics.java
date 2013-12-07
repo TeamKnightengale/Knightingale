@@ -1,7 +1,9 @@
-package edu.allegheny.TweetAnalyze.Analytics;
+package edu.allegheny.TweetAnalyze.analytics;
 
-import edu.allegheny.TweetAnalyze.*;
-import edu.allegheny.TweetAnalyze.Database.DatabaseHelper;
+import edu.allegheny.TweetAnalyze.Tweet;
+import edu.allegheny.TweetAnalyze.TweetBuilder;
+import edu.allegheny.TweetAnalyze.database.DatabaseHelper;
+
 import java.util.List;
 import java.util.ArrayList;
 import java.sql.*;
@@ -139,9 +141,59 @@ public class SimpleAnalytics {
 		return repliedToUserIDs;
 	}
 
+	/** 
+	 * @param userID the ID of the user whose replies to count
+	 * @return the number of times that user has been replied to (as an int)
+	 */
+	public static int getReplyCount (Long userID) throws SQLException, ParseException {
+		int replyCount = 0;
+		String replyCountQuery = "SELECT COUNT(*) FROM Tweets WHERE in_reply_to_user_id LIKE '" + userID.toString() +"'";
+
+		ResultSet replyCountResultSet = DatabaseHelper.execute(replyCountQuery);
+
+		while (replyCountResultSet.next())
+			replyCount = replyCountResultSet.getInt(1);
+
+		return replyCount;
+	}
+
+	/**
+	 * @return a List containing the IDs of all users that have been retweeted
+	 */
+	public static List<Long> retweetedUsers () throws SQLException, ParseException {
+		List<Long> retweetedUserIDs = new ArrayList<Long>();
+		String retweetedUsersQuery = "SELECT DISTINCT retweeted_status_user_id "
+									+ "FROM Tweets " 
+									+ "WHERE retweeted_status_user_id IS NOT 0";
+
+		ResultSet retweetedUserIDsResultSet = DatabaseHelper.execute(retweetedUsersQuery);	  
+
+		while (retweetedUserIDsResultSet.next())
+			retweetedUserIDs.add(new Long(retweetedUserIDsResultSet.getLong(1)));
+
+		return retweetedUserIDs;
+	}
+
+	/** 
+	 * @param userID the ID of the user whose retweeted statuses to count
+	 * @return the number of times that user has been retweeted (as an int)
+	 */
+	public static int getRetweetCount (Long userID) throws SQLException, ParseException {
+		int retweetCount = 0;
+		String retweetCountQuery = "SELECT COUNT(*) FROM Tweets WHERE retweeted_status_user_id LIKE '" + userID.toString() +"'";
+
+		ResultSet retweetCountResultSet = DatabaseHelper.execute(retweetCountQuery);
+
+		while (retweetCountResultSet.next())
+			retweetCount = retweetCountResultSet.getInt(1);
+
+		return retweetCount;
+	}
+
 	/**
 	 * @return list of tweets in october
 	 * @FIXME: doesn't work
+	 * @TODO: Change from tweetsInOctober to tweetsAsMonth(String Month)?
 	 */
 	public static List<Tweet> tweetsInOctober () throws SQLException, ParseException {
 		List<Tweet> tweetsInOctober = new ArrayList<Tweet>();
