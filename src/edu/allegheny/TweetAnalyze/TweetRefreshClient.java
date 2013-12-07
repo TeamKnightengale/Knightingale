@@ -19,15 +19,17 @@ import edu.allegheny.TweetAnalyze.database.DatabaseHelper;
 public class TweetRefreshClient
 {
 	private AccessTokenHelper tokenHelper;
+	private DatabaseHelper db;
 
-	public TweetRefreshClient()
+	public TweetRefreshClient(DatabaseHelper db)
 	{
 		this.tokenHelper = new AccessTokenHelper();
+		this.db = db;
 	}
 
 	public static void main(String argv[]) 
 	{
-		TweetRefreshClient client = new TweetRefreshClient();
+		TweetRefreshClient client = new TweetRefreshClient(new DatabaseHelper());
 		int numberOfNewTweets = client.refreshTweets();
 		System.out.println("\n" + numberOfNewTweets + " new tweets\n");
 	}
@@ -42,7 +44,7 @@ public class TweetRefreshClient
 		}
 		
 		//Get the last tweet id
-		long since_id = DatabaseHelper.getLastTweetID();
+		long since_id = db.getLastTweetID();
 
 		//Get the tweets
 		ArrayList<Tweet> newTweets = (ArrayList<Tweet>) this.getRecentTweets(since_id);
@@ -50,7 +52,7 @@ public class TweetRefreshClient
 		//Save it to db
 		if(newTweets.size() > 0)
 		{
-			DatabaseHelper.insertTweets(newTweets);	
+			db.insertTweets(newTweets);	
 		}
 		
 		return newTweets.size();
