@@ -1,8 +1,8 @@
-package edu.allegheny.TweetAnalyze.analytics.visualization;
-//package edu.allegheny.TweetAnalyze.analytics;
+package edu.allegheny.TweetAnalyze.ui.gui;
+
 import edu.allegheny.TweetAnalyze.analytics.ComplexAnalytics;
-import edu.allegheny.TweetAnalyze.analytics.visualization.UserLabel;
-import edu.allegheny.TweetAnalyze.analytics.visualization.FrequencyVisualization;
+import edu.allegheny.TweetAnalyze.ui.gui.UserLabel;
+import edu.allegheny.TweetAnalyze.ui.FrequencyVisualization;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -59,7 +59,7 @@ public class UserCloud implements FrequencyVisualization{
 
 	    } catch (Exception ex) {
 	    	System.out.println ("Something bad happened in a demo method. If you see this message in a production build, "
-	    	                    + "find Hawk Weisman and beat the shit out of him");
+	    	                    + "find Hawk Weisman and let him know");
 	    }
     }
 }

@@ -1,8 +1,8 @@
-package edu.allegheny.TweetAnalyze.analytics.visualization;
+package edu.allegheny.TweetAnalyze.ui.gui;
 
 import edu.allegheny.TweetAnalyze.analytics.ComplexAnalytics;
-import edu.allegheny.TweetAnalyze.analytics.visualization.HashtagLabel;
-import edu.allegheny.TweetAnalyze.analytics.visualization.FrequencyVisualization;
+import edu.allegheny.TweetAnalyze.ui.gui.HashtagLabel;
+import edu.allegheny.TweetAnalyze.ui.FrequencyVisualization;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;

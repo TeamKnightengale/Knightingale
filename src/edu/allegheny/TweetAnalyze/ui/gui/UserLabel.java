@@ -1,4 +1,4 @@
-package edu.allegheny.TweetAnalyze.analytics.visualization;
+package edu.allegheny.TweetAnalyze.ui.gui;
 
 import java.net.URI;
 import java.net.URISyntaxException;

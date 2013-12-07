@@ -104,7 +104,7 @@
 	</target>
 	
 	<target name="usercloud" depends="compile">
-		<java fork="true" classname="edu.allegheny.TweetAnalyze.analytics.visualization.UserCloud" maxmemory="1024m">
+		<java fork="true" classname="edu.allegheny.TweetAnalyze.ui.gui.UserCloud" maxmemory="1024m">
 			<arg line="${args}"/>
 			<classpath refid="run.classpath" />
         </java>
