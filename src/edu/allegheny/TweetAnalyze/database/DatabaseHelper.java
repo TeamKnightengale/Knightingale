@@ -19,13 +19,12 @@ import edu.allegheny.TweetAnalyze.LogConfigurator; // REMOVE WHEN MAIN METHOD IS
 
 public class DatabaseHelper
 {
-    private static Connection c = null;
-    private static Statement stmt = null;
-    private static ResultSet rs = null;
     private static SimpleDateFormat timestampFormat = new SimpleDateFormat("yyyy-MM-dd kk:mm:ss z");
-
-
-    public static void main(String[] argv) throws Exception
+    private  Connection c = null;
+    private  Statement stmt = null;
+    private  ResultSet rs = null;
+    
+    public void main(String[] argv) throws Exception
     {
         try {
             LogConfigurator.setup(); // setup the logger.
@@ -41,7 +40,7 @@ public class DatabaseHelper
         System.out.println(db.getLastTweetID());
     }
 
-    public static void createTweetsTable() 
+    public void createTweetsTable() 
     {
         try 
         {
@@ -68,7 +67,7 @@ public class DatabaseHelper
             }
     }
 
-    public static void dropTweetsTable()
+    public void dropTweetsTable()
     {
         try {
             Class.forName("org.sqlite.JDBC");
@@ -86,7 +85,7 @@ public class DatabaseHelper
         }
     }
 
-    public static ResultSet execute(String query)
+    public ResultSet execute(String query)
     {
         try
         {
@@ -112,7 +111,7 @@ public class DatabaseHelper
         return null;
     }
 
-    public static void insertTweets(ArrayList<Tweet> tweets) 
+    public void insertTweets(ArrayList<Tweet> tweets) 
     {
         try 
         {
@@ -174,7 +173,7 @@ public class DatabaseHelper
             }
     }
 
-    public static ArrayList<Tweet> getAllTweets() throws ParseException
+    public ArrayList<Tweet> getAllTweets() throws ParseException
     {
         ArrayList<Tweet> tweets = new ArrayList<Tweet>();
         try 
@@ -194,7 +193,7 @@ public class DatabaseHelper
         return tweets;
     }
 
-    public static long getLastTweetID()
+    public long getLastTweetID()
     {
         String query = "select tweet_id from tweets order by tweet_id desc limit 1";
         ResultSet resultset = execute(query);
