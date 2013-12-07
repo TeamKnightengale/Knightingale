@@ -7,6 +7,11 @@ import 	org.junit.*;
 import 	org.junit.runner.RunWith;
 import 	org.junit.runners.JUnit4;
 
+import	java.util.logging.Logger;
+import	java.util.logging.Level;
+import 	java.util.logging.Handler;
+import 	java.util.logging.LogRecord;
+
 /**
  * Provides logging functionality to a JUnit test class.
  */
@@ -14,13 +19,31 @@ import 	org.junit.runners.JUnit4;
 @RunWith(JUnit4.class)
 public class LoggingTest {
 
+	protected Logger testLogger;
+	protected TestHandler testHandler;
+
 	@Before
 	public void setUpLoggingTest() {
-		System.setProperty("log4j.configuration", new File(new File("").getAbsolutePath() + "/config/logging/test_logging.xml").toString());
+		testLogger = Logger.getLogger("");
+   		testHandler = new TestHandler();
+    	testHandler.setLevel(Level.ALL);
+    	testLogger.setUseParentHandlers(false);
+    	testLogger.addHandler(testHandler);
+    	testLogger.setLevel(Level.ALL);
 	}
+}
 
-	@After
-	public void tearDownLoggingTest() {
-		System.setProperty("log4j.configuration", new File(new File("").getAbsolutePath() + "/config/logging/log4j.xml").toString());
-	}
+class TestHandler extends Handler {
+    Level lastLevel = Level.FINEST;
+
+    public Level  checkLevel() {
+        return lastLevel;
+    }    
+
+    public void publish(LogRecord record) {
+        lastLevel = record.getLevel();
+    }
+
+    public void close(){}
+    public void flush(){}
 }

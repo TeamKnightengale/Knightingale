@@ -3,7 +3,7 @@ package edu.allegheny.TweetAnalyze.analytics;
 import edu.allegheny.TweetAnalyze.database.DatabaseHelper;
 
 import edu.allegheny.TweetAnalyze.analytics.*;
-import edu.allegheny.TweetAnalyze.analytics.visualization.*;
+import edu.allegheny.TweetAnalyze.ui.gui.*;
 
 import java.util.List;
 import java.util.ArrayList;
@@ -13,6 +13,8 @@ import java.sql.SQLException;
 import java.text.ParseException;
 
 import twitter4j.*;
+
+import edu.allegheny.TweetAnalyze.LogConfigurator; // REMOVE WHEN MAIN METHOD IS REMOVED
 
 /**
  * Provides complex analytic methods for the TweetAnalyze database.
@@ -34,8 +36,9 @@ public class ComplexAnalyzer {
 	}
 
 	public static void main(String[] argv) {
-		try {
 
+		try {
+			LogConfigurator.setup(); // setup the logger.
 			ComplexAnalyzer analyzer = new ComplexAnalyzer(new DatabaseHelper());
 
 			Map<User, Integer> globalReplyFrequency = analyzer.getGlobalReplyFrequency();

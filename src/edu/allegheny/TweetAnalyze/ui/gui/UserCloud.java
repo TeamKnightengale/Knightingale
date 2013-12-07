@@ -19,6 +19,8 @@ import java.io.IOException;
 
 import twitter4j.*;
 
+import edu.allegheny.TweetAnalyze.LogConfigurator; // REMOVE WHEN MAIN METHOD IS REMOVED
+
 /**
  * Swing frequency visualization for Twitter users.
  *
@@ -72,7 +74,9 @@ public class UserCloud implements FrequencyVisualization{
      * This method should not be called in production builds. It may be retained in alphas for testing purposes.
      */
     public static void main(String[] argv) {
+
     	try {
+    		LogConfigurator.setup(); // setup the logger.
 	   	    FrequencyVisualization a = new UserCloud(ComplexAnalytics.getGlobalRetweetFrequency(), "Demo RetweetCloud");
 	   	   	FrequencyVisualization b = new UserCloud(ComplexAnalytics.getGlobalReplyFrequency(), "Demo ReplyCloud");
 	    	
