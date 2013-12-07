@@ -113,7 +113,7 @@
 
 	<!-- RUNNING TASK - "ant db" -->
 	<target name="db" depends="compile">
-		<java fork="true" classname="edu.allegheny.TweetAnalyze.Database.DatabaseHelper" maxmemory="1024m">
+		<java fork="true" classname="edu.allegheny.TweetAnalyze.database.DatabaseHelper" maxmemory="1024m">
 			<arg line="${args}"/>
 			<classpath refid="run.classpath" />
         </java>
