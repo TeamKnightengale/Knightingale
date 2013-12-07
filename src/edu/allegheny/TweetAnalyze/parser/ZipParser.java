@@ -100,7 +100,7 @@ public class ZipParser {
 	 */
 	public static void extractTweetsCSV (ZipFile target, File dest) throws ZipException {
 
-		LOGGER.fine("ZipParser: extracting Tweets.csv from " + target. + ".");
+		LOGGER.fine("ZipParser: extracting Tweets.csv from " + target + ".");
 
 		target.extractFile("tweets.csv", dest.getPath());
 	}
