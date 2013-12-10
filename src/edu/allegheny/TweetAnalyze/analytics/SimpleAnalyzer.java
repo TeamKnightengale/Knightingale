@@ -139,13 +139,14 @@ public class SimpleAnalyzer {
 	}
 
 	/**
-	 * @return a List containg all users that have been replied to
+	 * @return a List containg all users that have been replied to with count
+	 * of times replied to
 	 */
 	public List<Long> repliedToUsers () throws SQLException, ParseException {
 		List<Long> repliedToUserIDs = new ArrayList<Long>();
-		String repliedToUsersQuery = "SELECT DISTINCT in_reply_to_user_id "
-									+ "FROM Tweets " 
-									+ "WHERE in_reply_to_user_id IS NOT 0";
+		String repliedToUsersQuery = "SELECT DISTINCT in_reply_to_user_id, COUNT (*)"
+								+ "FROM tweets " 
+								+ "GROUP BY in_reply_to_user_id";
 
 		ResultSet repliedToUserIDsResultSet = db.execute(repliedToUsersQuery);	  
 
@@ -176,10 +177,9 @@ public class SimpleAnalyzer {
 	 */
 	public List<Long> retweetedUsers () throws SQLException, ParseException {
 		List<Long> retweetedUserIDs = new ArrayList<Long>();
-		String retweetedUsersQuery = "SELECT DISTINCT retweeted_status_user_id "
-									+ "FROM Tweets " 
-									+ "WHERE retweeted_status_user_id IS NOT 0";
-
+		String retweetedUsersQuery = "SELECT DISTINCT retweeted_status_user_id, COUNT(*) "
+								+ "FROM Tweets " 
+								+ "GROUP BY retweed_status_user_id DES";
 		ResultSet retweetedUserIDsResultSet = db.execute(retweetedUsersQuery);	  
 
 		while (retweetedUserIDsResultSet.next())
