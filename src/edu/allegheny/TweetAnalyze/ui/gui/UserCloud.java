@@ -1,8 +1,10 @@
 package edu.allegheny.TweetAnalyze.ui.gui;
 
-import edu.allegheny.TweetAnalyze.analytics.ComplexAnalytics;
+import edu.allegheny.TweetAnalyze.analytics.ComplexAnalyzer;
+
 import edu.allegheny.TweetAnalyze.ui.gui.UserLabel;
 import edu.allegheny.TweetAnalyze.ui.FrequencyVisualization;
+import edu.allegheny.TweetAnalyze.database.DatabaseHelper;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -76,9 +78,10 @@ public class UserCloud implements FrequencyVisualization{
     public static void main(String[] argv) {
 
     	try {
+    		ComplexAnalyzer analyzer = new ComplexAnalyzer(new DatabaseHelper());
     		LogConfigurator.setup(); // setup the logger.
-	   	    FrequencyVisualization a = new UserCloud(ComplexAnalytics.getGlobalRetweetFrequency(), "Demo RetweetCloud");
-	   	   	FrequencyVisualization b = new UserCloud(ComplexAnalytics.getGlobalReplyFrequency(), "Demo ReplyCloud");
+	   	    FrequencyVisualization a = new UserCloud(analyzer.getGlobalRetweetFrequency(), "Demo RetweetCloud");
+	   	   	FrequencyVisualization b = new UserCloud(analyzer.getGlobalReplyFrequency(), "Demo ReplyCloud");
 	    	
 	    	a.visualize();
 	    	b.visualize();
