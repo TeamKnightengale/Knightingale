@@ -146,7 +146,7 @@ public class SimpleAnalyzer {
 		List<Long> repliedToUserIDs = new ArrayList<Long>();
 		String repliedToUsersQuery = "SELECT DISTINCT in_reply_to_user_id, COUNT (*)"
 								+ "FROM tweets " 
-								+ "GROUP BY in_reply_to_user_id";
+								+ "GROUP BY in_reply_to_user_id DESC";
 
 		ResultSet repliedToUserIDsResultSet = db.execute(repliedToUsersQuery);	  
 
@@ -179,7 +179,7 @@ public class SimpleAnalyzer {
 		List<Long> retweetedUserIDs = new ArrayList<Long>();
 		String retweetedUsersQuery = "SELECT DISTINCT retweeted_status_user_id, COUNT(*) "
 								+ "FROM Tweets " 
-								+ "GROUP BY retweed_status_user_id DES";
+								+ "GROUP BY retweed_status_user_id DESC";
 		ResultSet retweetedUserIDsResultSet = db.execute(retweetedUsersQuery);	  
 
 		while (retweetedUserIDsResultSet.next())
