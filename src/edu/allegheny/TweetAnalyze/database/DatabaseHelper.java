@@ -79,10 +79,7 @@ public class DatabaseHelper
             stmt = c.createStatement();
             String sql = "Create Table users(" +
                 "user_id INTEGER PRIMARY KEY,"+
-		"user_name VARCHAR," +
-                "hashtag VARCHAR," +
-		"retweet_count INTEGER," +
-		"reply_count INTEGER);";
+		"user_name VARCHAR);";
             stmt.executeUpdate(sql);
             stmt.close();
             c.close();
@@ -93,31 +90,6 @@ public class DatabaseHelper
      
 	}
 
-/*
-    public static void createTrigger()
-    {
-	try
-	{
-	    Class.forName("org.sqlite.JDBC");
-	    c = DriverManager.getConnection("jdbc:sqlite:tweets.db");
-	    stmt = c.createStatement();
-	    String retweetcount = "SELECT COUNT (*) FROM tweets WHERE " +
-				  "retweeted_status_id IS NOT 0";
-	    String replycount = "SELECT COUNT (*) FROM tweets WHERE " +
-				"in_reply_to_status_id IS NOT 0";
-
-	    String sql = "Create TRIGGER usersBuild AFTER INSERT ON tweets" +
-			 " BEGIN INSERT INTO users (user_id, user_name, retweet_count, " +
-			 "reply_count);" + "VALUES(New.tweet_id, New.user_name , retweetcount," + 				 "replycount); END";
-	    stmt.executeUpdate(sql);
-	    stmt.close();
-	    } catch(Exception e) {
-		System.out.println("-------Problems Creating Table-------");
-                e.printStackTrace();
-            }
-     
-	}
-*/
     public static void dropTweetsTable()
     {
         try {
@@ -125,7 +97,8 @@ public class DatabaseHelper
             c = DriverManager.getConnection("jdbc:sqlite:tweets.db");
             c.setAutoCommit(false);
             stmt = c.createStatement();
-            stmt.executeUpdate("DROP TABLE IF EXISTS Tweets");   
+            stmt.executeUpdate("DROP TABLE IF EXISTS tweets");
+            stmt.executeUpdate("DROP TABLE IF EXISTS users");   
             stmt.close();
             c.commit();
             c.close();
