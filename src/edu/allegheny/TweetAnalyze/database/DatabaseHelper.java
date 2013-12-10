@@ -37,8 +37,8 @@ public class DatabaseHelper
         db.dropTweetsTable();
         db.createTweetsTable();
 	db.createUsersTable();
-//	db.createTrigger();
         db.insertTweets((ArrayList<Tweet>) ZipParser.parse(zipFile));
+	db.insertUser();
         db.getAllTweets();
         System.out.println(db.getLastTweetID());
     }
@@ -197,6 +197,26 @@ public class DatabaseHelper
             }
     }
 
+    public static void insertUser()
+    {
+	try {
+            Class.forName("org.sqlite.JDBC");
+            c = DriverManager.getConnection("jdbc:sqlite:tweets.db");
+            c.setAutoCommit(false);
+            stmt = c.createStatement();
+            stmt.executeUpdate("INSERT INTO users (user_id) " +
+			       "SELECT DISTINCT(in_reply_to_user_id, retweeted_status_id) " +
+			       "FROM tweets WHERE in_reply_to_user_id AND retweet_status_id" +
+			       " IS NOT 0");   
+            stmt.close();
+            c.commit();
+            c.close();
+        }catch(Exception e) 
+        {
+            System.out.println("\n\nProblem Updating Tweet Entries \n");
+            e.printStackTrace();
+        }
+    }
     public static ArrayList<Tweet> getAllTweets() throws ParseException
     {
         ArrayList<Tweet> tweets = new ArrayList<Tweet>();

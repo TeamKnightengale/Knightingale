@@ -144,9 +144,10 @@ public class SimpleAnalyzer {
 	 */
 	public List<Long> repliedToUsers () throws SQLException, ParseException {
 		List<Long> repliedToUserIDs = new ArrayList<Long>();
-		String repliedToUsersQuery = "SELECT DISTINCT in_reply_to_user_id, COUNT (*)"
-								+ "FROM tweets " 
-								+ "GROUP BY in_reply_to_user_id DESC";
+		String repliedToUsersQuery = "SELECT DISTINCT in_reply_to_user_id as rid, COUNT (*) "
+								+ "FROM Tweets " 
+								+ "GROUP BY in_reply_to_user_id "
+								+ "ORDER BY rid DESC";
 
 		ResultSet repliedToUserIDsResultSet = db.execute(repliedToUsersQuery);	  
 
@@ -177,9 +178,9 @@ public class SimpleAnalyzer {
 	 */
 	public List<Long> retweetedUsers () throws SQLException, ParseException {
 		List<Long> retweetedUserIDs = new ArrayList<Long>();
-		String retweetedUsersQuery = "SELECT DISTINCT retweeted_status_user_id, COUNT(*) "
-								+ "FROM Tweets " 
-								+ "GROUP BY retweed_status_user_id DESC";
+		String retweetedUsersQuery = "SELECT DISTINCT retweeted_status_user_id AS id, COUNT(*) "
+							+ "FROM Tweets " 
+							+ "GROUP BY retweeted_status_user_id "  							+ "ORDER BY id DESC";
 		ResultSet retweetedUserIDsResultSet = db.execute(retweetedUsersQuery);	  
 
 		while (retweetedUserIDsResultSet.next())
