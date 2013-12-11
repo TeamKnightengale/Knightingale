@@ -205,9 +205,8 @@ public class DatabaseHelper
             c.setAutoCommit(false);
             stmt = c.createStatement();
             stmt.executeUpdate("INSERT INTO users (user_id) " +
-			       "SELECT DISTINCT(in_reply_to_user_id, retweeted_status_id) " +
-			       "FROM tweets WHERE in_reply_to_user_id AND retweet_status_id" +
-			       " IS NOT 0");   
+			       "SELECT in_reply_to_user_id FROM tweets " +
+			       "UNION SELECT retweeted_status_user_id FROM tweets");   
             stmt.close();
             c.commit();
             c.close();
