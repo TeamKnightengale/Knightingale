@@ -54,10 +54,18 @@ public class SimpleAnalyzer {
 			System.out.println(t.getText());
 		}
 
-		System.out.println("\n\nList of people you reply to : \n");
+		System.out.println("\n\nList of people you reply to: \n");
 		
 		List<Long> repliedUsers = analyzer.repliedToUsers();
 		for (Long l : repliedUsers)
+		{
+			System.out.println(l);
+		}
+
+		System.out.println("\n\nList of people you've retweeted: \n");
+		
+		List<Long> retweetedUsers = analyzer.retweetedUsers();
+		for (Long l : retweetedUsers)
 		{
 			System.out.println(l);
 		}
