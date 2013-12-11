@@ -7,14 +7,15 @@ import java.util.ArrayList;
 import java.text.SimpleDateFormat;
 import java.text.ParseException;
 import twitter4j.*;
+import java.sql.*;
 
 /**
 * Builds Tweets
 *
 * @author	Dibyo Mukherjee
 * @author	Hawk Weisman
-* @version	1.5
-* @since	November 30, 1013
+* @version	2.0
+* @since	December 2, 2013
 */
 
 public class TweetBuilder
@@ -165,4 +166,34 @@ public class TweetBuilder
 
 		return tweet;
 	}
-}
+
+	/**
+	* @param 	line An array containing the components of a tweet in the order they are given in a tweets.csv file
+	* @throws	ParseException in the event of a problem parsing timestamps
+	* @return 	an ArrayList of Tweets
+	* @author 	Dibyo Mukherjee
+	*/
+	
+	public static ArrayList<Tweet> buildTweetFromResultSet(ResultSet rs) throws ParseException, SQLException
+	{
+		String[] line = new String[10];
+		ArrayList<Tweet> tweets = new ArrayList<Tweet>(); 
+		while (rs.next()) 
+		{	
+			
+			line[0] = new Long(rs.getLong("tweet_id")).toString();
+			line[1] = new Long(rs.getLong("in_reply_to_status_id")).toString();
+			line[2] = new Long(rs.getLong("in_reply_to_user_id")).toString();
+			line[3] = timestampFormat.format(new Date(rs.getLong("timestamp")));
+			line[4] = rs.getString("source");
+			line[5] = rs.getString("text");
+			line[6] = new Long(rs.getLong("retweeted_status_id")).toString();
+			line[7] = new Long(rs.getLong("retweeted_status_user_id")).toString();
+			line[8] = timestampFormat.format(new Date(rs.getLong("retweeted_status_timestamp")));
+			line[9] = rs.getString("expanded_urls");
+			tweets.add(buildTweet(line));			
+		}
+		return tweets;
+	}
+	
+	}

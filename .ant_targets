@@ -1,0 +1,13 @@
+	clean
+	compile
+	run
+	TweetAnalyze
+	analyze
+	db
+	token
+	refresh
+	test
+	coveragetest
+	coverage
+	ncss
+	javadoc

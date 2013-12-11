@@ -74,3 +74,4 @@ eclim/.eclimrc_k
 
 #Java
 *.class
+tweets.db

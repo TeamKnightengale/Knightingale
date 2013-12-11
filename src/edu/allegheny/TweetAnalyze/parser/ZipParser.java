@@ -8,7 +8,7 @@
  *
  */
 
-package edu.allegheny.TweetAnalyze.Parser;
+package edu.allegheny.TweetAnalyze.parser;
 
 import	java.io.File;
 import	java.io.IOException;
@@ -22,8 +22,7 @@ import	edu.allegheny.TweetAnalyze.Tweet;
 import	net.lingala.zip4j.core.ZipFile;
 import	net.lingala.zip4j.exception.ZipException;
 
-import	org.apache.logging.log4j.LogManager;
-import	org.apache.logging.log4j.Logger;
+import	java.util.logging.Logger;
 
 /**
  * Contains methods for expanding zipped Twitter archives, locating Tweet CSV 
@@ -35,7 +34,8 @@ import	org.apache.logging.log4j.Logger;
  */
 public class ZipParser {
 
-	public static Logger logger = LogManager.getFormatterLogger(ZipParser.class.getName());
+	public static Logger logger = Logger.getLogger(ZipParser.class.getName());
+	private static File tempDir, temp;
 
 	/**
 	 * Parse: runs the complete parsing process.
@@ -48,50 +48,28 @@ public class ZipParser {
 		List<Tweet> output = null;
 
 		try {
-				if (logger.isDebugEnabled()) {
-					logger.debug("ZipParser: Target file is %s", target);
-				}
+				logger.fine("ZipParser: Target file is " + target + ".");
 			
-				File 		tempDir = new File(getRelativePath() + "/TweetAnalyzeTemp/");
-				File 		temp = new File (getRelativePath() + "/TweetAnalyzeTemp/tweets.csv");
-				ZipFile 	archive = new ZipFile(target);
+				tempDir = new File(getRelativePath() + "/TweetAnalyzeTemp/");
+				temp = new File (getRelativePath() + "/TweetAnalyzeTemp/tweets.csv");
+				ZipFile archive = new ZipFile(target);
 
 				// Extract the CSV file from the archive
 				extractTweetsCSV(archive, tempDir);
 
-				if (logger.isDebugEnabled()) {
-					logger.debug("ZipParser: Tweets.csv extracted, passing control to CSVParser");
-				}
+				logger.fine("ZipParser: Tweets.csv extracted, passing control to CSVParser.");
 				
 				// Return the Tweet array list from the parser ParseFile method
 				output = CSVParser.parseFile(temp);
 
-				if (temp.delete() == false) {
-					logger.error("ZipParser: failed to delete temporary file %s", temp.getPath());
-				} else if (logger.isDebugEnabled()) {
-					logger.debug("ZipParser: deleted temporary file %s", temp.getPath());
-				}				return output;
 		} 
 
-		// Log any ZipExceptions to error with stack traces.
-		catch (ZipException e) {
-			logger.error("ZipParser: Caught ZipException while decompressing tweets.zip", e);
-		}
-
-		// Log any IOExceptions to error with stack traces
-		catch (IOException e) {
-			logger.error("ZipParser: Caught IOException while opening tweets.csv", e);
-		}
-
-		// Log any ParseExceptions to error with stack traces
-		catch (ParseException e) {
-			logger.error("ZipParser: Caught a ParseException while parsing dates from tweets.csv", e);
-		}
-
-		// Log any other exceptions with stack traces
+		// Log exceptions
 		catch (Exception e) {
-			logger.error("ZipParser: Caught an unexpected exception", e);
+			logger.severe("ZipParser: Caught an unexpected exception\n" + e);
 		}
+
+		cleanUp(tempDir, temp);
 
 		return output;
 	}
@@ -105,10 +83,22 @@ public class ZipParser {
 	 */
 	public static void extractTweetsCSV (ZipFile target, File dest) throws ZipException {
 
-		if (logger.isDebugEnabled()) {
-			logger.debug("ZipParser: extracting Tweets.csv from %s", target);
-		}
+		logger.fine("ZipParser: extracting Tweets.csv from " + target + ".");
+
 		target.extractFile("tweets.csv", dest.getPath());
+	}
+
+	public static void cleanUp (File tempDir, File temp){
+		if (temp.delete() == false) 
+			logger.severe("ZipParser: failed to delete temporary file " + temp.getPath() + ".");
+		else 
+			logger.fine("ZipParser: deleted temporary file " + temp.getPath() + ".");
+		
+
+		if (tempDir.delete() == false) 
+			logger.severe("ZipParser: failed to delete temporary directory" + tempDir.getPath() + ".");
+		else 
+			logger.fine("ZipParser: deleted temporary directory " + tempDir.getPath() + ".");
 	}
 
 	private static String getRelativePath () {

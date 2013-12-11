@@ -8,6 +8,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.ArrayList;
 
+import edu.allegheny.TweetAnalyze.database.DatabaseHelper;
+
 /**
  * Get recent tweets and store them in the db
  * @author Dibyo Mukherjee
@@ -17,20 +19,22 @@ import java.util.ArrayList;
 public class TweetRefreshClient
 {
 	private AccessTokenHelper tokenHelper;
+	private DatabaseHelper db;
 
-	public TweetRefreshClient()
+	public TweetRefreshClient(DatabaseHelper db)
 	{
 		this.tokenHelper = new AccessTokenHelper();
+		this.db = db;
 	}
 
 	public static void main(String argv[]) 
 	{
-		long since_id = Long.parseLong("386276101074714624");
-		TweetRefreshClient client = new TweetRefreshClient();
-		client.refreshTweets();
+		TweetRefreshClient client = new TweetRefreshClient(new DatabaseHelper());
+		int numberOfNewTweets = client.refreshTweets();
+		System.out.println("\n" + numberOfNewTweets + " new tweets\n");
 	}
 
-	public void refreshTweets()
+	public int refreshTweets()
 	{
 		//Make sure you have the right Access Tokens
 		if (! tokenHelper.hasToken())
@@ -39,14 +43,20 @@ public class TweetRefreshClient
 			this.refreshCredentials();
 		}
 		
-		long since_id = Long.parseLong("386276101074714624");
-		List<Tweet> tweets = this.getRecentTweets(since_id);
-		for(Tweet tweet : tweets)
+		//Get the last tweet id
+		long since_id = db.getLastTweetID();
+
+		//Get the tweets
+		ArrayList<Tweet> newTweets = (ArrayList<Tweet>) this.getRecentTweets(since_id);
+		
+		//Save it to db
+		if(newTweets.size() > 0)
 		{
-			System.out.println(tweet.getText());
+			db.insertTweets(newTweets);	
+			db.insertUser();	// check to see if there are new users
 		}
 		
-		//Store them in dB
+		return newTweets.size();
 	}
 
 	/**
@@ -89,7 +99,5 @@ public class TweetRefreshClient
 
 		return tweets;
 	}
-
-
 
 }
