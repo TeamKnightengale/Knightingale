@@ -123,7 +123,7 @@ public class DatabaseHelper
 		}
 		catch(SQLException se)
 		{
-			logger.severe("SQLException in executing query" + query + ":\n" + e.getStackTrace());
+			logger.severe("SQLException in executing query" + query + ":\n" + se.getStackTrace());
 		}
 		catch(ClassNotFoundException e)
 		{
@@ -245,7 +245,7 @@ public class DatabaseHelper
 		}
 		catch(SQLException se)
 		{
-			logger.severe("SQLException while getting last tweet ID:\n" + e.getStackTrace());
+			logger.severe("SQLException while getting last tweet ID:\n" + se.getStackTrace());
 		}
 		
 		return  latest_tweet;
