@@ -80,8 +80,8 @@ public class UserCloud implements FrequencyVisualization{
     	try {
     		FrequencyAnalyzer analyzer = new FrequencyAnalyzer(new DatabaseHelper());
     		LogConfigurator.setup(); // setup the logger.
-	   	    FrequencyVisualization a = new UserCloud(analyzer.getGlobalRetweetFrequency(), "Demo RetweetCloud");
-	   	   	FrequencyVisualization b = new UserCloud(analyzer.getGlobalReplyFrequency(), "Demo ReplyCloud");
+	   	    FrequencyVisualization a = new UserCloud(analyzer.globalRetweetFrequency(), "Demo RetweetCloud");
+	   	   	FrequencyVisualization b = new UserCloud(analyzer.globalReplyFrequency(), "Demo ReplyCloud");
 	    	
 	    	a.visualize();
 	    	b.visualize();

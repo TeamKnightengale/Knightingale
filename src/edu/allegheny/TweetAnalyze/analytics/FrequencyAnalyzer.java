@@ -45,8 +45,8 @@ public class FrequencyAnalyzer {
 			LogConfigurator.setup(); // setup the logger.
 			FrequencyAnalyzer analyzer = new FrequencyAnalyzer(new DatabaseHelper());
 
-			Map<String, Integer> globalReplyFrequency = analyzer.getGlobalReplyFrequency();
-			Map<String, Integer> globalRetweetFrequency = analyzer.getGlobalRetweetFrequency();
+			Map<String, Integer> globalReplyFrequency = analyzer.globalReplyFrequency();
+			Map<String, Integer> globalRetweetFrequency = analyzer.globalRetweetFrequency();
 
 			System.out.println("#-----Printing raw reply data:\n");
 
@@ -70,9 +70,16 @@ public class FrequencyAnalyzer {
 	}
 
 	/**
-	 * @return a HashMap<String, Integer> where the Integers associated with each user represents the number of times that user has been replied to.
+	 * @return a Map <String, Integer> representing the frequency of hashtags in the database.
 	 */
-	public HashMap<String, Integer> getGlobalReplyFrequency () throws SQLException, ParseException, TwitterException {
+	public Map<String, Integer> globalHashtagFrequency () throws SQLException, ParseException {
+
+	}
+
+	/**
+	 * @return a Map<String, Integer> where the values associated with each user represent the number of times that user has been replied to.
+	 */
+	public Map<String, Integer> globalReplyFrequency () throws ParseException {
 
 		HashMap<String, Integer> frequencyMap = new HashMap<String, Integer>();
 		List<Long> repliedIDs = simpleAnalyzer.repliedToUsers();
@@ -82,12 +89,17 @@ public class FrequencyAnalyzer {
 		for (Long id : repliedIDs) {
 			if (id > 0){ // IDs must be nonzero
 
-				// execute the DB query for each ID
-				usernameResult = db.execute(usernameQuery + id.toString());
+				try {
+					// execute the DB query for each ID
+					usernameResult = db.execute(usernameQuery + id.toString());
+				
+					// unpack result set
+					while (usernameResult.next()) {
+						username = usernameResult.getString(1);
+					}
 
-				// unpack result set
-				while (usernameResult.next()) {
-					username = usernameResult.getString(1);
+				} catch (SQLException se) {
+					logger.log(Level.SEVERE, "SQLException occured during reply frequency analysis" + se);
 				}
 
 				if (username == null) { // we haven't gotten a name for this user yet
@@ -114,9 +126,9 @@ public class FrequencyAnalyzer {
 	}
 
 	/**
-	 * @return a HashMap<String, Integer> where the Integers associated with each user represents the number of times that user has been retweeted to.
+	 * @return a Map<String, Integer> where the Integers associated with each user represents the number of times that user has been retweeted to.
 	 */
-	public HashMap<String, Integer> getGlobalRetweetFrequency () throws SQLException, ParseException, TwitterException{
+	public Map<String, Integer> globalRetweetFrequency () throws SQLException, ParseException, TwitterException{
 
 		HashMap<String, Integer> frequencyMap = new HashMap<String, Integer>();
 		List<Long> repliedIDs = simpleAnalyzer.retweetedUsers();
@@ -126,16 +138,20 @@ public class FrequencyAnalyzer {
 		for (Long id : repliedIDs) {
 			if (id > 0){ // IDs must be nonzero
 
-				// execute the DB query for each ID
-				usernameResult = db.execute(usernameQuery + id.toString());
-
-				// unpack result set
-				while (usernameResult.next()) {
-					username = usernameResult.getString(1);
+				try {
+					// execute the DB query for each ID
+					usernameResult = db.execute(usernameQuery + id.toString());
+				
+					// unpack result set
+					while (usernameResult.next()) {
+						username = usernameResult.getString(1);
+					}
+				} catch (SQLException se) {
+					logger.log(Level.SEVERE, "SQLException occured during retweet frequency analysis" + se);
 				}
 
 				if (username == null) { // we haven't gotten a name for this user yet
-					try {
+					try {s
 						username = twitter.showUser(id).getScreenName();
 						logger.finer("Got a username for replied user " + id +".");
 					} catch (TwitterException te) {
