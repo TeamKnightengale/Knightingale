@@ -72,14 +72,14 @@ public class FrequencyAnalyzer {
 	/**
 	 * @return a Map <String, Integer> representing the frequency of hashtags in the database.
 	 */
-	public Map<String, Integer> globalHashtagFrequency () throws SQLException, ParseException {
+	public Map<String, Integer> globalHashtagFrequency () throws ParseException {
 
 	}
 
 	/**
 	 * @return a Map<String, Integer> where the values associated with each user represent the number of times that user has been replied to.
 	 */
-	public Map<String, Integer> globalReplyFrequency () throws ParseException {
+	public Map<String, Integer> globalReplyFrequency () {
 
 		HashMap<String, Integer> frequencyMap = new HashMap<String, Integer>();
 		List<Long> repliedIDs = simpleAnalyzer.repliedToUsers();
@@ -100,6 +100,8 @@ public class FrequencyAnalyzer {
 
 				} catch (SQLException se) {
 					logger.log(Level.SEVERE, "SQLException occured during reply frequency analysis" + se);
+				} catch (ParseException pe) {
+					logger.log(Level.SEVERE, "ParseException occured during reply frequency analysis" + se);
 				}
 
 				if (username == null) { // we haven't gotten a name for this user yet
@@ -115,7 +117,7 @@ public class FrequencyAnalyzer {
 						} else if (te.exceededRateLimitation()) {
 							logger.warning("You've exceeded the Twitter API rate limit and are being throttled.");
 						} else {
-							logger.log(Level.SEVERE, "Caught an unexpected TwitterException:" + te);
+							logger.log(Level.SEVERE, "Caught an unexpected TwitterException:" + pe);
 							}
 						}
 					frequencyMap.put(username, new Integer(simpleAnalyzer.getReplyCount(id)));
@@ -146,8 +148,11 @@ public class FrequencyAnalyzer {
 					while (usernameResult.next()) {
 						username = usernameResult.getString(1);
 					}
+
 				} catch (SQLException se) {
 					logger.log(Level.SEVERE, "SQLException occured during retweet frequency analysis" + se);
+				} catch (ParseException pe) {
+					logger.log(Level.SEVERE, "ParseException occured during retweet frequency analysis" + pe);
 				}
 
 				if (username == null) { // we haven't gotten a name for this user yet
