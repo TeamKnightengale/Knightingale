@@ -39,6 +39,11 @@ public class FrequencyAnalyzer {
 										+ "FROM users "
 										+ "WHERE user_id IS ";
 
+	//////////////////////////////////////////////////////////////////
+	// DEMO MAIN METHOD - SHOULD NOT OCCUR IN PRODUCTION BUILDS 	//
+	// Remove before flight, handle with care, so on and so forth.	//
+	// If this breaks, I warned you! ~ Hawk 						//
+	//////////////////////////////////////////////////////////////////
 	public static void main(String[] argv) {
 
 		try {
@@ -47,19 +52,27 @@ public class FrequencyAnalyzer {
 
 			Map<String, Integer> globalReplyFrequency = analyzer.globalReplyFrequency();
 			Map<String, Integer> globalRetweetFrequency = analyzer.globalRetweetFrequency();
+			Map<String, Integer> globalHashtagFrequency = analyzer.globalHashtagFrequency();
 
 			System.out.println("#-----Printing raw reply data:\n");
 
 			for (Map.Entry<String, Integer> entry : globalReplyFrequency.entrySet())
        			System.out.println(entry.getKey() + " has been replied to " + entry.getValue() + " times.");
 
-       		System.out.println("\n#-----Printing raw reply data:\n");
+       		System.out.println("\n#-----Printing raw retweet data:\n");
 
        		for (Map.Entry<String, Integer> entry : globalRetweetFrequency.entrySet())
        			System.out.println(entry.getKey() + " has been retweeted " + entry.getValue() + " times.");
 
-		} catch (Exception e) {
-			e.printStackTrace();
+       		System.out.println("\n#-----Printing hashtag frequency data:\n");
+
+       		for (Map.Entry<String, Integer> entry : globalHashtagFrequency.entrySet())
+       			System.out.println(entry.getKey() + " has occured " + entry.getValue() + " times.");
+
+		} catch (Exception ex) {
+			System.err.println ("Something bad happened in a demo method. You should never see this message in production builds. "
+	    	                    + "If you do, please find Hawk Weisman and let him know");
+	    	ex.printStackTrace(System.err);
 		}
 	}
 
@@ -126,7 +139,7 @@ public class FrequencyAnalyzer {
 							logger.finer("Got a username for replied user " + id +"."); // and log to finer
 						} catch (TwitterException te) {
 							if (te.getStatusCode() == 404) {
-								logger.info("Error getting username from ID number, the user with ID #" + id + " may no longer exist.");
+								logger.warning("Error getting username from ID number: the user with ID #" + id + " may no longer exist.");
 							} else if (te.isCausedByNetworkIssue()) {
 								logger.warning("You're having network issues and cannot connect to the Twitter API, try again later.");
 							} else if (te.exceededRateLimitation()) {
@@ -183,7 +196,7 @@ public class FrequencyAnalyzer {
 							logger.finer("Got a username for replied user " + id +".");
 						} catch (TwitterException te) {
 							if (te.getStatusCode() == 404) {
-								logger.info("Error getting username from ID number, the user with ID #" + id + " may no longer exist.");
+								logger.warning("Error getting username from ID number: the user with ID #" + id + " may no longer exist.");
 							} else if (te.isCausedByNetworkIssue()) {
 								logger.warning("You're having network issues and cannot connect to the Twitter API, try again later.");
 							} else if (te.exceededRateLimitation()) {
