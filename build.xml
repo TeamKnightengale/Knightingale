@@ -134,7 +134,7 @@
 	<!-- RUNNING TASK - "ant test" -->
 	<target name="test" depends="compile">
 		<junit fork="yes">
-			<test name="edu.allegheny.TweetAnalyze.test.MasterTestSuite" />
+			<test name="edu.allegheny.tweetanalyze.test.MasterTestSuite" />
 			<classpath refid="test.classpath.logging" />
 			<formatter type="brief" usefile="false" />
 		</junit>
