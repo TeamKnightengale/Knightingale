@@ -5,7 +5,7 @@
 //              /___/                /___/          
 //  Open-source Twitter analytics...with style!
 
-package edu.allegheny.TweetAnalyze.ui.gui;
+package edu.allegheny.tweetanalyze.ui.gui;
 
 import java.net.URI;
 import java.net.URISyntaxException;

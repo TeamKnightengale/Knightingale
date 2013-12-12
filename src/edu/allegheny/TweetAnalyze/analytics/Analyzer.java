@@ -1,11 +1,11 @@
-package edu.allegheny.TweetAnalyze.analytics;
+package edu.allegheny.tweetanalyze.analytics;
 
-import edu.allegheny.TweetAnalyze.Tweet;
-import edu.allegheny.TweetAnalyze.database.DatabaseHelper;
+import edu.allegheny.tweetanalyze.Tweet;
+import edu.allegheny.tweetanalyze.database.DatabaseHelper;
 
 //////////////////////////////////////////////////////
 // REMOVE BEFORE FLIGHT 							//
-import edu.allegheny.TweetAnalyze.LogConfigurator;  //
+import edu.allegheny.tweetanalyze.LogConfigurator;  //
 //////////////////////////////////////////////////////
 
 import java.util.Map;
@@ -34,17 +34,17 @@ public class Analyzer {
 			FrequencyAnalyzer frequencies = new FrequencyAnalyzer(new DatabaseHelper());
 			CompositionAnalyzer composition = new CompositionAnalyzer(new DatabaseHelper());
 			UserAnalyzer users = new UserAnalyzer(new DatabaseHelper());
-			SearchAnalyzer search = new SearchAnalyzer(new DatabaseHelper());
+			//SearchAnalyzer search = new SearchAnalyzer(new DatabaseHelper());
 
 			Map<String, Integer> globalReplyFrequency = frequencies.globalReplyFrequency();
 			Map<String, Integer> globalRetweetFrequency = frequencies.globalRetweetFrequency();
 			Map<String, Integer> globalHashtagFrequency = frequencies.globalHashtagFrequency();
 		
-			System.out.println("Tweets having " + argv[0] + " : \n");
-			List<Tweet> tweets = search.search(argv[0]);
+			// System.out.println("Tweets having " + argv[0] + " : \n");
+			// //List<Tweet> tweets = search.search(argv[0]);
 
-			for (Tweet t : tweets)
-				System.out.println(t.getText());
+			// for (Tweet t : tweets)
+			// 	System.out.println(t.getText());
 		
 			System.out.printf("\n%d%% of your tweets are retweets, and %d%% are replies.\n", composition.percentRetweets(), composition.percentReplies());
 

@@ -4,15 +4,6 @@ import com.beust.jcommander.*;
 
 public class CommandArgs
 {
-	public class DatabaseCommands
-	{
-
-	} 
-
-	public class AnalysisCommands
-	{
-
-	}
 
 	@Parameters(commandDescription = "Searches for all tweets with a word")
 	public class SearchCommand
@@ -26,6 +17,7 @@ public class CommandArgs
 		}
 	}
 	
+	@Parameters(commandDescription = "Get new tweets for the user from")
 	public class RefreshCommand
 	{
 

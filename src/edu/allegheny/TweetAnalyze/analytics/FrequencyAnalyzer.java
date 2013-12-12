@@ -5,12 +5,12 @@
 //              /___/                /___/          
 //  Open-source Twitter analytics...with style!
 
-package edu.allegheny.TweetAnalyze.analytics;
+package edu.allegheny.tweetanalyze.analytics;
 
-import edu.allegheny.TweetAnalyze.database.DatabaseHelper;
+import edu.allegheny.tweetanalyze.database.DatabaseHelper;
 
-import edu.allegheny.TweetAnalyze.analytics.*;
-import edu.allegheny.TweetAnalyze.ui.gui.*;
+import edu.allegheny.tweetanalyze.analytics.*;
+import edu.allegheny.tweetanalyze.ui.gui.*;
 
 import java.util.List;
 import java.util.ArrayList;
@@ -26,7 +26,7 @@ import java.text.ParseException;
 
 import twitter4j.*;
 
-import edu.allegheny.TweetAnalyze.LogConfigurator; // REMOVE WHEN MAIN METHOD IS REMOVED
+import edu.allegheny.tweetanalyze.LogConfigurator; // REMOVE WHEN MAIN METHOD IS REMOVED
 
 /**
  * Provides analyses that involve the frequency of typed elements in the database.

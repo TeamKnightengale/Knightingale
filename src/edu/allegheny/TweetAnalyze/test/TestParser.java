@@ -1,4 +1,4 @@
-package edu.allegheny.TweetAnalyze.test;
+package edu.allegheny.tweetanalyze.test;
 
 import 	static org.junit.Assert.fail;
 import 	static org.junit.Assert.*;
@@ -10,7 +10,7 @@ import 	org.junit.rules.ExpectedException;
 import 	org.junit.runner.RunWith;
 import 	org.junit.runners.JUnit4;
 
-import 	edu.allegheny.TweetAnalyze.parser.*;
+import 	edu.allegheny.tweetanalyze.parser.*;
 
 import	net.lingala.zip4j.core.ZipFile;
 import	net.lingala.zip4j.exception.ZipException;
@@ -22,12 +22,12 @@ import	java.io.File;
 import 	java.io.IOException;
 
 /**
- * Tests for {@link edu.allegheny.TweetAnalyze.parser}
+ * Tests for {@link edu.allegheny.tweetanalyze.parser}
  * 
  * @author	Hawk Weisman
  * @version	0.1
- * @see		edu.allegheny.TweetAnalyze.parser.CSVParser
- * @see		edu.allegheny.TweetAnalyze.parser.ZipParser
+ * @see		edu.allegheny.tweetanalyze.parser.CSVParser
+ * @see		edu.allegheny.tweetanalyze.parser.ZipParser
  */
 
 @RunWith(JUnit4.class)

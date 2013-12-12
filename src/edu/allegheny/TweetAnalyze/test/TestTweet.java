@@ -1,8 +1,8 @@
-package edu.allegheny.TweetAnalyze.test;
+package edu.allegheny.tweetanalyze.test;
 
 import static org.junit.Assert.*;
 
-import edu.allegheny.TweetAnalyze.Tweet;
+import edu.allegheny.tweetanalyze.Tweet;
 
 import java.util.ArrayList;
 import java.util.Date;

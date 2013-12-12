@@ -5,7 +5,7 @@
 //              /___/                /___/          
 //  Open-source Twitter analytics...with style!
 
-package edu.allegheny.TweetAnalyze.parser;
+package edu.allegheny.tweetanalyze.parser;
 
 import	java.io.File;
 import	java.io.IOException;
@@ -14,7 +14,7 @@ import	java.util.ArrayList;
 import	java.util.Formatter;
 import	java.text.ParseException;
 
-import	edu.allegheny.TweetAnalyze.Tweet;
+import	edu.allegheny.tweetanalyze.Tweet;
 
 import	net.lingala.zip4j.core.ZipFile;
 import	net.lingala.zip4j.exception.ZipException;
