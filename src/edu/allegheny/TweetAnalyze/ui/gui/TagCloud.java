@@ -62,6 +62,8 @@ public class TagCloud implements FrequencyVisualization{
 	       	panel.add(label);
 		}
 
+		cloud.setMinWeight(findMinimumWeight()); 
+
 	    frame.add(panel);
 	    frame.setSize(800, 600);
 	}
@@ -71,5 +73,15 @@ public class TagCloud implements FrequencyVisualization{
 	 */
     public void visualize() {
 		frame.setVisible(true);
+    }
+
+    private double findMinimumWeight() {
+    	double lowestWeight = 1.0;
+
+    	for (Tag tag : cloud.tags()) {
+    		if (tag.getWeight() < lowestWeight)
+    			lowestWeight = tag.getWeight();
+    	}
+    	return lowestWeight;
     }
 }
