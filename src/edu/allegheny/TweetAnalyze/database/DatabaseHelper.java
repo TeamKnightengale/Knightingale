@@ -45,7 +45,7 @@ public class DatabaseHelper
 		System.out.println(db.getLastTweetID());
 	}
 
-	public static void createTweetsTable() 
+	public void createTweetsTable() 
 	{
 		try 
 		{
@@ -71,7 +71,7 @@ public class DatabaseHelper
 			}
 	}
 
-	public static void createUsersTable()
+	public void createUsersTable()
 	{
 	try
 	{
@@ -90,7 +90,7 @@ public class DatabaseHelper
 	 
 	}
 
-	public static void dropTweetsTable()
+	public void dropTweetsTable()
 	{
 		try {
 			Class.forName("org.sqlite.JDBC");
@@ -108,7 +108,7 @@ public class DatabaseHelper
 		}
 	}
 
-	public static ResultSet execute(String query)
+	public ResultSet execute(String query)
 	{
 		try
 		{
@@ -133,7 +133,7 @@ public class DatabaseHelper
 		return null;
 	}
 
-	public static void insertTweets(ArrayList<Tweet> tweets) 
+	public void insertTweets(ArrayList<Tweet> tweets) 
 	{
 		try 
 		{
@@ -194,7 +194,7 @@ public class DatabaseHelper
 			}
 	}
 
-	public static void insertUser()
+	public void insertUser()
 	{
 	try {
 			Class.forName("org.sqlite.JDBC");
@@ -220,7 +220,7 @@ public class DatabaseHelper
 	 * @param 	username The String to insert at the matching userID
 	 * @param 	userID ID of the user at which to insert the username.
 	 */
-	public static void updateUsername(String username, long userID) {
+	public void updateUsername(String username, long userID) {
 		try {
 			Class.forName("org.sqlite.JDBC");
 			c = DriverManager.getConnection("jdbc:sqlite:tweets.db");
@@ -237,7 +237,7 @@ public class DatabaseHelper
 		}
 	}
 
-	public static ArrayList<Tweet> getAllTweets() throws ParseException
+	public ArrayList<Tweet> getAllTweets() throws ParseException
 	{
 		ArrayList<Tweet> tweets = new ArrayList<Tweet>();
 		try 
@@ -256,7 +256,7 @@ public class DatabaseHelper
 		return tweets;
 	}
 
-	public static long getLastTweetID()
+	public long getLastTweetID()
 	{
 		String query = "select tweet_id from tweets order by tweet_id desc limit 1";
 		ResultSet resultset = execute(query);
