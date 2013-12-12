@@ -2,7 +2,7 @@ package edu.allegheny.tweetanalyze.ui.cli;
 
 import com.beust.jcommander.*;
 
-public class KnightingaleCLIParameters
+public class CommandArgs
 {
 	public class DatabaseCommands
 	{
@@ -25,7 +25,7 @@ public class KnightingaleCLIParameters
 			return search;
 		}
 	}
-
+	
 	public class RefreshCommand
 	{
 
