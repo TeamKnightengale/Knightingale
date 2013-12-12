@@ -5,11 +5,11 @@
 //              /___/                /___/          
 //  Open-source Twitter analytics...with style!
 
-package edu.allegheny.TweetAnalyze.analytics;
+package edu.allegheny.tweetanalyze.analytics;
 
-import edu.allegheny.TweetAnalyze.Tweet;
-import edu.allegheny.TweetAnalyze.TweetBuilder;
-import edu.allegheny.TweetAnalyze.database.DatabaseHelper;
+import edu.allegheny.tweetanalyze.Tweet;
+import edu.allegheny.tweetanalyze.TweetBuilder;
+import edu.allegheny.tweetanalyze.database.DatabaseHelper;
 
 import java.util.List;
 import java.util.ArrayList;
@@ -19,7 +19,7 @@ import java.util.logging.Level;
 import java.sql.*;
 import java.text.ParseException;
 
-import edu.allegheny.TweetAnalyze.LogConfigurator; // REMOVE WHEN MAIN METHOD IS REMOVED
+import edu.allegheny.tweetanalyze.LogConfigurator; // REMOVE WHEN MAIN METHOD IS REMOVED
 
 /**
  * Searches the Tweets database and returns certain types of tweets.
@@ -32,7 +32,7 @@ import edu.allegheny.TweetAnalyze.LogConfigurator; // REMOVE WHEN MAIN METHOD IS
  */
 public class SearchAnalyzer extends Analyzer {
 	
-	public static Logger logger = Logger.getLogger(SimpleAnalyzer.class.getName());
+	public static Logger logger = Logger.getLogger(SearchAnalyzer.class.getName());
 
 	public SearchAnalyzer(DatabaseHelper db){
 		super(db);
