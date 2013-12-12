@@ -53,6 +53,7 @@ public class TweetRefreshClient
 		if(newTweets.size() > 0)
 		{
 			db.insertTweets(newTweets);	
+			db.insertUser();	// check to see if there are new users
 		}
 		
 		return newTweets.size();

@@ -9,6 +9,8 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.HashMap;
+import java.util.logging.Logger;
+
 import java.sql.SQLException;
 import java.text.ParseException;
 
@@ -26,14 +28,9 @@ import edu.allegheny.TweetAnalyze.LogConfigurator; // REMOVE WHEN MAIN METHOD IS
 
 public class ComplexAnalyzer {
 
+	public static Logger logger = Logger.getLogger(ComplexAnalyzer.class.getName());
 	private static Twitter twitter = TwitterFactory.getSingleton();
 	private SimpleAnalyzer simpleAnalyzer;
-	
-
-	public ComplexAnalyzer(DatabaseHelper db)
-	{
-		this.simpleAnalyzer = new SimpleAnalyzer(db);
-	}
 
 	public static void main(String[] argv) {
 
@@ -59,6 +56,11 @@ public class ComplexAnalyzer {
 		}
 	}
 
+	public ComplexAnalyzer(DatabaseHelper db)
+	{
+		this.simpleAnalyzer = new SimpleAnalyzer(db);
+	}
+
 	/**
 	 * @return a HashMap<User, Integer> where the Integers associated with each user represents the number of times that user has been replied to.
 	 */
@@ -68,7 +70,20 @@ public class ComplexAnalyzer {
 		List<Long> repliedIDs = simpleAnalyzer.repliedToUsers();
 
 		for (Long id : repliedIDs) {
-			frequencyMap.put(twitter.showUser(id), new Integer(simpleAnalyzer.getReplyCount(id)));
+			if (id > 0){ // IDs must be nonzero
+				try {
+					frequencyMap.put(twitter.showUser(id), new Integer(simpleAnalyzer.getReplyCount(id)));
+					logger.finer("Got a username for replied user " + id +".");
+				} catch (TwitterException te) {
+					if (te.getStatusCode() == 404) {
+						logger.info("Got a bad userID, the user with ID = " + id + " may no longer exist.");
+					} else if (te.getStatusCode() == 401) {
+						logger.warning("Twitter API rate limit exceeded.");
+					} else {
+						logger.severe("Caught an unexpected TwitterException:" + te.getStackTrace());
+					}
+				}
+			}
 		}
 
 		return frequencyMap;
@@ -84,9 +99,21 @@ public class ComplexAnalyzer {
 		List<Long> retweetedIDs = simpleAnalyzer.retweetedUsers();
 
 		for (Long id : retweetedIDs) {
-			frequencyMap.put(twitter.showUser(id), new Integer(simpleAnalyzer.getRetweetCount(id)));
+			if (id > 0) { // IDs must be nonzero
+				try {
+					frequencyMap.put(twitter.showUser(id), new Integer(simpleAnalyzer.getRetweetCount(id)));
+					logger.finer("Got a username for retweeted user " + id +".");
+				} catch (TwitterException te) {
+					if (te.getStatusCode() == 404) {
+						logger.info("Got a bad Twitter user ID, the user with ID " + id + " may no longer exist.");
+					} else if (te.getStatusCode() == 401) {
+						logger.warning("Twitter API rate limit exceeded.");
+					} else {
+						logger.severe("Caught an unexpected TwitterException:" + te.getStackTrace());
+					}
+				}
+			}
 		}
-
 		return frequencyMap;
 	}
 }

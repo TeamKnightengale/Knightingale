@@ -95,14 +95,15 @@
         </java>
 	</target>
 
-
+	<!-- RUNNING TASK - "ant replyFreq" -->
 	<target name="replyFreq" depends="compile">
-		<java fork="true" classname="edu.allegheny.TweetAnalyze.analytics.ComplexAnalytics" maxmemory="1024m">
+		<java fork="true" classname="edu.allegheny.TweetAnalyze.analytics.ComplexAnalyzer" maxmemory="1024m">
 			<arg line="${args}"/>
 			<classpath refid="run.classpath" />
         </java>
 	</target>
 	
+	<!-- RUNNING TASK - "ant usercloud" -->
 	<target name="usercloud" depends="compile">
 		<java fork="true" classname="edu.allegheny.TweetAnalyze.ui.gui.UserCloud" maxmemory="1024m">
 			<arg line="${args}"/>
