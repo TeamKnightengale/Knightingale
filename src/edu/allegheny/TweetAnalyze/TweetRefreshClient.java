@@ -1,3 +1,10 @@
+//     __ __     _      __   __  _                __   
+//    / //_/__  (_)__ _/ /  / /_(_)__  ___ ____ _/ /__ 
+//   / ,< / _ \/ / _ `/ _ \/ __/ / _ \/ _ `/ _ `/ / -_)
+//  /_/|_/_//_/_/\_, /_//_/\__/_/_//_/\_, /\_,_/_/\__/ 
+//              /___/                /___/          
+//  Open-source Twitter analytics...with style!
+
 package edu.allegheny.TweetAnalyze;
 
 import twitter4j.*;
@@ -53,6 +60,7 @@ public class TweetRefreshClient
 		if(newTweets.size() > 0)
 		{
 			db.insertTweets(newTweets);	
+			db.insertUser();	// check to see if there are new users
 		}
 		
 		return newTweets.size();

@@ -3,6 +3,8 @@
 	run
 	TweetAnalyze
 	analyze
+	replyFreq
+	usercloud
 	db
 	token
 	refresh

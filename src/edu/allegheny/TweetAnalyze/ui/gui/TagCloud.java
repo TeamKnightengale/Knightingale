@@ -1,6 +1,13 @@
+//     __ __     _      __   __  _                __   
+//    / //_/__  (_)__ _/ /  / /_(_)__  ___ ____ _/ /__ 
+//   / ,< / _ \/ / _ `/ _ \/ __/ / _ \/ _ `/ _ `/ / -_)
+//  /_/|_/_//_/_/\_, /_//_/\__/_/_//_/\_, /\_,_/_/\__/ 
+//              /___/                /___/          
+//  Open-source Twitter analytics...with style!
+
 package edu.allegheny.TweetAnalyze.ui.gui;
 
-import edu.allegheny.TweetAnalyze.analytics.ComplexAnalytics;
+import edu.allegheny.TweetAnalyze.analytics.FrequencyAnalyzer;
 import edu.allegheny.TweetAnalyze.ui.gui.HashtagLabel;
 import edu.allegheny.TweetAnalyze.ui.FrequencyVisualization;
 
@@ -55,6 +62,8 @@ public class TagCloud implements FrequencyVisualization{
 	       	panel.add(label);
 		}
 
+		cloud.setMinWeight(findMinimumWeight()); 
+
 	    frame.add(panel);
 	    frame.setSize(800, 600);
 	}
@@ -64,5 +73,15 @@ public class TagCloud implements FrequencyVisualization{
 	 */
     public void visualize() {
 		frame.setVisible(true);
+    }
+
+    private double findMinimumWeight() {
+    	double lowestWeight = 1.0;
+
+    	for (Tag tag : cloud.tags()) {
+    		if (tag.getWeight() < lowestWeight)
+    			lowestWeight = tag.getWeight();
+    	}
+    	return lowestWeight;
     }
 }
