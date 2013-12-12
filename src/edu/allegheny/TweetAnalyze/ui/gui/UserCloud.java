@@ -36,24 +36,24 @@ import edu.allegheny.TweetAnalyze.LogConfigurator; // REMOVE WHEN MAIN METHOD IS
  */
 public class UserCloud implements FrequencyVisualization{
 
-	protected Map<User, Integer> contents;
+	protected Map<String, Integer> contents;
 	protected JFrame frame;
 	protected JPanel panel;
 	protected Cloud cloud;
 
 	/**
-	 * @param users A frequency map of twitter4j User objects
+	 * @param users A frequency map of Twitter usernames (as Strings)
 	 * @param title A title for the UserCloud window
 	 */
-	public UserCloud (Map<User, Integer> users, String title) {
+	public UserCloud (Map<String, Integer> users, String title) {
 		contents = users;
 		frame = new JFrame(title);
 	    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	    panel = new JPanel();
 	    cloud = new Cloud();
 
-	    for (Map.Entry<User, Integer> entry : contents.entrySet())
-	        cloud.addTag(new Tag("@" + entry.getKey().getScreenName(), entry.getValue()));
+	    for (Map.Entry<String, Integer> entry : contents.entrySet())
+	        cloud.addTag(new Tag("@" + entry.getKey(), entry.getValue()));
 
         for (Tag tag : cloud.tags()) {
 	        final UserLabel label = new UserLabel(tag);
@@ -87,8 +87,9 @@ public class UserCloud implements FrequencyVisualization{
 	    	b.visualize();
 
 	    } catch (Exception ex) {
-	    	System.out.println ("Something bad happened in a demo method. You should never see this message in production builds. "
+	    	System.err.println ("Something bad happened in a demo method. You should never see this message in production builds. "
 	    	                    + "If you do, please find Hawk Weisman and let him know");
+	    	ex.printStackTrace(System.err);
 	    }
     }
 }

@@ -128,9 +128,9 @@ public class SimpleAnalyzer {
 	public int percentReplies () throws SQLException, ParseException {
 		double numTweets = 0, numReplies = 0;
 
-		String numTweetsQuery = "SELECT COUNT(*)FROM Tweets";
-		String numRepliesQuery = "SELECT COUNT(*)FROM Tweets WHERE in_reply_to_status_id IS NOT 0 AND" + 
-									" in_reply_to_user_id IS NOT 0";
+		String numTweetsQuery 	= "SELECT COUNT(*)FROM Tweets";
+		String numRepliesQuery 	= "SELECT COUNT(*)FROM Tweets WHERE in_reply_to_status_id IS NOT 0 AND" 
+								+ " in_reply_to_user_id IS NOT 0";
 
 		ResultSet numTweetsResultSet = db.execute(numTweetsQuery);
 		ResultSet numRepliesResultSet = db.execute(numRepliesQuery);
@@ -152,10 +152,10 @@ public class SimpleAnalyzer {
 	 */
 	public List<Long> repliedToUsers () throws SQLException, ParseException {
 		List<Long> repliedToUserIDs = new ArrayList<Long>();
-		String repliedToUsersQuery = "SELECT DISTINCT in_reply_to_user_id as rid, COUNT (*) "
-								+ "FROM Tweets " 
-								+ "GROUP BY in_reply_to_user_id "
-								+ "ORDER BY rid DESC";
+		String repliedToUsersQuery 	= "SELECT DISTINCT in_reply_to_user_id as rid, COUNT (*) "
+									+ "FROM Tweets " 
+									+ "GROUP BY in_reply_to_user_id "
+									+ "ORDER BY rid DESC";
 
 		ResultSet repliedToUserIDsResultSet = db.execute(repliedToUsersQuery);	  
 
@@ -186,9 +186,10 @@ public class SimpleAnalyzer {
 	 */
 	public List<Long> retweetedUsers () throws SQLException, ParseException {
 		List<Long> retweetedUserIDs = new ArrayList<Long>();
-		String retweetedUsersQuery = "SELECT DISTINCT retweeted_status_user_id AS id, COUNT(*) "
-							+ "FROM Tweets " 
-							+ "GROUP BY retweeted_status_user_id "  							+ "ORDER BY id DESC";
+		String retweetedUsersQuery 	= "SELECT DISTINCT retweeted_status_user_id AS id, COUNT(*) "
+									+ "FROM Tweets " 
+									+ "GROUP BY retweeted_status_user_id "
+									+ "ORDER BY id DESC";
 		ResultSet retweetedUserIDsResultSet = db.execute(retweetedUsersQuery);	  
 
 		while (retweetedUserIDsResultSet.next())
@@ -220,8 +221,8 @@ public class SimpleAnalyzer {
 	 */
 	public List<Tweet> tweetsInOctober () throws SQLException, ParseException {
 		List<Tweet> tweetsInOctober = new ArrayList<Tweet>();
-		String tweetsInOctoberQuery = "SELECT * FROM Tweets WHERE timestamp " + 
-									"BETWEEN '2013-09-30 23:59:59' AND '2013-11-01 00:00:01'";
+		String tweetsInOctoberQuery = "SELECT * FROM Tweets WHERE timestamp " 
+									+ "BETWEEN '2013-09-30 23:59:59' AND '2013-11-01 00:00:01'";
 
 		tweetsInOctober = TweetBuilder.buildTweetFromResultSet(db.execute(tweetsInOctoberQuery));	 
 
