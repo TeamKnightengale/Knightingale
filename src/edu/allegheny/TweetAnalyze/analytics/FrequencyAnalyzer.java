@@ -36,57 +36,20 @@ import edu.allegheny.TweetAnalyze.LogConfigurator; // REMOVE WHEN MAIN METHOD IS
  * @since	December 11, 2013
  */
 
-public class FrequencyAnalyzer {
+public class FrequencyAnalyzer extends Analyzer {
 
 	public static Logger logger = Logger.getLogger(FrequencyAnalyzer.class.getName());
 	private static Twitter twitter = TwitterFactory.getSingleton();
-	private SimpleAnalyzer simpleAnalyzer;
-	private DatabaseHelper db;
+	private UserAnalyzer userAnalyzer;
+	private HashtagAnalyzer hashtagAnalyzer;
 	private static String usernameQuery = "SELECT user_name "
 										+ "FROM users "
 										+ "WHERE user_id IS ";
 
-	//////////////////////////////////////////////////////////////////
-	// DEMO MAIN METHOD - SHOULD NOT OCCUR IN PRODUCTION BUILDS 	//
-	// Remove before flight, handle with care, so on and so forth.	//
-	// If this breaks, I warned you! ~ Hawk 						//
-	//////////////////////////////////////////////////////////////////
-	public static void main(String[] argv) {
-
-		try {
-			LogConfigurator.setup(); // setup the logger.
-			FrequencyAnalyzer analyzer = new FrequencyAnalyzer(new DatabaseHelper());
-
-			Map<String, Integer> globalReplyFrequency = analyzer.globalReplyFrequency();
-			Map<String, Integer> globalRetweetFrequency = analyzer.globalRetweetFrequency();
-			Map<String, Integer> globalHashtagFrequency = analyzer.globalHashtagFrequency();
-
-			System.out.println("#-----Printing raw reply data:\n");
-
-			for (Map.Entry<String, Integer> entry : globalReplyFrequency.entrySet())
-       			System.out.println(entry.getKey() + " has been replied to " + entry.getValue() + " times.");
-
-       		System.out.println("\n#-----Printing raw retweet data:\n");
-
-       		for (Map.Entry<String, Integer> entry : globalRetweetFrequency.entrySet())
-       			System.out.println(entry.getKey() + " has been retweeted " + entry.getValue() + " times.");
-
-       		System.out.println("\n#-----Printing hashtag frequency data:\n");
-
-       		for (Map.Entry<String, Integer> entry : globalHashtagFrequency.entrySet())
-       			System.out.println(entry.getKey() + " has occured " + entry.getValue() + " times.");
-
-		} catch (Exception ex) {
-			System.err.println ("Something bad happened in a demo method. You should never see this message in production builds. "
-	    	                    + "If you do, please find Hawk Weisman and let him know");
-	    	ex.printStackTrace(System.err);
-		}
-	}
-
-	public FrequencyAnalyzer(DatabaseHelper db)
-	{
-		this.simpleAnalyzer = new SimpleAnalyzer(db);
-		this.db = db;
+	public FrequencyAnalyzer(DatabaseHelper db) {
+		super(db);
+		this.userAnalyzer = new UserAnalyzer(db);
+		this.hashtagAnalyzer = new HashtagAnalyzer(db);
 	}
 
 	/**
@@ -95,18 +58,17 @@ public class FrequencyAnalyzer {
 	public Map<String, Integer> globalHashtagFrequency () {
 
 		HashMap<String, Integer> frequencyMap = new HashMap<String,Integer>();
-		List<String> hashtags = simpleAnalyzer.extractHashtags();
+		List<String> hashtags = hashtagAnalyzer.extractHashtags();
 
 		for (String hashtag : hashtags) {
 			try {
-				frequencyMap.put(hashtag, new Integer(simpleAnalyzer.hashtagCount(hashtag)));
+				frequencyMap.put(hashtag, new Integer(hashtagAnalyzer.hashtagCount(hashtag)));
 			} catch (SQLException se) {
 				logger.log(Level.SEVERE, "SQLException took place during hashtag frequency analysis", se);
 			} catch (ParseException pe) {
 				logger.log(Level.SEVERE, "ParseException took place during hashtag frequency analysis", pe);
 			}
 		}
-
 		return frequencyMap;
 	}
 
@@ -116,25 +78,23 @@ public class FrequencyAnalyzer {
 	public Map<String, Integer> globalReplyFrequency () {
 
 		HashMap<String, Integer> frequencyMap = new HashMap<String, Integer>();
-		List<Long> repliedIDs = null;
+		long id; 
+		int count;
 		String username = null; // assume we don't know the username.
+		ResultSet repliedIDs;
 		ResultSet usernameResult;
 
 		try {
-			repliedIDs = simpleAnalyzer.repliedToUsers();
-		} catch (SQLException se) {
-			logger.log(Level.SEVERE, "SQLException took place while getting replied user IDs from database", se);
-		} catch (ParseException pe) {
-			logger.log(Level.SEVERE, "ParseException took place while getting replied user IDs from database", pe);
-		}
+			repliedIDs = userAnalyzer.repliedToUsers();
+			
+			while (repliedIDs.next()) {
+				id = repliedIDs.getLong(1);
+				count = repliedIDs.getInt(2);
 
-		for (Long id : repliedIDs) {
-			if (id > 0){ // IDs must be nonzero
-
-				try {
+				if (id > 0){ // IDs must be nonzero
 					// execute the DB query for each ID
-					usernameResult = db.execute(usernameQuery + id.toString());
-					
+					usernameResult = db.execute(usernameQuery + id);
+						
 					// unpack result set
 					while (usernameResult.next()) 
 						username = usernameResult.getString(1);
@@ -143,27 +103,27 @@ public class FrequencyAnalyzer {
 						try {
 							username = twitter.showUser(id).getScreenName(); 			// get a username from twitter
 							db.updateUsername(username, id);							// update the db
-							logger.finer("Got a username for replied user " + id +"."); // and log to finer
-						} catch (TwitterException te) {
-							if (te.getStatusCode() == 404) {
-								logger.warning("Error getting username from ID number: the user with ID #" + id + " may no longer exist.");
-							} else if (te.isCausedByNetworkIssue()) {
-								logger.warning("You're having network issues and cannot connect to the Twitter API, try again later.");
-							} else if (te.exceededRateLimitation()) {
-								logger.warning("You've exceeded the Twitter API rate limit and are being throttled.");
-							} else {
-								logger.log(Level.SEVERE, "Caught an unexpected TwitterException:" + te);
+								logger.finer("Got a username for replied user " + id +"."); // and log to finer
+							} catch (TwitterException te) {
+								if (te.getStatusCode() == 404) {
+									logger.warning("Error getting username from ID number: the user with ID #" + id + " may no longer exist.");
+								} else if (te.isCausedByNetworkIssue()) {
+									logger.warning("You're having network issues and cannot connect to the Twitter API, try again later.");
+								} else if (te.exceededRateLimitation()) {
+									logger.warning("You've exceeded the Twitter API rate limit and are being throttled.");
+								} else {
+									logger.log(Level.SEVERE, "Caught an unexpected TwitterException:" + te);
 								}
 							}
-						frequencyMap.put(username, new Integer(simpleAnalyzer.getReplyCount(id)));
-					}
-
-				} catch (SQLException se) {
-					logger.log(Level.WARNING, "SQLException occured during reply frequency analysis" + se);
-				} catch (ParseException pe) {
-					logger.log(Level.WARNING, "ParseException occured during reply frequency analysis" + pe);
+						}
+					frequencyMap.put(username, new Integer(count));
 				}
 			}
+
+		} catch (SQLException se) {
+			logger.log(Level.WARNING, "SQLException occured during reply frequency analysis" + se);
+		} catch (ParseException pe) {
+			logger.log(Level.WARNING, "ParseException occured during reply frequency analysis" + pe);
 		}
 		return frequencyMap;
 	}
@@ -174,55 +134,51 @@ public class FrequencyAnalyzer {
 	public Map<String, Integer> globalRetweetFrequency () {
 
 		HashMap<String, Integer> frequencyMap = new HashMap<String, Integer>();
-		List<Long> retweetedIDs = null;
+		long id; 
+		int count;
 		String username = null; // assume we don't know the username.
+		ResultSet retweetIDs;
 		ResultSet usernameResult;
 
 		try {
-			retweetedIDs = simpleAnalyzer.retweetedUsers();
-		} catch (SQLException se) {
-			logger.log(Level.SEVERE, "SQLException took place while getting retweeted user IDs from database", se);
-		} catch (ParseException pe) {
-			logger.log(Level.SEVERE, "ParseException took place while getting retweeted user IDs from database", pe);
-		}
+			retweetIDs = userAnalyzer.retweetedUsers();
+			
+			while (retweetIDs.next()) {
+				id = retweetIDs.getLong(1);
+				count = retweetIDs.getInt(2);
 
-		for (Long id : retweetedIDs) {
-			if (id > 0){ // IDs must be nonzero
-
-				try {
+				if (id > 0){ // IDs must be nonzero
 					// execute the DB query for each ID
-					usernameResult = db.execute(usernameQuery + id.toString());
-				
+					usernameResult = db.execute(usernameQuery + id);
+						
 					// unpack result set
 					while (usernameResult.next()) 
 						username = usernameResult.getString(1);
 
 					if (username == null) { // we haven't gotten a name for this user yet
 						try {
-							username = twitter.showUser(id).getScreenName();
-							logger.finer("Got a username for replied user " + id +".");
-						} catch (TwitterException te) {
-							if (te.getStatusCode() == 404) {
-								logger.warning("Error getting username from ID number: the user with ID #" + id + " may no longer exist.");
-							} else if (te.isCausedByNetworkIssue()) {
-								logger.warning("You're having network issues and cannot connect to the Twitter API, try again later.");
-							} else if (te.exceededRateLimitation()) {
-								logger.warning("You've exceeded the Twitter API rate limit and are being throttled.");
-							} else {
-								logger.log(Level.SEVERE, "Caught an unexpected TwitterException:" + te);
+							username = twitter.showUser(id).getScreenName(); 			// get a username from twitter
+							db.updateUsername(username, id);							// update the db
+								logger.finer("Got a username for replied user " + id +"."); // and log to finer
+							} catch (TwitterException te) {
+								if (te.getStatusCode() == 404) {
+									logger.warning("Error getting username from ID number: the user with ID #" + id + " may no longer exist.");
+								} else if (te.isCausedByNetworkIssue()) {
+									logger.warning("You're having network issues and cannot connect to the Twitter API, try again later.");
+								} else if (te.exceededRateLimitation()) {
+									logger.warning("You've exceeded the Twitter API rate limit and are being throttled.");
+								} else {
+									logger.log(Level.SEVERE, "Caught an unexpected TwitterException:" + te);
+								}
 							}
 						}
-					}
-
-					frequencyMap.put(username, new Integer(simpleAnalyzer.getReplyCount(id)));
-
-				} catch (SQLException se) {
-					logger.log(Level.WARNING, "SQLException occured during retweet frequency analysis" + se);
-				} catch (ParseException pe) {
-					logger.log(Level.WARNING, "ParseException occured during retweet frequency analysis" + pe);
+					frequencyMap.put(username, new Integer(count));
 				}
-
 			}
+		} catch (SQLException se) {
+			logger.log(Level.WARNING, "SQLException occured during reply frequency analysis" + se);
+		} catch (ParseException pe) {
+			logger.log(Level.WARNING, "ParseException occured during reply frequency analysis" + pe);
 		}
 		return frequencyMap;
 	}
