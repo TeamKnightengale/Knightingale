@@ -26,6 +26,10 @@ public class DatabaseHelper
 	private static ResultSet rs = null;
 	private static SimpleDateFormat timestampFormat = new SimpleDateFormat("yyyy-MM-dd kk:mm:ss z");
 	public static Logger logger = Logger.getLogger(DatabaseHelper.class.getName());
+	
+	public DatabaseHelper()
+	{
+	}
 
 	public static void main(String[] argv) throws Exception
 	{
@@ -123,7 +127,7 @@ public class DatabaseHelper
 			return crs;
 		}
 		catch(SQLException se)
-		{
+		{//ava.lang.IncompatibleClassChangeError: Expected static method
 			logger.log(Level.SEVERE, "SQLException in executing query: " + query, se);
 		}
 		catch(ClassNotFoundException e)
