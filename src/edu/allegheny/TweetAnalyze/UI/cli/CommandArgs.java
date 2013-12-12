@@ -22,6 +22,7 @@ public class CommandArgs
 	public class SearchCommand
 	{
 		@Parameter(description = "words to search for")
+
 		private List<String> word;	
 
 		public String getWord()
@@ -70,6 +71,4 @@ public class CommandArgs
 			return type;
 		}
 	}
-
-
 }

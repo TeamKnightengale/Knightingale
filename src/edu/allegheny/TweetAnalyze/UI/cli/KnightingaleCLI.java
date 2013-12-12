@@ -22,7 +22,7 @@ import java.io.IOException;
 public class KnightingaleCLI
 {
 	DatabaseHelper db = new DatabaseHelper();
-	
+
 	public static void main(String[] args)
 	{
 		KnightingaleCLI cli = new KnightingaleCLI();
@@ -35,7 +35,6 @@ public class KnightingaleCLI
 		CommandArgs.FrequencyCommand frequency = commandargs.new FrequencyCommand();
 		CommandArgs.CompositionCommand composition = commandargs.new CompositionCommand();
 		CommandArgs.CloudCommand cloud = commandargs.new CloudCommand();
-
 		JCommander cmd = new JCommander(commandargs);
 		
 		cmd.addCommand("search", search);
@@ -74,7 +73,6 @@ public class KnightingaleCLI
 				break;
 				
 				default : cmd.usage();
-
 			}
 		}
 		catch(ParameterException e)
@@ -107,6 +105,7 @@ public class KnightingaleCLI
 
 	public void add(String file)
 	{
+
 		File zipFile = new File(file);
 		//@TODO : Check to see if table exists; if it does insert it, else create it
 		db.dropTweetsTable();
