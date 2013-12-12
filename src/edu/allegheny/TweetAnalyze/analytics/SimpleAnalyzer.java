@@ -7,6 +7,8 @@ import edu.allegheny.TweetAnalyze.database.DatabaseHelper;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.regex.*;
+import java.util.logging.Logger;
+import java.util.logging.Level;
 
 import java.sql.*;
 import java.text.ParseException;
@@ -25,6 +27,7 @@ import edu.allegheny.TweetAnalyze.LogConfigurator; // REMOVE WHEN MAIN METHOD IS
 public class SimpleAnalyzer {
 	
 	private DatabaseHelper db;
+	public static Logger logger = Logger.getLogger(SimpleAnalyzer.class.getName());
 
 	public SimpleAnalyzer(DatabaseHelper db)
 	{
@@ -247,18 +250,41 @@ public class SimpleAnalyzer {
 	 * @return a list of the hashtags that there are
 	 */
 	public List<String> extractHashtags () {
-		List<Tweets> taggedTweets = tweetsWithHashtag();
-		List<String> hashtags;
+		List<Tweet> taggedTweets = null; 
+		List<String> hashtags = null;
 		Pattern tagExtractor = Pattern.compile("#([A-Za-z0-9_]+)");
+
+		try {
+			taggedTweets = tweetsWithHashtag();
+		} catch (SQLException se) {
+			logger.log(Level.SEVERE, "SQLException took place while extracting hashtags", se);
+		} catch (ParseException pe) {
+			logger.log(Level.SEVERE, "ParseException took place while extracting hashtags", pe);
+		}
 
 		for (Tweet tweet : taggedTweets) {
 			Matcher lineMatcher = tagExtractor.matcher(tweet.getText());
 
 			// pattern-matching taketh place
 			while (lineMatcher.find()) 
-				taggedTweets.add(lineMatcher.group()); 
+				hashtags.add(lineMatcher.group()); 
 		}
 		return hashtags;
+	}
+
+	/**
+	 * @param hashtag A String containing a hashtag
+	 * @return the number of occurences of the hashtag given as a parameter
+	 */
+	public Integer hashtagCount (String hashtag) throws SQLException, ParseException {
+		Integer count = 0;
+		String hashtagCountQuery = "SELECT COUNT(*) FROM Tweets WHERE text LIKE '" + hashtag + "'";
+		ResultSet countResultSet = db.execute(hashtagCountQuery);
+
+		while (countResultSet.next())
+			count = countResultSet.getInt(1);
+
+		return count;
 	}
 
 }
