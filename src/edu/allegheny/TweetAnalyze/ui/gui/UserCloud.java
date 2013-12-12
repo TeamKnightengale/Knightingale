@@ -82,9 +82,11 @@ public class UserCloud implements FrequencyVisualization{
     		LogConfigurator.setup(); // setup the logger.
 	   	    FrequencyVisualization a = new UserCloud(analyzer.globalRetweetFrequency(), "Demo RetweetCloud");
 	   	   	FrequencyVisualization b = new UserCloud(analyzer.globalReplyFrequency(), "Demo ReplyCloud");
+	   	   	FrequencyVisualization c = new TagCloud(analyzer.globalHashtagFrequency(), "Demo TagCloud");
 	    	
 	    	a.visualize();
 	    	b.visualize();
+	    	c.visualize();
 
 	    } catch (Exception ex) {
 	    	System.err.println ("Something bad happened in a demo method. You should never see this message in production builds. "

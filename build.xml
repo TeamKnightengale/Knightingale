@@ -103,8 +103,8 @@
         </java>
 	</target>
 	
-	<!-- RUNNING TASK - "ant usercloud" -->
-	<target name="usercloud" depends="compile">
+	<!-- RUNNING TASK - "ant clouds" -->
+	<target name="clouds" depends="compile">
 		<java fork="true" classname="edu.allegheny.TweetAnalyze.ui.gui.UserCloud" maxmemory="1024m">
 			<arg line="${args}"/>
 			<classpath refid="run.classpath" />
@@ -166,6 +166,7 @@
 			<structure name="TweetAnalyzeCoverage Report">
 				<classfiles>
 					<fileset dir="${result.classes.dir}">
+						<exclude name="**/gui/*.class" />
 					    <exclude name="**/*Test*.class" />
       				</fileset>
 				</classfiles>

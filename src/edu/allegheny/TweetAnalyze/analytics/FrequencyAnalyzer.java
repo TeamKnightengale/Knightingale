@@ -190,7 +190,7 @@ public class FrequencyAnalyzer {
 								logger.warning("You've exceeded the Twitter API rate limit and are being throttled.");
 							} else {
 								logger.log(Level.SEVERE, "Caught an unexpected TwitterException:" + te);
-								}
+							}
 						}
 					}
 
