@@ -95,8 +95,8 @@
         </java>
 	</target>
 
-	<!-- RUNNING TASK - "ant replyFreq" -->
-	<target name="replyFreq" depends="compile">
+	<!-- RUNNING TASK - "ant frequencies" -->
+	<target name="frequencies" depends="compile">
 		<java fork="true" classname="edu.allegheny.TweetAnalyze.analytics.FrequencyAnalyzer" maxmemory="1024m">
 			<arg line="${args}"/>
 			<classpath refid="run.classpath" />
