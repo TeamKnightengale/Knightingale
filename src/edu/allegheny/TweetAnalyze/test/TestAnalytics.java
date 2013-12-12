@@ -47,8 +47,9 @@ public class TestAnalytics
     IT WILL PROPERLY RETURN BLANK*/
 
     private SimpleDateFormat timestampFormat;
-    private final List<String> namesCollumn = new ArrayList<String>();
-    private final List idRow = new ArrayList(); //i'll refactor this abomination later
+    /*private final List<String> namesCollumn = new ArrayList<String>();
+    private final List idRow = new ArrayList(); //i'll refactor this abomination later*///makeResultSet(namesCollumn, idRow);
+
     @Rule
   	public ExpectedException exception = ExpectedException.none();
     
@@ -58,7 +59,7 @@ public class TestAnalytics
         timestampFormat = new SimpleDateFormat("yyyy-MM-dd kk:mm:ss z");
         
 
-        namesCollumn.add("tweet_id");
+       /* namesCollumn.add("tweet_id");
         namesCollumn.add("in_reply_status_id");
         namesCollumn.add("in_reply_user_id");
         namesCollumn.add("timestamp");
@@ -66,6 +67,7 @@ public class TestAnalytics
         namesCollumn.add("text");
         namesCollumn.add("retweeted_status_id");
         namesCollumn.add("retweeted_status_user_id");
+//makeResultSet(namesCollumn, idRow);
         namesCollumn.add("retweeted_status_timestamp");
         namesCollumn.add("expanded_urls");
         idRow.add(6398642204l);
@@ -77,14 +79,15 @@ public class TestAnalytics
         idRow.add(219459070103527425l);
         idRow.add(192770064250978306l);
         idRow.add(192671491215720448l);
-        idRow.add("180649285145202688");
+        idRow.add("180649285145202688");*/
          }
 
+//makeResultSet(namesCollumn, idRow);
 
-    private static ResultSet makeResultSet(final List<String> Collumns, final List rows) throws Exception 
+   /* private static ResultSet makeResultSet(final List<String> Collumns, final List rows) throws Exception 
     {//probably don't need this method. may get rid of.
     ResultSet result = mock(ResultSet.class);
-    final AtomicInteger currentIndex = new AtomicInteger(-1);
+"SELECT COUNT(*) FROM tweets WHERE retweeted_status_id IS NOT 0"    final AtomicInteger currentIndex = new AtomicInteger(-1);
  
     when(result.next()).thenAnswer(new Answer() {
         public Object answer(InvocationOnMock aInvocation) throws Throwable {
@@ -105,19 +108,19 @@ public class TestAnalytics
     when(result.getDate(argument.capture())).thenAnswer(rowLookupAnswer);
     
     return result;
-}
+}*/
 
 
     /** 
      * testSearch()
      * This tests the search() function
-     * of the simple analytics class
+     * of the SearchAnalytics class
      * */
     @Test(expected=NullPointerException.class)//has to eat this otherwise will always throw NPE. but it still works with NPE gone
     public void testSearch() throws SQLException, ParseException, ClassNotFoundException, Exception
     {
         DatabaseHelper mockDH = mock(DatabaseHelper.class);
-
+        
         SearchAnalyzer sa = new SearchAnalyzer(mockDH);
 
         Date time = timestampFormat.parse("2013-10-15 03:01:16 +0000");
@@ -128,8 +131,7 @@ public class TestAnalytics
 
         Tweet tweet = new Tweet(247525256951132160l, time, "Me", "Epic Testing Go!", url);
 
-            ResultSet rsMock = mock(ResultSet.class);
-
+            ResultSet rsMock = mock(ResultSet.class); 
             when(rsMock.getLong("tweet_id")).thenReturn(Long.valueOf("247525256951132160"));
             //when(rsMock.getLong("in_reply_status_id")).thenReturn(Long.valueOf("2"));this don't have to be here but this is format for 
             //when(rsMock.getLong("in_reply_user_id")).thenReturn(Long.valueOf("1"));the reply and retweet stuff
@@ -151,28 +153,62 @@ public class TestAnalytics
 
             expected.add(tweet);
 
-            assertEquals(expected, actual);
+            assertEquals(expected.get(0).getText(), actual.get(0).getText());
      }
 
     /**
      * testPercentRetweets()
      * This tests the percentRetweets()
-     * of the simple analytics class
-     * 
-    @Test
+     * of the CompositionAnalyzer.class
+     * */
+    @Test//this fails find a way to make it pass.
     public void testPercentRetweets() throws SQLException, ParseException, ClassNotFoundException
     {
-        DatabaseHelper mockDH = mock(DatabaseHelper.class);
-
-        TweetBuilder mockTB = mock(TweetBuilder.class);
+         DatabaseHelper mockDH = mock(DatabaseHelper.class);
         
-        SimpleAnalyzer sa = new SimpleAnalyzer(mockDH);
+        CompositionAnalyzer ca = new CompositionAnalyzer(mockDH);
 
-        sa.percentRetweets();
+        //Date time = timestampFormat.parse("2013-10-15 03:01:16 +0000");
+        
+       // ArrayList<String> url = new ArrayList<String>();
 
-        verify(mockDH).execute("SELECT COUNT(*) FROM tweets");
+        //url.add("http://docs.mockito.googlecode.com/hg/org/mockito/Mockito.html");
 
-        verify(mockDH).execute("SELECT COUNT(*) FROM tweets WHERE retweeted_status_id IS NOT 0");
+       // Tweet tweet = new Tweet(247525256951132160l, time, "Me", "Epic Testing Go!", url);
+
+            ResultSet rsMock = mock(ResultSet.class); 
+            when(rsMock.getLong("tweet_id")).thenReturn(Long.valueOf("247525256951132160")).thenReturn(Long.valueOf("23")).thenReturn(Long.valueOf("42"));
+            when(rsMock.getLong("in_reply_status_id")).thenReturn(Long.valueOf("2"));
+            when(rsMock.getLong("in_reply_user_id")).thenReturn(Long.valueOf("1"));
+            when(rsMock.getLong("timestamp")).thenReturn(Long.valueOf("1347849595000")).thenReturn(Long.valueOf("1347894595001")).thenReturn(Long.valueOf("1234567892000"));
+            when(rsMock.getString("source")).thenReturn("Me").thenReturn("2").thenReturn("OOOGIDEBOOGIDIE");
+            when(rsMock.getString("text")).thenReturn("Epic Testing Go!").thenReturn("The end Times Are Upon Us").thenReturn("Finals are Here");
+            when(rsMock.getLong("retweeted_status_id")).thenReturn(Long.valueOf("1"));
+            when(rsMock.getLong("retweeted_status_user_id")).thenReturn(Long.valueOf("2"));
+            when(rsMock.getLong("retweeted_status_timestamp")).thenReturn(Long.valueOf("3"));
+            when(rsMock.getString("expanded_urls")).thenReturn("http://docs.mockito.googlecode.com/hg/org/mockito/Mockito.html");
+
+            ResultSet rsMock2 = mock(ResultSet.class); 
+            when(rsMock2.getLong("tweet_id")).thenReturn(Long.valueOf("23"));         
+            when(rsMock2.getLong("timestamp")).thenReturn(Long.valueOf("1347894595001"));           
+            when(rsMock2.getString("source")).thenReturn("2");           
+            when(rsMock2.getString("text")).thenReturn("The end Times Are Upon Us");
+            when(rsMock2.getLong("retweeted_status_id")).thenReturn(Long.valueOf("1"));
+            when(rsMock2.getLong("retweeted_status_user_id")).thenReturn(Long.valueOf("2"));
+            when(rsMock2.getLong("retweeted_status_timestamp")).thenReturn(Long.valueOf("3"));
+            
+            when(mockDH.execute("SELECT COUNT(*) FROM tweets")).thenReturn(rsMock);
+            
+            when(mockDH.execute("SELECT COUNT(*) FROM tweets WHERE retweeted_status_id IS NOT 0")).thenReturn(rsMock2);
+
+            when(rsMock.next()).thenReturn(true).thenReturn(false);
+
+            int expected = 33;
+
+            int actual = ca.percentRetweets();
+
+            assertEquals(expected, actual);
+
     }
 
     /**
