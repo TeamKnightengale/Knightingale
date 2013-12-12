@@ -8,8 +8,10 @@ public class KnightingaleCLI
 {
 	public static void main(String[] args)
 	{
-		KnightingaleCLIParameters params = new KnightingaleCLIParameters();
-		JCommander cmd = new JCommander(params);
+		CommandArgs commandargs = new CommandArgs();
+		CommandArgs.SearchCommand search = commandargs.new SearchCommand();
+		JCommander cmd = new JCommander();
+
 		try
 		{
 			cmd.parse(args);
