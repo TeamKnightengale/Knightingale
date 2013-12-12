@@ -1,6 +1,6 @@
 package edu.allegheny.TweetAnalyze.ui.gui;
 
-import edu.allegheny.TweetAnalyze.analytics.ComplexAnalyzer;
+import edu.allegheny.TweetAnalyze.analytics.FrequencyAnalyzer;
 
 import edu.allegheny.TweetAnalyze.ui.gui.UserLabel;
 import edu.allegheny.TweetAnalyze.ui.FrequencyVisualization;
@@ -21,8 +21,8 @@ import java.io.IOException;
 
 import twitter4j.*;
 
-import edu.allegheny.TweetAnalyze.LogConfigurator; // REMOVE WHEN MAIN METHOD IS REMOVED
-
+import edu.allegheny.TweetAnalyze.LogConfigurator; 	// REMOVE WHEN MAIN METHOD IS REMOVED
+												   	// REMOVE BEFORE FLIGHT
 /**
  * Swing frequency visualization for Twitter users.
  *
@@ -32,7 +32,7 @@ import edu.allegheny.TweetAnalyze.LogConfigurator; // REMOVE WHEN MAIN METHOD IS
  *
  * @author 	Hawk Weisman
  * @version 1.0
- * @since 	December 7th, 2013
+ * @since 	December 11th, 2013
  */
 public class UserCloud implements FrequencyVisualization{
 
@@ -78,7 +78,7 @@ public class UserCloud implements FrequencyVisualization{
     public static void main(String[] argv) {
 
     	try {
-    		ComplexAnalyzer analyzer = new ComplexAnalyzer(new DatabaseHelper());
+    		FrequencyAnalyzer analyzer = new FrequencyAnalyzer(new DatabaseHelper());
     		LogConfigurator.setup(); // setup the logger.
 	   	    FrequencyVisualization a = new UserCloud(analyzer.getGlobalRetweetFrequency(), "Demo RetweetCloud");
 	   	   	FrequencyVisualization b = new UserCloud(analyzer.getGlobalReplyFrequency(), "Demo ReplyCloud");

@@ -6,6 +6,8 @@ import edu.allegheny.TweetAnalyze.database.DatabaseHelper;
 
 import java.util.List;
 import java.util.ArrayList;
+import java.util.regex.*;
+
 import java.sql.*;
 import java.text.ParseException;
 
@@ -18,7 +20,7 @@ import edu.allegheny.TweetAnalyze.LogConfigurator; // REMOVE WHEN MAIN METHOD IS
  * @author  Ian McMillan
  * @author  Dibyo Mukherjee
  * @version	1.0
- * @since	December 4, 2013
+ * @since	December 11, 2013
  */
 public class SimpleAnalyzer {
 	
@@ -239,6 +241,24 @@ public class SimpleAnalyzer {
 		tweetsWithHashtag = TweetBuilder.buildTweetFromResultSet(db.execute(tweetsWithHashtagQuery));	
 
 		return tweetsWithHashtag;
+	}
+
+	/**
+	 * @return a list of the hashtags that there are
+	 */
+	public List<String> extractHashtags () {
+		List<Tweets> taggedTweets = tweetsWithHashtag();
+		List<String> hashtags;
+		Pattern tagExtractor = Pattern.compile("#([A-Za-z0-9_]+)");
+
+		for (Tweet tweet : taggedTweets) {
+			Matcher lineMatcher = tagExtractor.matcher(tweet.getText());
+
+			// pattern-matching taketh place
+			while (lineMatcher.find()) 
+				taggedTweets.add(lineMatcher.group()); 
+		}
+		return hashtags;
 	}
 
 }

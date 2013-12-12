@@ -22,16 +22,16 @@ import twitter4j.*;
 import edu.allegheny.TweetAnalyze.LogConfigurator; // REMOVE WHEN MAIN METHOD IS REMOVED
 
 /**
- * Provides complex analytic methods for the TweetAnalyze database.
+ * Provides analyses that involve {user | hashtag} frequency in the database.
  *
  * @author	Hawk Weisman
  * @version	1.0
- * @since	December 4, 2013
+ * @since	December 11, 2013
  */
 
-public class ComplexAnalyzer {
+public class FrequencyAnalyzer {
 
-	public static Logger logger = Logger.getLogger(ComplexAnalyzer.class.getName());
+	public static Logger logger = Logger.getLogger(FrequencyAnalyzer.class.getName());
 	private static Twitter twitter = TwitterFactory.getSingleton();
 	private SimpleAnalyzer simpleAnalyzer;
 	private DatabaseHelper db;
@@ -43,7 +43,7 @@ public class ComplexAnalyzer {
 
 		try {
 			LogConfigurator.setup(); // setup the logger.
-			ComplexAnalyzer analyzer = new ComplexAnalyzer(new DatabaseHelper());
+			FrequencyAnalyzer analyzer = new FrequencyAnalyzer(new DatabaseHelper());
 
 			Map<String, Integer> globalReplyFrequency = analyzer.getGlobalReplyFrequency();
 			Map<String, Integer> globalRetweetFrequency = analyzer.getGlobalRetweetFrequency();
@@ -63,7 +63,7 @@ public class ComplexAnalyzer {
 		}
 	}
 
-	public ComplexAnalyzer(DatabaseHelper db)
+	public FrequencyAnalyzer(DatabaseHelper db)
 	{
 		this.simpleAnalyzer = new SimpleAnalyzer(db);
 		this.db = db;

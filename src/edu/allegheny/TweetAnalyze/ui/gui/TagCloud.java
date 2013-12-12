@@ -1,6 +1,6 @@
 package edu.allegheny.TweetAnalyze.ui.gui;
 
-import edu.allegheny.TweetAnalyze.analytics.ComplexAnalyzer;
+import edu.allegheny.TweetAnalyze.analytics.FrequencyAnalyzer;
 import edu.allegheny.TweetAnalyze.ui.gui.HashtagLabel;
 import edu.allegheny.TweetAnalyze.ui.FrequencyVisualization;
 
