@@ -1,7 +1,7 @@
-package edu.allegheny.TweetAnalyze.test;
+package edu.allegheny.tweetanalyze.test;
 
-import edu.allegheny.TweetAnalyze.TweetBuilder;
-import edu.allegheny.TweetAnalyze.Tweet;
+import edu.allegheny.tweetanalyze.TweetBuilder;
+import edu.allegheny.tweetanalyze.Tweet;
 
 import java.util.List;
 import java.util.ArrayList;

@@ -1,4 +1,4 @@
-package edu.allegheny.TweetAnalyze;
+package edu.allegheny.tweetanalyze;
 
 import java.io.IOException;
 import java.util.logging.FileHandler;

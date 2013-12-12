@@ -7,9 +7,9 @@
 
 package edu.allegheny.TweetAnalyze.analytics;
 
-import edu.allegheny.TweetAnalyze.Tweet;
-import edu.allegheny.TweetAnalyze.TweetBuilder;
-import edu.allegheny.TweetAnalyze.database.DatabaseHelper;
+import edu.allegheny.tweetanalyze.Tweet;
+import edu.allegheny.tweetanalyze.TweetBuilder;
+import edu.allegheny.tweetanalyze.database.DatabaseHelper;
 
 import java.util.List;
 import java.util.ArrayList;
@@ -20,7 +20,7 @@ import java.util.logging.Level;
 import java.sql.*;
 import java.text.ParseException;
 
-import edu.allegheny.TweetAnalyze.LogConfigurator; // REMOVE WHEN MAIN METHOD IS REMOVED
+import edu.allegheny.tweetanalyze.LogConfigurator; // REMOVE WHEN MAIN METHOD IS REMOVED
 
 /**
  * Provides simple analytic methods for the TweetAnalyze database.

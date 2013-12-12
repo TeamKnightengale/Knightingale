@@ -1,3 +1,4 @@
+
 //     __ __     _      __   __  _                __   
 //    / //_/__  (_)__ _/ /  / /_(_)__  ___ ____ _/ /__ 
 //   / ,< / _ \/ / _ `/ _ \/ __/ / _ \/ _ `/ _ `/ / -_)
@@ -5,7 +6,8 @@
 //              /___/                /___/          
 //  Open-source Twitter analytics...with style!
 
-package edu.allegheny.TweetAnalyze;
+package edu.allegheny.tweetanalyze;
+
 
 import twitter4j.*;
 import java.util.List;
@@ -15,7 +17,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.ArrayList;
 
-import edu.allegheny.TweetAnalyze.database.DatabaseHelper;
+import edu.allegheny.tweetanalyze.database.DatabaseHelper;
 
 /**
  * Get recent tweets and store them in the db

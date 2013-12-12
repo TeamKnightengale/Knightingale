@@ -1,4 +1,4 @@
-package edu.allegheny.TweetAnalyze.test;
+package edu.allegheny.tweetanalyze.test;
 
 import	java.io.Serializable;
 import	java.io.File;

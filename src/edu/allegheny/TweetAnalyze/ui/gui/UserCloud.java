@@ -5,13 +5,13 @@
 //              /___/                /___/          
 //  Open-source Twitter analytics...with style!
 
-package edu.allegheny.TweetAnalyze.ui.gui;
+package edu.allegheny.tweetanalyze.ui.gui;
 
-import edu.allegheny.TweetAnalyze.analytics.FrequencyAnalyzer;
+import edu.allegheny.tweetanalyze.analytics.FrequencyAnalyzer;
 
-import edu.allegheny.TweetAnalyze.ui.gui.UserLabel;
-import edu.allegheny.TweetAnalyze.ui.FrequencyVisualization;
-import edu.allegheny.TweetAnalyze.database.DatabaseHelper;
+import edu.allegheny.tweetanalyze.ui.gui.UserLabel;
+import edu.allegheny.tweetanalyze.ui.FrequencyVisualization;
+import edu.allegheny.tweetanalyze.database.DatabaseHelper;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -28,7 +28,7 @@ import java.io.IOException;
 
 import twitter4j.*;
 
-import edu.allegheny.TweetAnalyze.LogConfigurator; 	// REMOVE WHEN MAIN METHOD IS REMOVED
+import edu.allegheny.tweetanalyze.LogConfigurator; 	// REMOVE WHEN MAIN METHOD IS REMOVED
 												   	// REMOVE BEFORE FLIGHT
 /**
  * Swing frequency visualization for Twitter users.

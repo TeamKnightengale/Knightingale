@@ -5,11 +5,11 @@
 //              /___/                /___/          
 //  Open-source Twitter analytics...with style!
 
-package edu.allegheny.TweetAnalyze.ui.gui;
+package edu.allegheny.tweetanalyze.ui.gui;
 
-import edu.allegheny.TweetAnalyze.analytics.FrequencyAnalyzer;
-import edu.allegheny.TweetAnalyze.ui.gui.HashtagLabel;
-import edu.allegheny.TweetAnalyze.ui.FrequencyVisualization;
+import edu.allegheny.tweetanalyze.analytics.FrequencyAnalyzer;
+import edu.allegheny.tweetanalyze.ui.gui.HashtagLabel;
+import edu.allegheny.tweetanalyze.ui.FrequencyVisualization;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
