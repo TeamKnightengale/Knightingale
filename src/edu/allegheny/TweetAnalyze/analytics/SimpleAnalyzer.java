@@ -1,3 +1,10 @@
+//     __ __     _      __   __  _                __   
+//    / //_/__  (_)__ _/ /  / /_(_)__  ___ ____ _/ /__ 
+//   / ,< / _ \/ / _ `/ _ \/ __/ / _ \/ _ `/ _ `/ / -_)
+//  /_/|_/_//_/_/\_, /_//_/\__/_/_//_/\_, /\_,_/_/\__/ 
+//              /___/                /___/          
+//  Open-source Twitter analytics...with style!
+
 package edu.allegheny.TweetAnalyze.analytics;
 
 import edu.allegheny.TweetAnalyze.Tweet;
@@ -6,6 +13,10 @@ import edu.allegheny.TweetAnalyze.database.DatabaseHelper;
 
 import java.util.List;
 import java.util.ArrayList;
+import java.util.regex.*;
+import java.util.logging.Logger;
+import java.util.logging.Level;
+
 import java.sql.*;
 import java.text.ParseException;
 
@@ -18,17 +29,23 @@ import edu.allegheny.TweetAnalyze.LogConfigurator; // REMOVE WHEN MAIN METHOD IS
  * @author  Ian McMillan
  * @author  Dibyo Mukherjee
  * @version	1.0
- * @since	December 4, 2013
+ * @since	December 11, 2013
  */
 public class SimpleAnalyzer {
 	
 	private DatabaseHelper db;
+	public static Logger logger = Logger.getLogger(SimpleAnalyzer.class.getName());
 
 	public SimpleAnalyzer(DatabaseHelper db)
 	{
 		this.db = db;
 	}
 
+	//////////////////////////////////////////////////////////////////
+	// DEMO MAIN METHOD - SHOULD NOT OCCUR IN PRODUCTION BUILDS 	//
+	// Remove before flight, handle with care, so on and so forth.	//
+	// If this breaks, I warned you! ~ Hawk 						//
+	//////////////////////////////////////////////////////////////////
 	public static void main(String argv[]) throws Exception
 	{
 		LogConfigurator.setup(); // setup the logger.
@@ -45,19 +62,27 @@ public class SimpleAnalyzer {
 		
 		System.out.printf("\n%d%% of your tweets are retweets, and %d%% are replies.\n", analyzer.percentRetweets(), analyzer.percentReplies());
 
-		System.out.println("\n\nYour tweets with hashtags are: \n");
+		System.out.println("\n\nHashtags you've used are: \n");
 
-		List<Tweet> hashtags = analyzer.tweetsWithHashtag();
+		List<String> hashtags = analyzer.extractHashtags();
 
-		for(Tweet t : hashtags)
+		for(String hashtag : hashtags)
 		{
-			System.out.println(t.getText());
+			System.out.println(hashtag);
 		}
 
-		System.out.println("\n\nList of people you reply to : \n");
+		System.out.println("\n\nList of people you reply to: \n");
 		
 		List<Long> repliedUsers = analyzer.repliedToUsers();
 		for (Long l : repliedUsers)
+		{
+			System.out.println(l);
+		}
+
+		System.out.println("\n\nList of people you've retweeted: \n");
+		
+		List<Long> retweetedUsers = analyzer.retweetedUsers();
+		for (Long l : retweetedUsers)
 		{
 			System.out.println(l);
 		}
@@ -120,9 +145,9 @@ public class SimpleAnalyzer {
 	public int percentReplies () throws SQLException, ParseException {
 		double numTweets = 0, numReplies = 0;
 
-		String numTweetsQuery = "SELECT COUNT(*)FROM Tweets";
-		String numRepliesQuery = "SELECT COUNT(*)FROM Tweets WHERE in_reply_to_status_id IS NOT 0 AND" + 
-									" in_reply_to_user_id IS NOT 0";
+		String numTweetsQuery 	= "SELECT COUNT(*)FROM Tweets";
+		String numRepliesQuery 	= "SELECT COUNT(*)FROM Tweets WHERE in_reply_to_status_id IS NOT 0 AND" 
+								+ " in_reply_to_user_id IS NOT 0";
 
 		ResultSet numTweetsResultSet = db.execute(numTweetsQuery);
 		ResultSet numRepliesResultSet = db.execute(numRepliesQuery);
@@ -144,10 +169,10 @@ public class SimpleAnalyzer {
 	 */
 	public List<Long> repliedToUsers () throws SQLException, ParseException {
 		List<Long> repliedToUserIDs = new ArrayList<Long>();
-		String repliedToUsersQuery = "SELECT DISTINCT in_reply_to_user_id as rid, COUNT (*) "
-								+ "FROM Tweets " 
-								+ "GROUP BY in_reply_to_user_id "
-								+ "ORDER BY rid DESC";
+		String repliedToUsersQuery 	= "SELECT DISTINCT in_reply_to_user_id as rid, COUNT (*) "
+									+ "FROM Tweets " 
+									+ "GROUP BY in_reply_to_user_id "
+									+ "ORDER BY rid DESC";
 
 		ResultSet repliedToUserIDsResultSet = db.execute(repliedToUsersQuery);	  
 
@@ -178,9 +203,10 @@ public class SimpleAnalyzer {
 	 */
 	public List<Long> retweetedUsers () throws SQLException, ParseException {
 		List<Long> retweetedUserIDs = new ArrayList<Long>();
-		String retweetedUsersQuery = "SELECT DISTINCT retweeted_status_user_id AS id, COUNT(*) "
-							+ "FROM Tweets " 
-							+ "GROUP BY retweeted_status_user_id "  							+ "ORDER BY id DESC";
+		String retweetedUsersQuery 	= "SELECT DISTINCT retweeted_status_user_id AS id, COUNT(*) "
+									+ "FROM Tweets " 
+									+ "GROUP BY retweeted_status_user_id "
+									+ "ORDER BY id DESC";
 		ResultSet retweetedUserIDsResultSet = db.execute(retweetedUsersQuery);	  
 
 		while (retweetedUserIDsResultSet.next())
@@ -212,8 +238,8 @@ public class SimpleAnalyzer {
 	 */
 	public List<Tweet> tweetsInOctober () throws SQLException, ParseException {
 		List<Tweet> tweetsInOctober = new ArrayList<Tweet>();
-		String tweetsInOctoberQuery = "SELECT * FROM Tweets WHERE timestamp " + 
-									"BETWEEN '2013-09-30 23:59:59' AND '2013-11-01 00:00:01'";
+		String tweetsInOctoberQuery = "SELECT * FROM Tweets WHERE timestamp " 
+									+ "BETWEEN '2013-09-30 23:59:59' AND '2013-11-01 00:00:01'";
 
 		tweetsInOctober = TweetBuilder.buildTweetFromResultSet(db.execute(tweetsInOctoberQuery));	 
 
@@ -230,6 +256,48 @@ public class SimpleAnalyzer {
 		tweetsWithHashtag = TweetBuilder.buildTweetFromResultSet(db.execute(tweetsWithHashtagQuery));	
 
 		return tweetsWithHashtag;
+	}
+
+	/**
+	 * @return a list of the hashtags that there are
+	 */
+	public List<String> extractHashtags () {
+		List<Tweet> taggedTweets = new ArrayList<Tweet>(); 
+		List<String> hashtags = new ArrayList<String>();
+		Pattern tagExtractor = Pattern.compile("(#[A-Za-z0-9_]+)");
+
+		try {
+			taggedTweets = tweetsWithHashtag();
+		} catch (SQLException se) {
+			logger.log(Level.SEVERE, "SQLException took place while extracting hashtags", se);
+		} catch (ParseException pe) {
+			logger.log(Level.SEVERE, "ParseException took place while extracting hashtags", pe);
+		}
+
+		for (Tweet tweet : taggedTweets) {
+			Matcher lineMatcher = tagExtractor.matcher(tweet.getText());
+
+			// pattern-matching taketh place
+			while (lineMatcher.find()) 
+				hashtags.add(lineMatcher.group()); 
+
+		}
+		return hashtags;
+	}
+
+	/**
+	 * @param hashtag A String containing a hashtag
+	 * @return the number of occurences of the hashtag given as a parameter
+	 */
+	public Integer hashtagCount (String hashtag) throws SQLException, ParseException {
+		Integer count = 0;
+		String hashtagCountQuery = "SELECT COUNT(*) FROM Tweets WHERE text LIKE '%" + hashtag + "%'";
+		ResultSet countResultSet = db.execute(hashtagCountQuery);
+
+		while (countResultSet.next())
+			count = countResultSet.getInt(1);
+
+		return count;
 	}
 
 }

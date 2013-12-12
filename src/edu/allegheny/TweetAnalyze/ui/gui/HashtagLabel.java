@@ -1,3 +1,10 @@
+//     __ __     _      __   __  _                __   
+//    / //_/__  (_)__ _/ /  / /_(_)__  ___ ____ _/ /__ 
+//   / ,< / _ \/ / _ `/ _ \/ __/ / _ \/ _ `/ _ `/ / -_)
+//  /_/|_/_//_/_/\_, /_//_/\__/_/_//_/\_, /\_,_/_/\__/ 
+//              /___/                /___/          
+//  Open-source Twitter analytics...with style!
+
 package edu.allegheny.TweetAnalyze.ui.gui;
 
 import java.net.URI;
@@ -63,7 +70,7 @@ public class HashtagLabel extends JPanel implements MouseListener {
     @Override
 	public void mouseClicked(MouseEvent e) {    
 	   	try {       
-	        desktop.browse(new URI("https://twitter.com/search?q="+label.getText().substring(1)+"=hash"));
+	        desktop.browse(new URI("https://twitter.com/search?q=%23"+label.getText().substring(1)+"&src=hash"));
 	    } catch (Exception ex) {
 	    	ex.printStackTrace(); // log this later
 	    }

@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.logging.Logger;
+import java.util.logging.Level;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -66,7 +67,7 @@ public class DatabaseHelper
 			stmt.close();
 			c.close();
 			} catch(Exception e) {
-				logger.severe("Problems creating Tweets table:\n" + e.getStackTrace());
+				logger.log(Level.SEVERE, "Problems creating Tweets table:", e);
 			}
 	}
 
@@ -84,7 +85,7 @@ public class DatabaseHelper
 			stmt.close();
 			c.close();
 			} catch(Exception e) {
-				logger.severe("Problems creating Users table:\n" + e.getStackTrace());
+				logger.log(Level.SEVERE,"Problems creating Users table:", e);
 			}
 	 
 	}
@@ -103,7 +104,7 @@ public class DatabaseHelper
 			c.close();
 		}catch(Exception e) 
 		{
-			logger.severe("Problem updating table entries:\n" + e.getStackTrace());
+			logger.log(Level.SEVERE, "Problem updating table entries:", e);
 		}
 	}
 
@@ -123,11 +124,11 @@ public class DatabaseHelper
 		}
 		catch(SQLException se)
 		{
-			logger.severe("SQLException in executing query" + query + ":\n" + se.getStackTrace());
+			logger.log(Level.SEVERE, "SQLException in executing query: " + query, se);
 		}
 		catch(ClassNotFoundException e)
 		{
-			logger.severe("ClassNotFoundException in executing query" + query + ":\n" + e.getStackTrace());
+			logger.log(Level.SEVERE, "ClassNotFoundException in executing query: " + query, e);
 		}
 		return null;
 	}
@@ -189,7 +190,7 @@ public class DatabaseHelper
 			c.close();
 			} catch(Exception e) 
 			{
-				logger.severe("Problem updating tweets table entries:\n" + e.getStackTrace());
+				logger.log(Level.SEVERE, "Problem updating tweets table entries:", e);
 			}
 	}
 
@@ -201,17 +202,41 @@ public class DatabaseHelper
 			c.setAutoCommit(false);
 			stmt = c.createStatement();
 			stmt.executeUpdate("INSERT INTO users (user_id) " +
-				   "SELECT DISTINCT(in_reply_to_user_id, retweeted_status_id) " +
-				   "FROM tweets WHERE in_reply_to_user_id AND retweet_status_id" +
-				   " IS NOT 0");   
+				   "SELECT in_reply_to_user_id FROM tweets " +
+			       "UNION SELECT retweeted_status_user_id FROM tweets");   
 			stmt.close();
 			c.commit();
 			c.close();
 		}catch(Exception e) 
 		{
-			logger.severe("Problem updating users table entries:\n" + e.getStackTrace());
+			logger.log(Level.SEVERE, "Problem updating users table entries:", e);
 		}
 	}
+
+	/**
+	 * Inserts usernames into the database for the user with the given ID.
+	 *
+	 * @author 	Hawk Weisman
+	 * @param 	username The String to insert at the matching userID
+	 * @param 	userID ID of the user at which to insert the username.
+	 */
+	public static void updateUsername(String username, long userID) {
+		try {
+			Class.forName("org.sqlite.JDBC");
+			c = DriverManager.getConnection("jdbc:sqlite:tweets.db");
+			c.setAutoCommit(false);
+			stmt = c.createStatement();
+			stmt.executeUpdate("UPDATE users "
+			                 + "SET user_name = \"" + username + "\" "
+			                 + "WHERE user_id = " + userID + ";");   
+			stmt.close();
+			c.commit();
+			c.close();
+		} catch (Exception e) {
+			logger.log(Level.SEVERE,"Problem inserting usernames into database:", e);
+		}
+	}
+
 	public static ArrayList<Tweet> getAllTweets() throws ParseException
 	{
 		ArrayList<Tweet> tweets = new ArrayList<Tweet>();
@@ -226,7 +251,7 @@ public class DatabaseHelper
 		} 
 		catch(Exception e) 
 		{
-			logger.severe("Problem getting all tweets:\n" + e.getStackTrace());
+			logger.log(Level.SEVERE, "Problem getting all tweets: ", e);
 		}
 		return tweets;
 	}
@@ -245,7 +270,7 @@ public class DatabaseHelper
 		}
 		catch(SQLException se)
 		{
-			logger.severe("SQLException while getting last tweet ID:\n" + se.getStackTrace());
+			logger.log(Level.SEVERE, "SQLException while getting last tweet ID:", se);
 		}
 		
 		return  latest_tweet;
