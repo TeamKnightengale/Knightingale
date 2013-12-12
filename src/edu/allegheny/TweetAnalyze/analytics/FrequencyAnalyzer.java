@@ -77,6 +77,16 @@ public class FrequencyAnalyzer {
 		HashMap<String, Integer> frequencyMap = new HashMap<String,Integer>();
 		List<String> hashtags = simpleAnalyzer.extractHashtags();
 
+		for (String hashtag : hashtags) {
+			try {
+				frequencyMap.put(hashtag, new Integer(simpleAnalyzer.hashtagCount(hashtag)));
+			} catch (SQLException se) {
+				logger.log(Level.SEVERE, "SQLException took place during hashtag frequency analysis", se);
+			} catch (ParseException pe) {
+				logger.log(Level.SEVERE, "ParseException took place during hashtag frequency analysis", pe);
+			}
+		}
+
 		return frequencyMap;
 	}
 
