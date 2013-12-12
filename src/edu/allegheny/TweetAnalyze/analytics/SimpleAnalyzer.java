@@ -34,6 +34,11 @@ public class SimpleAnalyzer {
 		this.db = db;
 	}
 
+	//////////////////////////////////////////////////////////////////
+	// DEMO MAIN METHOD - SHOULD NOT OCCUR IN PRODUCTION BUILDS 	//
+	// Remove before flight, handle with care, so on and so forth.	//
+	// If this breaks, I warned you! ~ Hawk 						//
+	//////////////////////////////////////////////////////////////////
 	public static void main(String argv[]) throws Exception
 	{
 		LogConfigurator.setup(); // setup the logger.
@@ -50,13 +55,13 @@ public class SimpleAnalyzer {
 		
 		System.out.printf("\n%d%% of your tweets are retweets, and %d%% are replies.\n", analyzer.percentRetweets(), analyzer.percentReplies());
 
-		System.out.println("\n\nYour tweets with hashtags are: \n");
+		System.out.println("\n\nHashtags you've used are: \n");
 
-		List<Tweet> hashtags = analyzer.tweetsWithHashtag();
+		List<String> hashtags = analyzer.extractHashtags();
 
-		for(Tweet t : hashtags)
+		for(String hashtag : hashtags)
 		{
-			System.out.println(t.getText());
+			System.out.println(hashtag);
 		}
 
 		System.out.println("\n\nList of people you reply to: \n");
@@ -250,9 +255,9 @@ public class SimpleAnalyzer {
 	 * @return a list of the hashtags that there are
 	 */
 	public List<String> extractHashtags () {
-		List<Tweet> taggedTweets = null; 
-		List<String> hashtags = null;
-		Pattern tagExtractor = Pattern.compile("#([A-Za-z0-9_]+)");
+		List<Tweet> taggedTweets = new ArrayList<Tweet>(); 
+		List<String> hashtags = new ArrayList<String>();
+		Pattern tagExtractor = Pattern.compile("(#[A-Za-z0-9_]+)");
 
 		try {
 			taggedTweets = tweetsWithHashtag();
@@ -268,6 +273,7 @@ public class SimpleAnalyzer {
 			// pattern-matching taketh place
 			while (lineMatcher.find()) 
 				hashtags.add(lineMatcher.group()); 
+
 		}
 		return hashtags;
 	}
@@ -278,7 +284,7 @@ public class SimpleAnalyzer {
 	 */
 	public Integer hashtagCount (String hashtag) throws SQLException, ParseException {
 		Integer count = 0;
-		String hashtagCountQuery = "SELECT COUNT(*) FROM Tweets WHERE text LIKE '" + hashtag + "'";
+		String hashtagCountQuery = "SELECT COUNT(*) FROM Tweets WHERE text LIKE '%" + hashtag + "%'";
 		ResultSet countResultSet = db.execute(hashtagCountQuery);
 
 		while (countResultSet.next())
