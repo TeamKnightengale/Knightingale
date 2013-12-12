@@ -5,21 +5,27 @@ import com.beust.jcommander.ParameterException;
 
 import edu.allegheny.tweetanalyze.*;
 import edu.allegheny.tweetanalyze.database.*;
+import edu.allegheny.tweetanalyze.parser.*;
+
+
+import java.io.File;
+import java.util.ArrayList;
 
 public class KnightingaleCLI
 {
 	public static void main(String[] args)
 	{
+		KnightingaleCLI cli = new KnightingaleCLI();
+
 		CommandArgs commandargs = new CommandArgs();
 		CommandArgs.SearchCommand search = commandargs.new SearchCommand();
 		CommandArgs.RefreshCommand refresh = commandargs.new RefreshCommand();
-		
-		JCommander cmd = new JCommander();
+		CommandArgs.AddCommand add = commandargs.new AddCommand();
+		JCommander cmd = new JCommander(commandargs);
 		
 		cmd.addCommand("search", search);
 		cmd.addCommand("refresh", refresh);
-
-		KnightingaleCLI cli = new KnightingaleCLI();
+		cmd.addCommand("add", add);
 
 		try
 		{
@@ -30,6 +36,9 @@ public class KnightingaleCLI
 				break;
 				
 				case "refresh" : cli.refresh();
+				break;
+
+				case "add" : cli.add(add.getFile());
 				break;
 
 			}
@@ -46,5 +55,17 @@ public class KnightingaleCLI
 		TweetRefreshClient client = new TweetRefreshClient(new DatabaseHelper());
 		int numberOfNewTweets =  client.refreshTweets();
 		System.out.println("\n" + numberOfNewTweets + " new tweets\n");
+	}
+
+	public void add(String file)
+	{
+		DatabaseHelper db = new DatabaseHelper();
+		File zipFile = new File(file);
+		db.dropTweetsTable();
+		db.createTweetsTable();
+		db.createUsersTable();
+		db.insertTweets((ArrayList<Tweet>) ZipParser.parse(zipFile));
+		db.insertUser();
+		System.out.println("Tweets Inserted");
 	}
 }
