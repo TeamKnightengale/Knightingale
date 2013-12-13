@@ -68,7 +68,7 @@ There are five major architectural components in the system:
 \item Test Suite
 \end{enumerate}
 
-\noindent The Analytics package quantifies all of the metrics outlined in the Requirements Document. \newline
+\noindent The Analytics package contains Analyzer classes that calculate the metrics outlined in the Requirements Document and generate frequency maps for use in frequency-based visualization. \newline
 
 \noindent The Database package provides an access layer to the database. Database access for the rest of the system is localised through this layer.\newline
 
@@ -76,26 +76,26 @@ There are five major architectural components in the system:
 
 \noindent The Refresher package uses the \textit{Twitter4j} library to connect to the Twitter API and retrieve new tweets. \newline
 
-\noindent The UI package allows the user to interact with the system. It contains two distinct packages: the cli and the GUI. The cli package contains the primary command line interface while the GUI is used for creating word clouds. \newline
+\noindent The UI package allows the user to interact with the system and produces data-visualization graphics. It contains two distinct packages: the CLI (command-line interface) and the GUI (graphical user interface). The CLI package contains the primary command line interface while the GUI contains the Swing frequency visualizations. The GUI package will also contain the planned full Swing user interface. \newline
 
-\noindent The Test Suite tests the system. We use a test suite to establish a confidence in the correctness of our code. \newline
+\noindent The Test package contains tests for the rest of the system. It contains a master test suite that runs other JUnit test classes in the package, as well as code to support unit testing by providing system-specific functionality to tests. \newline
 
-\noindent \textit{Knightingale's} essential path of function begins when the user downloads their twitter archive (a \textit{.ZIP} file) of their tweets from \textit{Twitter} through \textit{Knightingale's} UI package. The Parser makes sense of that information, and it is then stored in the database. Next, the Analytics package takes this data and extracts the necessary analytic information. These metrics and fed back to the user through the UI. The Refresher can be used to retreive new tweets that the user has posted after downloading the archive and add them to the database for analysis. The Test Suite is used exclusively by the developers and does not interact with the user.
+\noindent \textit{Knightingale's} essential path of functionality begins when the user downloads their Twitter archive (a \textit{.ZIP} file) of their tweets from \textit{Twitter} using their web browser of chouce. The user then uses \textit{Knightingale's} UI to provide the system with a path to the Twitter archive file. The Parser package extracts the comma-separated values file from the user's Twitter archive, parses individual tweets, and stores them in the database. Once the database has been created, the user may use the Analytics package to extract metrics from the archive. These metrics and fed back to the user through the UI and visualizations. The Refresher can be used to retreive new tweets that the user has posted after downloading the archive and add them to the database for analysis. The Test Suite is used exclusively by the developers and does not interact with the user - it should not be present in production builds.
 \end{adjustwidth}
 
 \subsection{Design Rationale} \label{sec:rationale}
 \begin{adjustwidth}{2em}{0pt}
-The system is designed to be modular and comply with best practices such as localising inputs and ouputs. The ui package handles all input and output. Wherever needed logging is used to log errors and other informative messages using the \textit{java.util.logging} package. The database module is provides an access layer that all other modules use to access the database and execute quieries. This design makes it easy to swap out our current database for a different database in the future with minor refactoring. We use mocking in our test suite to test localise error detection using the Mockito library.
+The system is designed to be modular and comply with best practices such as localising inputs and ouputs. The UI module handles all input and output to and from the user, while the Database module handles all interaction with the SQLite 3 relational database, and the Refresher package handles interaction with Twitter's servers. The Database module is designed with a high degree of modularity in order to make it possible to implement a planned feature allowing a user to store multiple Twitter archive databases on their system. Wherever needed, logging is used to log errors and debug information messages using the \textit{java.util.logging} package. 
 \end{adjustwidth}
 
 \subsection{Known Inconsistencies} \label{sec:known}
 \begin{adjustwidth}{2em}{0pt}
 The Refresh module has a input output component where a user may be asked to go to a link to authenticate with Twitter and input an authentication PIN from the Twitter website. This input and output is very specific to this module and therefore makes more sense here than in the ui package.
-Some modules are not included in the test suite for various reasons: 
+Some modules are not included targeted for unit testing, for various reasons:
 \begin{enumerate}
-\item GUI - this module was excluded because of time constraints.
-\item DbHelper - we had difficulty in setting up dbUnit. Hence, we manually tested the db with various configurations.
-\item refresh - this was difficult to test because it relied on connections to the Twitter API.
+\item GUI - This module will be tested manually by users during the acceptance testing stage.
+\item DbHelper - We had difficulty in setting up dbUnit. Hence, we manually tested the database with various configurations.
+\item refresh - This module relies on connections with the Twitter API servers. Since we cannot test this outside source, this module is excluded from unit testing.
 \end{enumerate}
 \end{adjustwidth}
 
