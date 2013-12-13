@@ -1,0 +1,105 @@
+\documentclass[a4paper, 12pt]{article}
+\usepackage{changepage, titlesec, hyperref, fullpage}
+\titleformat{\section}[block]{\bfseries}{\thesection.}{1em}{}
+\titleformat{\subsection}[block]{}{\thesubsection}{1em}{}
+\titleformat{\subsubsection}[block]{}{\thesubsubsection}{1em}{}
+\titlespacing*{\subsection} {2em}{3.25ex plus 1ex minus .2ex}{1.5ex plus .2ex}
+\titlespacing*{\subsubsection} {3em}{3.25ex plus 1ex minus .2ex}{1.5ex plus .2ex}
+\title{Design Document}
+\author{Jake Ballinger}
+\begin{document}
+\maketitle
+
+\begin{center}
+\centering  ``...I have always found that plans are useless, but planning is indispensable." \newline
+\centering - Dwight D. Eisenhower
+\end{center}
+
+\section{Introduction to Document} \label{sec:intro}
+\subsection{Purpose of the Product} \label{sec:purpose}
+\begin{adjustwidth}{2em}{0pt}
+\textit{Knightingale} is a \textit{Twitter} analytics tool. Whether it's helping businesses better figure out to whom to market their products, aiding clinical psychologists understand the impact of social media on anxiety disorders, or making navigating \textit{Twitter} easier for young adults, \textit{Knightingale} is intended for all users. \newline
+
+\noindent The \textit{Software Design Document} is intended principally for the development team and their professor at \textit{Allegheny College}, \textit{Dr. Gregory Kapfhammer}. This document provides a description of the functions of \textit{Knightingale} at a low-level of detail.
+\end{adjustwidth}
+
+\subsection{Document Conventions} \label{sec:conventions}
+\begin{adjustwidth}{2em}{0pt}
+This document was written following \textit{IEEE} conventions. It was formatted with \LaTeX. This is the most low-level of the trio of documents; the architecture document is at a higher level of description, and the requirements document is more concerned with the high-level concepts and expectations of the procuct. \newline
+
+\noindent Names, classes, and methods will be italicized, and both numbers and variables are modified with the $\$$ wrapper in \LaTeX.
+\end{adjustwidth}
+
+\subsection{Acronyms, Abbreviations, and Definitions} \label{sec:abbr}
+\begin{adjustwidth}{2em}{0pt}
+MAKE UP SHIT
+\end{adjustwidth}
+
+\subsection{Scope of the Product} \label{sec:scope}
+\begin{adjustwidth}{2em}{0pt}
+\textit{Knightingale} is a \textit{Twitter} analytics system. Refer to Section $1.4$ of the Requirements Document.
+\end{adjustwidth}
+
+\subsection{References} \label{sec:ref}
+\begin{adjustwidth}{2em}{0pt}
+
+\end{adjustwidth}
+
+\subsection{Outline of the rest of the SRS} \label{sec:outline}
+\begin{adjustwidth}{2em}{0pt}
+Section \ref{sec:overview}: System Overview \newline
+Section \ref{sec:datadesign}: Data Design \newline
+Section \ref{sec:datadescript}: Data Description \newline
+Section \ref{sec:dictionary}: Data Dictionary \newline
+Section \ref{sec:component}: Component Design \newline
+Section \ref{sec:human}: Human Interface Design \newline
+Section \ref{sec:ui}: Overview of User Interface \newline
+Section \ref{sec:screen}: Screen Images \newline
+Section \ref{sec:obs}: Screen Objects and Actions \newline
+\end{adjustwidth}
+
+\section{System Overivew} \label{sec:overview}
+\begin{adjustwidth}{1em}{0pt}
+\textit{Knightingale} was, at least in theory, conceived by \textit{Dr. Gregory Kapfhammer} at \textit{Allegheny College}. He assigned the creation of the system to the students in his \textit{Computer Science} $290$ \textit{Principles of Software Development} class as their final project. Four teams of five students would each develop their own \textit{Twitter} analytics system. \textit{Knightingale} is one of those systems. \newline
+
+\noindent What sets \textit{Knightingale} apart from its competition is it's user-friendly interface. \textbf{More on this}. \newline
+
+\noindent To further develop an example given in Section $1.1$, consider the situation of a clinical psychologist. It is common knowledge that...MAKE UP MORE SHIT
+\end{adjustwidth}
+ 
+\section{Data Design} \label{sec:datadesign}
+\subsection{Data Description} \label{sec:datadescript}
+\begin{adjustwidth}{2em}{0pt}
+Explain how the information domain of your system is transformed into data structures. Describe how the major data of system entities are stored, processed and organized. List any databases or data storage items. 
+\end{adjustwidth}
+
+\subsection{Data Dictionary} \label{sec:dictionary}
+\begin{adjustwidth}{2em}{0pt}
+Alphabetically list the system entities or major data along with their types and descriptions.
+\end{adjustwidth}
+
+\subsection{Component Design} \label{sec:component}
+\begin{adjustwidth}{1em}{0pt}
+- Go through classes
+- What are the methods and what do they do?
+
+In this section, we take a closer look at what each component does in a more systematic way. 
+Describe any local data when necessary.
+\end{adjustwidth}
+
+\section{Human Interface Design} \label{sec:human}
+\subsection{Overview of User Interface} \label{sec:ui}
+\begin{adjustwidth}{2em}{0pt}
+Describe the functional of the system from the user’s perspective. Explain how the user will be able to use your system to complete all the expected features and the feedback information that will be displayed for the user.
+\end{adjustwidth}
+
+\subsection{Screen Images} \label{sec:screen}
+\begin{adjustwidth}{2em}{0pt}
+Display screenshots showing the interface from the user’s perspective. These can be hand-drawn or you can use an automated drawing tool. Just make them as accurate as possible.
+\end{adjustwidth}
+
+\subsection{Screen Objects and Actions} \label{sec:obs}
+\begin{adjustwidth}{2em}{0pt}
+A discussion of screen objects and actions associated with those objects. 
+\end{adjustwidth}
+\end{document}
