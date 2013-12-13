@@ -56,21 +56,21 @@ Section \ref{sec:ui}: Overview of User Interface \newline
 Section \ref{sec:obs}: Screen Objects and Actions \newline
 \end{adjustwidth}
 
-\section{System Overivew} \label{sec:overview}
+\section{System Overview} \label{sec:overview}
 \begin{adjustwidth}{1em}{0pt}
 \textit{Knightingale} was, at least in theory, conceived by \textit{Dr. Gregory Kapfhammer} at \textit{Allegheny College}. He assigned the creation of the system to the students in his \textit{Computer Science} $290$ \textit{Principles of Software Development} class as their final project. Four teams of five students would each develop their own \textit{Twitter} analytics system. \textit{Knightingale} is one of those systems. \newline
 
-\noindent What sets \textit{Knightingale} apart from its competition is it's user-friendly interface. \textbf{More on this}. \newline
+\noindent What sets \textit{Knightingale} apart from its competition is its user-friendly interface, modularity, and expandability. The Knightingale command-line interface is exceptionally easy to use for any user with a basic background in command-line tools, and a \texit{Swing} graphical user interface is planned as well. The structiure of the system makes it very easy to add new features and other components at any point in time. \newline
 
-\noindent To further develop an example given in Section $1.1$, consider the situation of a clinical psychologist. It is common knowledge that a person's use of social media can be linked to their loneliness. The clinical psychologist might use the metrics provided by \textit{Knightingale} to better understand her client. 
+\noindent To further develop an example given in Section $1.1$, consider the situation of a clinical psychologist. It is common knowledge that a person's use of social media can be linked to their loneliness. The clinical psychologist might use the metrics provided by \textit{Knightingale} to better understand her client. Another example concerns a person engaged in social-media marketing for their company on Twitter. Such an individual could easily make use of \textit{Knightingale} to collect information about their company's Twitter feed to improve their marketing efforts or communicate information to their colleagues.
 \end{adjustwidth}
  
 \section{Data Design} \label{sec:datadesign}
 \subsection{Data Description} \label{sec:datadescript}
 \begin{adjustwidth}{2em}{0pt}
-The information domain of \textit{Knightingale} is the \textit{.ZIP} file downloaded from \textit{Twitter}. The classes \textit{DatabaseHelper.java} takes all of this information from the parser 
+\texit{Knightingale} stores a user's \texit{Twitter} archive over long periods using a \texit{SQLite 3} relational database. The Database package is used to provide a single point of interface with this database through which other components of the system must interact with the database.\newline
 
-Explain how the information domain of your system is transformed into data structures. Describe how the major data of system entities are stored, processed and organized. List any databases or data storage items. 
+The information domain of \textit{Knightingale} is the \textit{.ZIP} file downloaded from \textit{Twitter}, as well as information pulled directly from \textit{Twitter} through the \textit{Twitter4j} API. When the user adds a new twitter archive to the \textit{Knightingale} system, the Parser package is used to extract tweets from the archive file, which may then be discarded. The Database package is then used to insert these tweets into the SQLite 3 relational database. The database automatically generates a separate table of Twitter user IDs by selecting all of the unique user ID values that appear in the Tweets database. This table represents all of the Twitter users known by the system. These IDs are then associated with \twitter{Twitter} user names through communication with the \textit{Twitter} API.
 \end{adjustwidth}
 
 \subsection{Component Design} \label{sec:component}
@@ -85,12 +85,15 @@ Describe any local data when necessary.
 \section{Human Interface Design} \label{sec:human}
 \subsection{Overview of User Interface} \label{sec:ui}
 \begin{adjustwidth}{2em}{0pt}
-Describe the functional of the system from the user’s perspective. Explain how the user will be able to use your system to complete all the expected features and the feedback information that will be displayed for the user.
+\texit{Knightingale}'s primary point of contact with the user is a command-line interface, although a Swing graphical user interface is a planned feature. The user may interact with the system using a series of command-line arguments to the \texttt{knightingale} command.
+\begin{itemize}
+\item \texttt{search <search term>}: search for all tweets with a word
+\item \texttt{refresh}: get new tweets for the user from Twitter's servers
+\item \texttt{add <path to archive>}: adds tweets from the archive with the specified path to the database
+\item \texttt{delete}: removes all user data from the database
+\item \texttt{frequency <type: replies | hashtags | retweets>}: performs frequency analysis on replied users, retweeted users, or hashtags, depending on the argument given
+\item \texttt{composition}: returns information about the percent composition of the user's tweets
+\item \texttt{cloud <type: replies | hashtags | retweets>}: generates cloud visualizations for the chosen global frequency
+\end{itemize}
+Additional visualizations, such as ASCII graphs for users in command-line only environments, bar charts and pie charts for displaying compositional data, and heatmaps for displaying geolocational data, are all planned features for \textit{Knightingale}, and the modular architecture that the system uses for visualizations makes the addition of these and other visualizatyion types very easy.
 \end{adjustwidth}
-
-
-\subsection{Screen Objects and Actions} \label{sec:obs}
-\begin{adjustwidth}{2em}{0pt}
-A discussion of screen objects and actions associated with those objects. 
-\end{adjustwidth}
-\end{document}
