@@ -1,0 +1,111 @@
+\documentclass[a4paper, 12pt]{article}
+\usepackage{changepage, titlesec, hyperref, fullpage}
+\titleformat{\section}[block]{\bfseries}{\thesection.}{1em}{}
+\titleformat{\subsection}[block]{}{\thesubsection}{1em}{}
+\titleformat{\subsubsection}[block]{}{\thesubsubsection}{1em}{}
+\titlespacing*{\subsection} {2em}{3.25ex plus 1ex minus .2ex}{1.5ex plus .2ex}
+\titlespacing*{\subsubsection} {3em}{3.25ex plus 1ex minus .2ex}{1.5ex plus .2ex}
+\title{Architecture Document}
+\author{Jake Ballinger}
+\begin{document}
+\maketitle
+
+\begin{center}
+\centering  "...I have always found that plans are useless, but planning is indispensable." \newline
+\centering - Dwight D. Eisenhower
+\end{center}
+
+\section{Introduction to Document} \label{sec:intro}
+\subsection{Identifying Information} \label{sec:identify}
+\begin{adjustwidth}{2em}{0pt}
+This Architecture Document describes the system architecture and organization for \textit{Knightingale}, a \textit{Twitter} analytics system. \textit{Knightingale} uses a SHIT FUCK ME design.
+\end{adjustwidth}
+
+\subsection{Document Conventions} \label{sec:conventions}
+\begin{adjustwidth}{2em}{0pt}
+This document was written following \textit{IEEE} conventions. It was formatted with \LaTeX. This is the mid-level of the trio of documents; the design document is at a lower level of description, and the requirements document is more concerned with the high-level concepts and expectations of the procuct. \newline
+
+\noindent Names, classes, and methods will be italicized, and both numbers and variables are modified with the $\$$ wrapper in \LaTeX.
+\end{adjustwidth}
+
+\subsection{Acronyms, Abbreviations, and Definitions} \label{sec:abbr}
+\begin{adjustwidth}{2em}{0pt}
+\textbf{cli}: Command-Line Interface \newline
+\noindent \textbf{GUI}: Graphical User Interface \newline
+\noindent \textbf{\LaTeX}: The document-formatting language used to organize the information in the SRS, Architecture Document, and the Design Document. \newline
+\noindent \textbf{SRS}: Software Requirements Specification Document (also known as the Requirements Document)
+\end{adjustwidth}
+
+\subsection{System Overview} \label{sec:view}
+\begin{adjustwidth}{2em}{0pt}
+To give a brief overview, \textit{Knightingale} provides useful information about your tweeting habits. It was developed by students at \textit{Allegheny College} as part of the \textit{Computer Science 290: Principles of Software Development} class in \textit{Fall} of $2013$. Please refer to Section $1$ of the Requirements Document for a detailed explanation of \textit{Knightingale}. \newline
+\end{adjustwidth}
+
+\subsection{References} \label{sec:ref}
+\begin{adjustwidth}{2em}{0pt}
+
+\end{adjustwidth}
+
+\subsection{Outline of the rest of the SRS} \label{sec:outline}
+\begin{adjustwidth}{2em}{0pt}
+Section \ref{sec:arch}: System Architecture \newline
+Section \ref{sec:design}: Architectural Design \newline
+Section \ref{sec:decomp}: Decomposition Description \newline
+Section \ref{sec:rationale}: Design Rationale \newline
+Section \ref{sec:cc}: Consistency and Correspondences \newline
+Section \ref{sec:known}: Known Inconsistencies \newline
+Section \ref{sec:correspondences}: Correspondences in the AD \newline
+Section \ref{sec:rules}: Correspondence Rules \newline
+\end{adjustwidth}
+
+\section{System Architecture} \label{sec:arch}
+\subsection{Architectural Design} \label{sec:design}
+\begin{adjustwidth}{2em}{0pt}
+There are five major architectural components in the system:
+\begin{enumerate}
+\item Analytics
+\item Database
+\item Parser
+\item UI
+\item Test Suite
+\end{enumerate}
+
+\noindent The Analytics package quantifies all of the metrics outline in the Requirements Document. \newline
+
+\noindent The Database package contains the \textit{DatabaseHelper.java} class. \textit{DatabaseHelper.java} organizes all of the data about the downloaded tweets. In this way, it acts as a support system for the Analytics package. \newline
+
+\noindent The Parser package contains the classes that allow the system to extract information from the tweets. \newline
+
+\noindent The UI package allows the user to interact with the system. It contains two distinct packages: the cli and the GUI.\newline
+
+\noindent The Test Suite tests the system. We use a test suite to establish a confidence in the correctness of our code. \newline
+
+\noindent \textit{Knightingale's} essential path of function begins when the user downloads a \textit{.ZIP} file of their tweets from \textit{Twitter} through \textit{Knightingale's} UI package. The Parser makes sense of that information, and it is then stored in the database. Next, the Analytics package takes this data and extracts the necessary analytic information. These metrics and fed back to the user through the UI. The Test Suite is used exclusively by the developers and does not interact with the user.
+\end{adjustwidth}
+
+\subsection{Decomposition Description} \label{sec:decomp}
+\begin{adjustwidth}{2em}{0pt}
+Provide a decomposition of the subsystems in the architectural design. Supplement with text as needed. You may choose to give a functional description or an object-oriented description. For a functional description, put top-level data flow diagram (DFD) and structural decomposition diagrams. For an OO description, put subsystem model, object diagrams, generalization hierarchy diagram(s) (if any), aggregation hierarchy diagrams(s) (if any), interface specifications, and sequence diagrams here. 
+\end{adjustwidth}
+
+\subsection{Design Rationale} \label{sec:rationale}
+\begin{adjustwidth}{2em}{0pt}
+Discuss the rationale for selecting the architecture described in 2.1 including critical issues and trade/offs that were considered. You may discuss other architectures that were considered, provided that you explain why you didn’t choose them.
+\end{adjustwidth}
+
+\section{Consistency and Correspondences} \label{sec:cc}
+\subsection{Known Inconsistencies} \label{sec:known}
+\begin{adjustwidth}{2em}{0pt}
+Record any known inconsistencies in the AD. 
+\end{adjustwidth}
+
+\subsection{Correspondences in the Ad} \label{sec:correspondences}
+\begin{adjustwidth}{2em}{0pt}
+Identify each correspondence in the AD and its participating AD elements. Identify any correspondence rules. Correspondences are used to express, record, enforce and analyze consistency between models, views and other AD elements within an architecture description, between ADs, or between an AD and other forms of documentation. AD elements include instances of stakeholders, concerns, viewpoints and views, model kinds and mdoels, decisions and rationales. Constructs introduced by viewpoints and model kinds are also AD elements. Correspondences are n-ary mathematical relations. Correspondences can be depicted via tables, via links, or via other forms of associations (such as UML).
+\end{adjustwidth}
+
+\subsection{Correspondence Rules} \label{sec:rules}
+\begin{adjustwidth}{2em}{0pt}
+Identify each correspondence rule applying to the AD. Correspondence rules can be introduced by the AD, by one of its viewpoints, or from an architecture framework or architecture description language being used. For each identified correspondence rule, record whether the rule holds or otherwise record all known violations. 
+\end{adjustwidth}
+\end{document}
