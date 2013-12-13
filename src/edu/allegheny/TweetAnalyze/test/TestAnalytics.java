@@ -16,17 +16,24 @@ import  org.junit.runners.JUnit4;
 import  org.junit.rules.ExpectedException;
 import  static org.junit.Assert.*;
 
+import twitter4j.*;
+
 import  static org.mockito.Mockito.*;
+import  org.powermock.api.mockito.PowerMockito;
 import  org.mockito.ArgumentCaptor;
 import  org.mockito.stubbing.Answer;
 import  org.mockito.invocation.InvocationOnMock;
+
 import  java.util.ArrayList;
 import  java.util.Arrays;
 import  java.util.Date;
 import  java.util.List;
+import  java.util.Map;
+import  java.util.HashMap;
 import  java.util.concurrent.atomic.AtomicInteger;
 import  java.text.SimpleDateFormat;
 import  java.text.ParseException;
+import  java.io.IOException;
 import  java.sql.*;
 
 /**
@@ -35,51 +42,25 @@ import  java.sql.*;
  * Still missing some stuff from tests.
  * @Author Gabe Kelly
  * */
-public class TestAnalytics
+public class TestAnalytics extends LoggingTest
 {
-    /*IMPORTANT NOTE ABOUT THIS VERSION
-    AS OF RIGHT NOW THIS DOES NOT TEST THAT
-    THE CODE FOR CALCULATIONS AND SUCH
-    IN SIMPLE ANALYTICS WORK
-    JUST THAT SIMPLE ANALYTICS INTERACTS WITH
-    DB HELPER. WHICH IS IMPORTANT
-    BUT IT WILL NEED TO EVENTUALLY
-    HAVE CODE TO ALSO TEST IF GIVEN BLANK
-    IT WILL PROPERLY RETURN BLANK*/
-
+    
     private SimpleDateFormat timestampFormat;
-    /*private final List<String> namesCollumn = new ArrayList<String>();
-    private final List idRow = new ArrayList(); //i'll refactor this abomination later*///makeResultSet(namesCollumn, idRow);
 
+    private FrequencyAnalyzer spyFA;
+
+    private static Twitter mockTwit;
+
+    private DatabaseHelper mockDH;
     @Rule
   	public ExpectedException exception = ExpectedException.none();
     
 
     @Before
-    public void setUp () {
+    public void setUp ()  {
         timestampFormat = new SimpleDateFormat("yyyy-MM-dd kk:mm:ss z");    
-
-       /* namesCollumn.add("tweet_id");
-        namesCollumn.add("in_reply_status_id");
-        namesCollumn.add("in_reply_user_id");
-        namesCollumn.add("timestamp");
-        namesCollumn.add("source");
-        namesCollumn.add("text");
-        namesCollumn.add("retweeted_status_id");
-        namesCollumn.add("retweeted_status_user_id");
-        namesCollumn.add("retweeted_status_timestamp");
-        namesCollumn.add("expanded_urls");
-        idRow.add(6398642204l);
-        idRow.add(7268639295l);
-        idRow.add(219185626719850496l);
-        idRow.add(263130043444781057l);
-        idRow.add("227593758357721088");
-        idRow.add("219851590377545729");
-        idRow.add(219459070103527425l);
-        idRow.add(192770064250978306l);
-        idRow.add(192671491215720448l);
-        idRow.add("180649285145202688");*/  
-         }
+        mockDH = mock(DatabaseHelper.class);
+        }
 
 //makeResultSet(namesCollumn, idRow);
 
@@ -118,7 +99,7 @@ public class TestAnalytics
      @Test//(expected=NullPointerException.class)
      public void testSearch() throws SQLException, ParseException, ClassNotFoundException, Exception
     {
-        DatabaseHelper mockDH = mock(DatabaseHelper.class);
+        //DatabaseHelper mockDH = mock(DatabaseHelper.class);
         
         SearchAnalyzer sa = new SearchAnalyzer(mockDH);
 
@@ -129,10 +110,6 @@ public class TestAnalytics
         url.add("http://docs.mockito.googlecode.com/hg/org/mockito/Mockito.html");
 
         Tweet tweet = new Tweet(247525256951132160l, time, "Me", "Epic Testing Go!", url);
-
-
-
-
 
         ResultSet rsMock = makeResultSet( 
                 Arrays.asList("tweet_id", "in_reply_to_status_id", "in_reply_to_user_id", "timestamp", "source", "text", "retweeted_status_id", "retweeted_status_user_id",
@@ -162,7 +139,7 @@ public class TestAnalytics
     @Test//this fails find a way to make it pass.But runs without eating an NPE????
     public void testPercentRetweets() throws SQLException, ParseException, ClassNotFoundException, Exception
     {
-        DatabaseHelper mockDH = mock(DatabaseHelper.class);
+        //DatabaseHelper mockDH = mock(DatabaseHelper.class);
         
         CompositionAnalyzer ca = new CompositionAnalyzer(mockDH);
 
@@ -206,7 +183,7 @@ public class TestAnalytics
     @Test
     public void testPercentReplies() throws SQLException, ParseException, ClassNotFoundException, Exception
     {
-        DatabaseHelper mockDH = mock(DatabaseHelper.class);
+       // DatabaseHelper mockDH = mock(DatabaseHelper.class);
         
         CompositionAnalyzer ca = new CompositionAnalyzer(mockDH);
 
@@ -244,6 +221,8 @@ public class TestAnalytics
         assertEquals(expected, actual);
 
 
+
+
     }
 
     /**
@@ -254,7 +233,7 @@ public class TestAnalytics
     @Test//(expected=NullPointerException.class)
     public void testTweetsWithHyperlinks() throws SQLException, ParseException, ClassNotFoundException, Exception
     {
-        DatabaseHelper mockDH = mock(DatabaseHelper.class);
+       // DatabaseHelper mockDH = mock(DatabaseHelper.class);
 
         SearchAnalyzer sa = new SearchAnalyzer(mockDH);
 
@@ -297,7 +276,7 @@ public class TestAnalytics
    @Test//(expected=NullPointerException.class)
     public void testRepliedToUsers() throws SQLException, ParseException, ClassNotFoundException, Exception
     {
-        DatabaseHelper mockDH = mock(DatabaseHelper.class);
+        //DatabaseHelper mockDH = mock(DatabaseHelper.class);
 
         UserAnalyzer ua = new UserAnalyzer(mockDH);
 
@@ -308,8 +287,6 @@ public class TestAnalytics
         url.add("http://docs.mockito.googlecode.com/hg/org/mockito/Mockito.html");
 
         Tweet one = new Tweet(33l, time, "you", "COOKIES!", 21l, 1l);
-
-        //Tweet two = new Tweet(300000000000000000l, time, "Me", "Estamos fudidos", 4l, 5l, time, url);
 
         String repliedToUsersQuery 	= "SELECT DISTINCT in_reply_to_user_id as rid, COUNT (*) " + "FROM Tweets " + 
                                 "GROUP BY rid " + "ORDER BY rid DESC"; 
@@ -347,7 +324,7 @@ public class TestAnalytics
    @Test//(expected=NullPointerException.class)
     public void testRetweetedUsers() throws SQLException, ParseException, ClassNotFoundException, Exception
     {
-        DatabaseHelper mockDH = mock(DatabaseHelper.class);
+        //DatabaseHelper mockDH = mock(DatabaseHelper.class);
 
         UserAnalyzer ua = new UserAnalyzer(mockDH);
 
@@ -397,7 +374,7 @@ public class TestAnalytics
 public void testTweetsWithHashtag() throws SQLException, ParseException, ClassNotFoundException, Exception
 {
 
-        DatabaseHelper mockDH = mock(DatabaseHelper.class);
+        //DatabaseHelper mockDH = mock(DatabaseHelper.class);
 
         HashtagAnalyzer ha = new HashtagAnalyzer(mockDH);
 
@@ -440,7 +417,7 @@ public void testTweetsWithHashtag() throws SQLException, ParseException, ClassNo
 public void testExtractHashtags() throws SQLException, ParseException, ClassNotFoundException, Exception
     {
 
-        DatabaseHelper mockDH = mock(DatabaseHelper.class);
+        //DatabaseHelper mockDH = mock(DatabaseHelper.class);
 
         HashtagAnalyzer ha = new HashtagAnalyzer(mockDH);
 
@@ -474,7 +451,7 @@ public void testExtractHashtags() throws SQLException, ParseException, ClassNotF
 public void testHashtagCount() throws SQLException, ParseException, ClassNotFoundException, Exception
 {
 
-        DatabaseHelper mockDH = mock(DatabaseHelper.class);
+        //DatabaseHelper mockDH = mock(DatabaseHelper.class);
 
         HashtagAnalyzer ha = new HashtagAnalyzer(mockDH);
 
@@ -504,7 +481,221 @@ public void testHashtagCount() throws SQLException, ParseException, ClassNotFoun
 
         assertEquals(expected, actual);
     }
+/**
+ * testGlobalHashtagFrequency()
+ * This tests globalHashtagFrequency()
+ * of the frequency analyzer
+ * *INCOMPLETE* CANNOT SOLVE PRIVATE MOCKING.
+@Test
+public void testGlobalHashtagFrequency() throws SQLException, ParseException, ClassNotFoundException, Exception
+{
+    //DatabaseHelper mockDH = mock(DatabaseHelper.class);
 
+
+    FrequencyAnalyzer fa = new FrequencyAnalyzer(mockDH);
+
+    List<String> extract = new ArrayList<String>();
+
+    extract.add("#BLOBBIRD");
+
+    Integer count = 1;
+
+    ResultSet rsMock = makeResultSet( 
+                Arrays.asList("tweet_id", "in_reply_to_status_id", "in_reply_to_user_id", "timestamp", "source", "text", "retweeted_status_id", "retweeted_status_user_id",
+                    "retweeted_status_timestamp", "expanded_urls"),
+                Arrays.asList(247525256951132160l, 4l, 3l, 1347849595000l, "HOORAY", "#BLOBBIRD IS BETTER THAN FISH", null, null, null, "http://docs.mockito.googlecode.com/hg/org/mockito/Mockito.html")
+                );
+                
+   ResultSet rsMock2 = makeResultSet( 
+                Arrays.asList("tweet_id", "in_reply_to_status_id", "in_reply_to_user_id", "timestamp", "source", "text", "retweeted_status_id", "retweeted_status_user_id",
+                    "retweeted_status_timestamp", "expanded_urls"),
+                Arrays.asList(247525256951132160l, 4l, 3l, 1347849595000l, "HOORAY", "#BLOBBIRD IS BETTER THAN FISH", null, null, null, null)
+                );
+                
+        when(mockDH.execute("SELECT COUNT(*) FROM Tweets WHERE text LIKE '%#BLOBBIRD%'")).thenReturn(rsMock2);
+
+        when(rsMock2.next()).thenReturn(true).thenReturn(false);
+
+        when(rsMock2.getInt(1)).thenReturn(1);
+
+    when(rsMock.next()).thenReturn(true).thenReturn(false);
+
+    when(mockDH.execute("SELECT * FROM Tweets WHERE text LIKE '%#%'")).thenReturn(rsMock);
+
+    Map<String, Integer> actual = new HashMap<String, Integer>();
+    actual = fa.globalHashtagFrequency();
+
+    Map<String, Integer> expected = new HashMap<String, Integer>();
+
+    expected.put(extract.get(0), count);
+    
+    verify(rsMock).getInt(1);
+    //assertEquals(expected, actual);
+}*/
+
+/**
+ * testGlobalReplyFrequencyNOTNULL
+ * tests the globalReplyFrequency()
+ * of the frequency analyzer when
+ * id is not zero
+ * */
+@Test
+public void testGlobalReplyFrequencyNOTNULL() throws SQLException, ParseException, ClassNotFoundException, Exception
+{
+   // DatabaseHelper mockDH = mock(DatabaseHelper.class);
+
+    FrequencyAnalyzer fa = new FrequencyAnalyzer(mockDH);
+
+    List<String> id = new ArrayList<String>();
+
+    id.add("Santa Claus");
+
+    Integer count = 1;
+
+    ResultSet rsMock = makeResultSet( 
+                Arrays.asList("tweet_id", "in_reply_to_status_id", "in_reply_to_user_id", "timestamp", "source", "text", "retweeted_status_id", "retweeted_status_user_id",
+                    "retweeted_status_timestamp", "expanded_urls"),
+                Arrays.asList(247525256951132160l, 4l, 3l, 1347849595000l, "HOORAY", "#BLOBBIRD IS BETTER THAN FISH", null, null, null, "http://docs.mockito.googlecode.com/hg/org/mockito/Mockito.html")
+                );
+    ResultSet rsMock2 = makeResultSet(
+            Arrays.asList("tweet_id"),
+            Arrays.asList(247525256951132160l)
+    );
+                
+    when(mockDH.execute("SELECT DISTINCT in_reply_to_user_id as rid, COUNT (*) " + "FROM Tweets " + "GROUP BY rid " + "ORDER BY rid DESC")).thenReturn(rsMock);
+
+    when(mockDH.execute("SELECT user_name " + "FROM users " + "WHERE user_id IS " + 247525256951132160l)).thenReturn(rsMock2);
+
+    when(rsMock.next()).thenReturn(true).thenReturn(false);
+
+    when(rsMock2.next()).thenReturn(true).thenReturn(false);
+
+    when(rsMock.getLong(1)).thenReturn(247525256951132160l);
+
+    when(rsMock.getInt(2)).thenReturn(1);
+
+    when(rsMock2.getString(1)).thenReturn("Santa Claus");
+
+    Map<String, Integer> actual = new HashMap<String, Integer>();
+    actual = fa.globalReplyFrequency();
+
+    Map<String, Integer> expected = new HashMap<String, Integer>();
+
+    expected.put(id.get(0), count);
+
+    assertEquals(expected, actual);
+}
+
+/**
+ * testGlobalReplyFrequencyNULL
+ * tests the globalReplyFrequency()
+ * of the frequency analyzer when
+ * id is zero
+ * *INCOMPLETE* CANNOT SOLVE PRIVATE MOCKING.
+//@PrepareForTest(Twitter.class)
+@Test
+public void testGlobalReplyFrequencyNULL() throws SQLException, ParseException, ClassNotFoundException, Exception
+{
+   // DatabaseHelper mockDH = mock(DatabaseHelper.class);
+
+    FrequencyAnalyzer fa = new FrequencyAnalyzer(mockDH);
+
+    List<String> id = new ArrayList<String>();
+
+    mockTwit = PowerMockito.mock(Twitter.class);
+    //PowerMockito.whenNew(Twitter.class).withNoArguments().thenReturn(mockTwit);
+    spyFA = spy(new FrequencyAnalyzer(mockDH));
+
+    id.add("Santa Claus");
+
+    Integer count = 1;
+
+    ResultSet rsMock = makeResultSet( 
+                Arrays.asList("tweet_id", "in_reply_to_status_id", "in_reply_to_user_id", "timestamp", "source", "text", "retweeted_status_id", "retweeted_status_user_id",
+                    "retweeted_status_timestamp", "expanded_urls"),
+                Arrays.asList(247525256951132160l, 4l, 3l, 1347849595000l, "HOORAY", "#BLOBBIRD IS BETTER THAN FISH", null, null, null, "http://docs.mockito.googlecode.com/hg/org/mockito/Mockito.html")
+                );
+    ResultSet rsMock2 = makeResultSet(
+            Arrays.asList("tweet_id"),
+            Arrays.asList(1l)
+            );
+                  
+    when(mockDH.execute("SELECT DISTINCT in_reply_to_user_id as rid, COUNT (*) " + "FROM Tweets " + "GROUP BY rid " + "ORDER BY rid DESC")).thenReturn(rsMock);
+
+    when(mockDH.execute("SELECT user_name " + "FROM users " + "WHERE user_id IS " + 247525256951132160l)).thenReturn(rsMock2);
+
+    when(rsMock.next()).thenReturn(true).thenReturn(false);
+    when(rsMock2.next()).thenReturn(false);
+
+    when(rsMock.getLong(1)).thenReturn(247525256951132160l);
+
+    when(rsMock.getInt(2)).thenReturn(1);
+
+    //when(mockTwit.getshowUser(247525256951132160l)).thenReturn();
+
+    Map<String, Integer> actual = new HashMap<String, Integer>();
+    actual = fa.globalReplyFrequency();
+
+    Map<String, Integer> expected = new HashMap<String, Integer>();
+
+    expected.put(id.get(0), count);
+
+    assertEquals(expected, actual);
+}*/
+
+/**
+ * testGlobalRetweetedFrequencyNOTNULL
+ * tests the globalReplyFrequency()
+ * of the frequency analyzer when
+ * id is not zero
+ * */
+@Test
+public void testGlobalRetweetedFrequencyNOTNULL() throws SQLException, ParseException, ClassNotFoundException, Exception
+{
+   // DatabaseHelper mockDH = mock(DatabaseHelper.class);
+
+    FrequencyAnalyzer fa = new FrequencyAnalyzer(mockDH);
+
+    List<String> id = new ArrayList<String>();
+
+    id.add("Dr. Kapfhammer");
+
+    Integer count = 1;
+
+    ResultSet rsMock = makeResultSet( 
+                Arrays.asList("tweet_id", "in_reply_to_status_id", "in_reply_to_user_id", "timestamp", "source", "text", "retweeted_status_id", "retweeted_status_user_id",
+                    "retweeted_status_timestamp", "expanded_urls"),
+                Arrays.asList(247525256951132160l, null, null, 1347849595000l, "HOORAY", "#BLOBBIRD IS BETTER THAN FISH", 34l, 23l, 42l, "http://docs.mockito.googlecode.com/hg/org/mockito/Mockito.html")
+                );
+    ResultSet rsMock2 = makeResultSet(
+            Arrays.asList("tweet_id"),
+            Arrays.asList(247525256951132160l)
+    );
+                
+    when(mockDH.execute("SELECT DISTINCT retweeted_status_user_id AS id, COUNT(*) " + "FROM Tweets " + "GROUP BY retweeted_status_user_id " + "ORDER BY id DESC")).thenReturn(rsMock);
+
+    when(mockDH.execute("SELECT user_name " + "FROM users " + "WHERE user_id IS " + 247525256951132160l)).thenReturn(rsMock2);
+
+    when(rsMock.next()).thenReturn(true).thenReturn(false);
+
+    when(rsMock2.next()).thenReturn(true).thenReturn(false);
+
+    when(rsMock.getLong(1)).thenReturn(247525256951132160l);
+
+    when(rsMock.getInt(2)).thenReturn(1);
+
+    when(rsMock2.getString(1)).thenReturn("Dr. Kapfhammer");
+
+    Map<String, Integer> actual = new HashMap<String, Integer>();
+
+    actual = fa.globalRetweetFrequency();
+
+    Map<String, Integer> expected = new HashMap<String, Integer>();
+
+    expected.put(id.get(0), count);
+
+    assertEquals(expected, actual);
+}
 
 
 
