@@ -46,9 +46,9 @@ public class TestAnalytics extends LoggingTest
     
     private SimpleDateFormat timestampFormat;
 
-    private FrequencyAnalyzer spyFA;
+    //private FrequencyAnalyzer spyFA;
 
-    private static Twitter mockTwit;
+    //private static Twitter mockTwit;
 
     private DatabaseHelper mockDH;
     @Rule
@@ -487,7 +487,7 @@ public void testHashtagCount() throws SQLException, ParseException, ClassNotFoun
  * testGlobalHashtagFrequency()
  * This tests globalHashtagFrequency()
  * of the frequency analyzer
- * *INCOMPLETE* CANNOT SOLVE PRIVATE MOCKING.
+ * */
 @Test
 public void testGlobalHashtagFrequency() throws SQLException, ParseException, ClassNotFoundException, Exception
 {
@@ -495,6 +495,8 @@ public void testGlobalHashtagFrequency() throws SQLException, ParseException, Cl
 
 
     FrequencyAnalyzer fa = new FrequencyAnalyzer(mockDH);
+
+    HashtagAnalyzer haMOCK = mock(HashtagAnalyzer.class);
 
     List<String> extract = new ArrayList<String>();
 
@@ -514,12 +516,13 @@ public void testGlobalHashtagFrequency() throws SQLException, ParseException, Cl
                 Arrays.asList(247525256951132160l, 4l, 3l, 1347849595000l, "HOORAY", "#BLOBBIRD IS BETTER THAN FISH", null, null, null, null)
                 );
                 
-        when(mockDH.execute("SELECT COUNT(*) FROM Tweets WHERE text LIKE '%#BLOBBIRD%'")).thenReturn(rsMock2);
+    when(mockDH.execute("SELECT COUNT(*) FROM Tweets WHERE text LIKE '%#BLOBBIRD%'")).thenReturn(rsMock2);
 
-        when(rsMock2.next()).thenReturn(true).thenReturn(false);
+    when(rsMock2.next()).thenReturn(true).thenReturn(false);
 
-        when(rsMock2.getInt(1)).thenReturn(1);
+    when(rsMock2.getInt(1)).thenReturn(1);
 
+    when(haMOCK.hashtagCount("#BLOBBIRD")).thenReturn(1);
     when(rsMock.next()).thenReturn(true).thenReturn(false);
 
     when(mockDH.execute("SELECT * FROM Tweets WHERE text LIKE '%#%'")).thenReturn(rsMock);
@@ -531,9 +534,9 @@ public void testGlobalHashtagFrequency() throws SQLException, ParseException, Cl
 
     expected.put(extract.get(0), count);
     
-    verify(rsMock).getInt(1);
-    //assertEquals(expected, actual);
-}*/
+    //verify(rsMock).getInt(1);
+    assertEquals(expected, actual);
+}
 
 /**
  * testGlobalReplyFrequencyNOTNULL
@@ -593,7 +596,8 @@ public void testGlobalReplyFrequencyNOTNULL() throws SQLException, ParseExceptio
  * tests the globalReplyFrequency()
  * of the frequency analyzer when
  * id is zero
- * *INCOMPLETE* CANNOT SOLVE PRIVATE MOCKING.
+ * *INCOMPLETE* CANNOT SOLVE STATIC MOCKING.
+ * 
 //@PrepareForTest(Twitter.class)
 @Test
 public void testGlobalReplyFrequencyNULL() throws SQLException, ParseException, ClassNotFoundException, Exception
@@ -604,9 +608,9 @@ public void testGlobalReplyFrequencyNULL() throws SQLException, ParseException, 
 
     List<String> id = new ArrayList<String>();
 
-    mockTwit = PowerMockito.mock(Twitter.class);
+    Twitter mockTwit = mock(Twitter.class);
     //PowerMockito.whenNew(Twitter.class).withNoArguments().thenReturn(mockTwit);
-    spyFA = spy(new FrequencyAnalyzer(mockDH));
+    //spyFA = spy(new FrequencyAnalyzer(mockDH));
 
     id.add("Santa Claus");
 
@@ -627,13 +631,14 @@ public void testGlobalReplyFrequencyNULL() throws SQLException, ParseException, 
     when(mockDH.execute("SELECT user_name " + "FROM users " + "WHERE user_id IS " + 247525256951132160l)).thenReturn(rsMock2);
 
     when(rsMock.next()).thenReturn(true).thenReturn(false);
-    when(rsMock2.next()).thenReturn(false);
-
+    
     when(rsMock.getLong(1)).thenReturn(247525256951132160l);
 
     when(rsMock.getInt(2)).thenReturn(1);
 
-    //when(mockTwit.getshowUser(247525256951132160l)).thenReturn();
+    when(rsMock2.getString(1)).thenReturn(null);
+
+    when(mockTwit.getScreenName()).thenReturn("Santa Claus");
 
     Map<String, Integer> actual = new HashMap<String, Integer>();
     actual = fa.globalReplyFrequency();
@@ -641,8 +646,9 @@ public void testGlobalReplyFrequencyNULL() throws SQLException, ParseException, 
     Map<String, Integer> expected = new HashMap<String, Integer>();
 
     expected.put(id.get(0), count);
-
-    assertEquals(expected, actual);
+    
+    verify(mockTwit).getScreenName();
+    //assertEquals(expected, actual);
 }*/
 
 /**
