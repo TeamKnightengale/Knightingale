@@ -39,9 +39,9 @@ import edu.allegheny.tweetanalyze.LogConfigurator; // REMOVE WHEN MAIN METHOD IS
 public class FrequencyAnalyzer extends Analyzer {
 
 	public static Logger logger = Logger.getLogger(FrequencyAnalyzer.class.getName());
-	private static Twitter twitter = TwitterFactory.getSingleton();
-	private UserAnalyzer userAnalyzer;
-	private HashtagAnalyzer hashtagAnalyzer;
+	protected static Twitter twitter = TwitterFactory.getSingleton();
+	protected UserAnalyzer userAnalyzer;
+	protected HashtagAnalyzer hashtagAnalyzer;
 	private static String usernameQuery = "SELECT user_name "
 										+ "FROM users "
 										+ "WHERE user_id IS ";
