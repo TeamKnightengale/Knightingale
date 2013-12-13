@@ -212,4 +212,33 @@
 		</javadoc>
 	</target>
 
+
+
+	<!-- Creates a jar file of all neccessary jars and files. -->
+	<target name="build-jar"  depends="clean,compile">
+	  <jar destfile="${build.dir}/nightingale.jar" update="true">
+	       <fileset dir="${user.dir}"/>
+	       <restrict>
+		 <name name="**/*.class"/>
+		 <archives>
+		   <zips>
+		     <fileset dir="${lib.dir}">
+		       <include name = "**/*.jar"/> 
+		       <exclude name ="*junit*.jar"/> 
+		       <exclude name ="*jdepend*.jar"/> 
+		       <exclude name ="*mockito*.jar"/>
+		       <exclude name ="*javancss*.jar"/>
+		       <exclude name ="*jacoco*.jar"/>
+		       <exclude name ="*dbunit*.jar"/>
+		     </fileset>
+		   </zips>
+		 </archives>
+	       </restrict>
+	    <manifest>
+	      <attribute name="Main-Class" value="src.edu.allegheny.tweetAnalyze.database.DatabaseHelper"/>
+	    </manifest>
+	  </jar>
+	</target>
+
 </project>
+
