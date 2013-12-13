@@ -58,7 +58,8 @@
 
 	<taskdef uri="antlib:org.jacoco.ant" resource="org/jacoco/ant/antlib.xml">
 		<classpath path="${lib.dir}/jacocoant.jar"/>
-	</taskdef>
+    </taskdef>
+    <taskdef name="ncss" classname="javancss.JavancssAntTask" classpath="lib/javancss.jar:lib/jhbasic.jar:lib/ccl.jar"/>
 
 	<!-- BASIC TARGETS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
 
@@ -177,14 +178,19 @@
 	</target>
 	
 	<!-- based on the example given on the JavaNCSS site -->
-	<target name="ncss" depends="compile">
+    <target name="ncss" depends="compile">
+        <mkdir dir="${doc.dir}"/>
 		<taskdef name="CCNCheck" classname="javancss.JavancssAntTask">
 			<classpath refid="build.classpath"/>
 		</taskdef>
 
-	  	 <CCNCheck srcdir="${src.dir}"
-	            abortOnFail="true" ccnPerFuncMax="10"
-	            includes="**/*.java"/>
+        <ncss srcdir="${src.dir}"
+                generateReport="yes" 
+                outputfile="${doc.dir}/javancss-report.xml" 
+                format="xml" 
+	            ccnPerFuncMax="10"
+                abortOnFail="false"/>
+        <xslt basedir="${doc.dir}" destdir="${doc.dir}" includes="javancss-report.xml" style="${user.home}/.ant/etc/javancss2html.xsl"/>
   	</target>
 
 	<!-- Based on the demo Javadoc settings on the Ant web page. -->

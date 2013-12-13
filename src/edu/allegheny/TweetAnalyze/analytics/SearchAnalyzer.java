@@ -34,7 +34,8 @@ public class SearchAnalyzer extends Analyzer {
 	
 	public static Logger logger = Logger.getLogger(SearchAnalyzer.class.getName());
 
-	public SearchAnalyzer(DatabaseHelper db){
+	public SearchAnalyzer(DatabaseHelper db)
+	{
 		super(db);
 	}
 
