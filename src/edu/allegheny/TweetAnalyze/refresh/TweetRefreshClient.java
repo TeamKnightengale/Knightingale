@@ -6,7 +6,7 @@
 //              /___/                /___/          
 //  Open-source Twitter analytics...with style!
 
-package edu.allegheny.tweetanalyze;
+package edu.allegheny.tweetanalyze.refresh;
 
 
 import twitter4j.*;
@@ -16,7 +16,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.ArrayList;
-
+import edu.allegheny.tweetanalyze.*;
 import edu.allegheny.tweetanalyze.database.DatabaseHelper;
 
 /**

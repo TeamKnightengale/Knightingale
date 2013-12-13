@@ -1,4 +1,4 @@
-package edu.allegheny.tweetanalyze;
+package edu.allegheny.tweetanalyze.refresh;
 
 import twitter4j.Status;
 import twitter4j.Twitter;
