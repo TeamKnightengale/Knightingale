@@ -57,8 +57,7 @@ public class TestAnalytics
 
     @Before
     public void setUp () {
-        timestampFormat = new SimpleDateFormat("yyyy-MM-dd kk:mm:ss z");
-        
+        timestampFormat = new SimpleDateFormat("yyyy-MM-dd kk:mm:ss z");    
 
        /* namesCollumn.add("tweet_id");
         namesCollumn.add("in_reply_status_id");
@@ -79,7 +78,7 @@ public class TestAnalytics
         idRow.add(219459070103527425l);
         idRow.add(192770064250978306l);
         idRow.add(192671491215720448l);
-        idRow.add("180649285145202688");*/
+        idRow.add("180649285145202688");*/  
          }
 
 //makeResultSet(namesCollumn, idRow);
@@ -130,6 +129,10 @@ public class TestAnalytics
         url.add("http://docs.mockito.googlecode.com/hg/org/mockito/Mockito.html");
 
         Tweet tweet = new Tweet(247525256951132160l, time, "Me", "Epic Testing Go!", url);
+
+
+
+
 
         ResultSet rsMock = makeResultSet( 
                 Arrays.asList("tweet_id", "in_reply_to_status_id", "in_reply_to_user_id", "timestamp", "source", "text", "retweeted_status_id", "retweeted_status_user_id",
@@ -227,6 +230,8 @@ public class TestAnalytics
         when(rsMock.getInt(1)).thenReturn(3);
 
         when(rsMock2.getInt(1)).thenReturn(1);
+
+
 
         when(rsMock.next()).thenReturn(true).thenReturn(false);
 
@@ -383,8 +388,122 @@ public class TestAnalytics
 
     }
 
+/**
+ * testTweetsWithHashtag()
+ * This test the tweetsWithHashtag()
+ * of the hastag analytics class
+ * */
+@Test
+public void testTweetsWithHashtag() throws SQLException, ParseException, ClassNotFoundException, Exception
+{
 
+        DatabaseHelper mockDH = mock(DatabaseHelper.class);
 
+        HashtagAnalyzer ha = new HashtagAnalyzer(mockDH);
+
+        Date time = timestampFormat.parse("2012-09-17 02:39:55 +0000");
+        
+        ArrayList<String> url = new ArrayList<String>();
+
+        url.add("http://docs.mockito.googlecode.com/hg/org/mockito/Mockito.html");
+
+        Tweet tweet = new Tweet(247525256951132160l, time, "Me", "#CS210Final FTW", url);
+
+        ResultSet rsMock = makeResultSet( 
+                Arrays.asList("tweet_id", "in_reply_to_status_id", "in_reply_to_user_id", "timestamp", "source", "text", "retweeted_status_id", "retweeted_status_user_id",
+                    "retweeted_status_timestamp", "expanded_urls"),
+                Arrays.asList(247525256951132160l, null, null, 1347849595000l, "Me", "#CS210Final FTW", null, null, null, "http://docs.mockito.googlecode.com/hg/org/mockito/Mockito.html")
+                );
+                
+        when(mockDH.execute("SELECT * FROM Tweets WHERE text LIKE '%#%'")).thenReturn(rsMock);
+
+        when(rsMock.next()).thenReturn(true).thenReturn(false);
+
+        List<Tweet> actual = ha.tweetsWithHashtag();
+        
+        List<Tweet> expected = new ArrayList<Tweet>();
+
+        expected.add(tweet);
+
+        assertEquals(expected.get(0).getTweetID(), actual.get(0).getTweetID());
+        assertEquals(expected.get(0).getTimestamp(), actual.get(0).getTimestamp());
+        assertEquals(expected.get(0).getSource(), actual.get(0).getSource());
+        assertEquals(expected.get(0).getText(), actual.get(0).getText());
+        assertEquals(expected.get(0).getExpandedURLs(), actual.get(0).getExpandedURLs());
+    }
+/**
+ * testExtractHashtag()
+ * This test the extractHashtags()
+ * of the hastag analytics class
+ * */
+@Test
+public void testExtractHashtags() throws SQLException, ParseException, ClassNotFoundException, Exception
+    {
+
+        DatabaseHelper mockDH = mock(DatabaseHelper.class);
+
+        HashtagAnalyzer ha = new HashtagAnalyzer(mockDH);
+
+        ResultSet rsMock = makeResultSet( 
+                Arrays.asList("tweet_id", "in_reply_to_status_id", "in_reply_to_user_id", "timestamp", "source", "text", "retweeted_status_id", "retweeted_status_user_id",
+                    "retweeted_status_timestamp", "expanded_urls"),
+                 Arrays.asList(247525256951132160l, null, null, 1347849595000l, "Me", "#CS210Final FTW", null, null, null, "http://docs.mockito.googlecode.com/hg/org/mockito/Mockito.html"),
+                 Arrays.asList(247525256951132160l, 4l, 3l, 1347849595000l, "HOORAY", "CS290Final as well", null, null, null, null)
+                );
+                
+        when(mockDH.execute("SELECT * FROM Tweets WHERE text LIKE '%#%'")).thenReturn(rsMock);
+
+        when(rsMock.next()).thenReturn(true).thenReturn(false);
+
+        List<String> actual = ha.extractHashtags();
+
+        List<String> expected = new ArrayList<String>();
+
+        expected.add("#CS210Final");
+        
+        assertEquals(expected.get(0), actual.get(0));
+        assertFalse(actual.size() == 2);
+    }
+
+/**
+ * testHashtagCount()
+ * This test the hashtagCount()
+ * of the hastag analytics class
+ * */
+@Test
+public void testHashtagCount() throws SQLException, ParseException, ClassNotFoundException, Exception
+{
+
+        DatabaseHelper mockDH = mock(DatabaseHelper.class);
+
+        HashtagAnalyzer ha = new HashtagAnalyzer(mockDH);
+
+        Date time = timestampFormat.parse("2012-09-17 02:39:55 +0000");
+        
+        ArrayList<String> url = new ArrayList<String>();
+
+        url.add("http://docs.mockito.googlecode.com/hg/org/mockito/Mockito.html");
+
+        Tweet tweet = new Tweet(247525256951132160l, time, "Me", "#CS210Final FTW", url);
+
+        ResultSet rsMock = makeResultSet( 
+                Arrays.asList("tweet_id", "in_reply_to_status_id", "in_reply_to_user_id", "timestamp", "source", "text", "retweeted_status_id", "retweeted_status_user_id",
+                    "retweeted_status_timestamp", "expanded_urls"),
+                Arrays.asList(247525256951132160l, 4l, 3l, 1347849595000l, "HOORAY", "#CS290Final as well", null, null, null, null)
+                );
+                
+        when(mockDH.execute("SELECT COUNT(*) FROM Tweets WHERE text LIKE '%#CS290Final%'")).thenReturn(rsMock);
+
+        when(rsMock.next()).thenReturn(true).thenReturn(false);
+
+        when(rsMock.getInt(1)).thenReturn(1);
+
+        Integer actual = ha.hashtagCount("#CS290Final");
+
+        Integer expected = 1;
+
+        assertEquals(expected, actual);
+    }
 
 
 
