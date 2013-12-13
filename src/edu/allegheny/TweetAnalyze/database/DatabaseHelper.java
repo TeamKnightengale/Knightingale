@@ -48,7 +48,11 @@ public class DatabaseHelper
 		db.getAllTweets();
 		System.out.println(db.getLastTweetID());
 	}
-
+	/**
+	 * Creates table in the database for user ids and user name
+	 *
+	 * @author Dibyo Mukherjee
+	 */
 	public void createTweetsTable() 
 	{
 		try 
@@ -74,7 +78,11 @@ public class DatabaseHelper
 				logger.log(Level.SEVERE, "Problems creating Tweets table:", e);
 			}
 	}
-
+	/**
+	 * Creates table in the database for user ids and user name
+	 *
+	 * @author Ian Macmillan
+	 */
 	public void createUsersTable()
 	{
 		try
@@ -93,7 +101,11 @@ public class DatabaseHelper
 			}
 	 
 	}
-
+	/**
+	 * Drop existing tables in database if they already exist
+	 *
+	 * @author Dibyo Mukherjee
+	 */
 	public void dropTweetsTable()
 	{
 		try {
@@ -111,7 +123,12 @@ public class DatabaseHelper
 			logger.log(Level.SEVERE, "Problem updating table entries:", e);
 		}
 	}
-
+	/**
+	 * Defines the execution of a prepared statement
+	 *
+	 * @author Dibyo Mukherjee
+	 * @param query string consisting of an SQL statement
+	 */
 	public ResultSet execute(String query)
 	{
 		try
@@ -136,7 +153,12 @@ public class DatabaseHelper
 		}
 		return null;
 	}
-
+	/**
+	 * Inserts all tweet information into the database that was provided by Twitter
+	 *
+	 * @author Ian Macmillan
+	 * @param tweets ArrayList that is created from the parsing methods
+	 */
 	public void insertTweets(ArrayList<Tweet> tweets) 
 	{
 		try 
@@ -197,7 +219,11 @@ public class DatabaseHelper
 				logger.log(Level.SEVERE, "Problem updating tweets table entries:", e);
 			}
 	}
-
+	/**
+	 * Inserts user ids into the database for all replied to and retweeted users
+	 *
+	 * @author Ian Macmillan
+	 */
 	public void insertUser()
 	{
 		try {
@@ -240,7 +266,11 @@ public class DatabaseHelper
 			logger.log(Level.SEVERE,"Problem inserting usernames into database:", e);
 		}
 	}
-
+	/**
+	 * Returns all tweets currently in the database
+	 *
+	 * @author Dibyo Mukherjee
+	 */
 	public ArrayList<Tweet> getAllTweets() throws ParseException
 	{
 		ArrayList<Tweet> tweets = new ArrayList<Tweet>();
@@ -259,7 +289,11 @@ public class DatabaseHelper
 		}
 		return tweets;
 	}
-
+	/**
+	 * Returns the last tweet that was inserted into the database
+	 *
+	 * @author Dibyo Mukherjee
+	 */
 	public long getLastTweetID()
 	{
 		String query = "select tweet_id from tweets order by tweet_id desc limit 1";
