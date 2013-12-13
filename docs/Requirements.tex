@@ -1,0 +1,274 @@
+\documentclass[a4paper, 12pt]{article}
+\usepackage{changepage, titlesec, hyperref, fullpage}
+\titleformat{\section}[block]{\bfseries}{\thesection.}{1em}{}
+\titleformat{\subsection}[block]{}{\thesubsection}{1em}{}
+\titleformat{\subsubsection}[block]{}{\thesubsubsection}{1em}{}
+\titlespacing*{\subsection} {2em}{3.25ex plus 1ex minus .2ex}{1.5ex plus .2ex}
+\titlespacing*{\subsubsection} {3em}{3.25ex plus 1ex minus .2ex}{1.5ex plus .2ex}
+\title{Requirements Document}
+\author{Jake Ballinger}
+\begin{document}
+\maketitle
+
+\begin{center}
+\centering  ``...I have always found that plans are useless, but planning is indispensable." \newline
+\centering - Dwight D. Eisenhower
+\end{center}
+
+\section{Introduction to Document} \label{sec:intro}
+\subsection{Purpose of the Product} \label{sec:purpose}
+\begin{adjustwidth}{2em}{0pt}
+Many \textit{Twitter} users have amassed a such plethora of tweets that it is cumbersome to manually search through them, an ability that many \textit{Twitter} users would find useful. Presently, to do this, the user must download all of their tweets; however, because of the way \textit{Twitter} rate limits its \textit{API}, this can be difficult. \newline
+
+\noindent How wonderful would it be if we could search through all of our tweets? And what if we could do not only that, but what if we also could analyze the way we tweet?\newline
+
+\noindent This is the purpose of \textit{Knightingale}. \newline
+
+\noindent This is the first release of \textit{Knightingale}. This $SRS$ will detail the requirements of the system; for further details about the system, see the architecture and design documents.
+\end{adjustwidth}
+
+\subsection{Document Conventions} \label{sec:conventions}
+\begin{adjustwidth}{2em}{0pt}
+This document was written following \textit{IEEE} conventions. It was formatted with \textit{LaTeX}. This is the most high-level of the trio of documents; the architecture document is at a lower level of description, and the design document concerns itself with the implementation and algorithmic details. \newline
+
+\noindent Names, classes, and methods will be italicized, and both numbers and variables are modified with the $\$$ wrapper in \textit{LaTeX}.
+\end{adjustwidth}
+
+\subsection{Acronyms, Abbreviations, and Definitions} \label{sec:abbr}
+\begin{adjustwidth}{2em}{0pt}
+As this document is at a higher level, it is intended for more general consumption; a reader with little background in computer science or analysis should be able to reference this document for a simple understanding of the system’s functioning. That said, the developers have referenced this document in both draft and completed form. As such, it’s lack of technical details has not invalidated its usefulness. \newline
+
+\noindent For the casual consumer looking to learn more about \textit{Knightingale}, I suggest skipping to Section $1.4$, which describes the scope of the product. From there, I would read Sections $2.1$, the \textit{Product Perspective}, which provides some of the background information and history of the product; $2.2$, the \textit{Product Functions}, which summarizes the major functions of the product, Section $2.4$, which specifies the operating environment of \textit{Knightingale}, and \textit{Appendix A}, the glossary, which will be an aid to decode the document’s terminology. We’ve devoted \textit{Appendix B} to the visualization of some of these concepts. \newline
+
+\noindent More technical consumers will enjoy reading the document in its entirety; however, for an expedited experience, I suggest following the same sequence as was outlined for the casual consumer, with some additions: Section $1.4$, the entirety of Sections $2$ and $4$, and Sections $5.1$ and $5.4$, and \textit{Appendix B}. \newline
+\end{adjustwidth}
+
+\subsection{Scope of the Product} \label{sec:scope}
+\begin{adjustwidth}{2em}{0pt}
+\textit{Knightingale} is a system designed to inform any \textit{Twitter} user of their tweeting habits. \textit{Knightingale} could be used by social psychologists as a data-mining tool to obtain information about their clients or a population, or by companies to learn about a customer's interests to know which product to best advertise to them. For those looking to expand their presence on \textit{Twitter}, \textit{Knightingale} can be used to compare their tweeting habits to those of users with larger amounts of followers. We foresee \textit{Knightingale} being used for both recreational and professional use.
+\end{adjustwidth}
+
+\subsection{References} \label{sec:ref}
+\begin{adjustwidth}{2em}{0pt}
+
+\end{adjustwidth}
+
+\subsection{Outline of the rest of the SRS} \label{sec:outline}
+\begin{adjustwidth}{2em}{0pt}
+Section \ref{sec:general}: General Description of the Product \newline
+Section \ref{sec:context}: Context of Product \newline
+Section \ref{sec:functions}: Product Functions \newline
+Section \ref{sec:userc}: User Characteristics \newline
+Section \ref{sec:operating}: Operating Environment \newline
+Section \ref{sec:constraints}: Constraints \newline
+Section \ref{sec:and}: Assumptions and Dependencies \newline
+Section \ref{sec:specificreq}: Specific Requirements \newline
+Section \ref{sec:eir}: External Interface Requirements \newline
+Section \ref{sec:ui}: User Interface \newline
+Section \ref{sec:softi}: Software Interface \newline
+Section \ref{sec:funcreq}: Functional Requirements \newline
+Section \ref{sec:perfreq}: Performance Requirements \newline
+Section \ref{sec:designc}: Design Constraints \newline
+Section \ref{sec:qreq}: Quality Requirements \newline
+\end{adjustwidth}
+
+\section{General Description of the Product} \label{sec:general}
+\subsection{Context of Product} \label{sec:context}
+\begin{adjustwidth}{2em}{0pt}
+\textit{Knightingale} was developed as the final project for the \textit{Computer Science 290 Principles of Software Development} class at \textit{Allegheny College}. It is a new, self-contained product. 
+\end{adjustwidth}
+ 
+\subsection{Product Functions} \label{sec:functions}
+\begin{adjustwidth}{2em}{0pt}
+\textit{Twitter} allows users to down a $.ZIP$ file of all of their tweets. \textit{Knightingale} reads in this file and stores the tweets in a database. From there, it can perform certain user-specified analyses:
+\begin{itemize}
+\item Composition of Tweets
+\item Content of Tweets
+\item User Interactions
+\item Search Functions
+\end{itemize}
+\end{adjustwidth}
+
+\subsection{User Characteristics} \label{sec:userc}
+\begin{adjustwidth}{2em}{0pt}
+The average \textit{Twitter} user can use \textit{Knightingale} to learn more about their tweeting habits. For this type of user, \textit{Knightingale} is designed to be a fun tool. \newline
+
+\noindent Researchers and academics can use Nightingale as a tool to gather information. Psychologists can use \textit{Knightingale} to identify patterns in a client's tweeting habits, and this can inform their research or therapy techniques. For example, if a psychologist is interested in studying self-esteem and social networks, they can define the ratio of tweets containing original content to those containing unoriginal content - quotations, retweets, or urls - as a measure of self-esteem. Without \textit{Knightingale}, quantifying metrics like this would be unimaginably complicated.
+\end{adjustwidth}
+
+\subsection{Operating Environment} \label{sec:operating}
+\begin{adjustwidth}{2em}{0pt}
+Development on \textit{Knightingale} took place on both the \textit{Mac OSx} and \textit{Linux} $12.04$.
+\end{adjustwidth}
+
+\subsection{Design and Implementation Constraints} \label{sec:constraints}
+\begin{adjustwidth}{2em}{0pt}
+\textit{Knightingale} is designed to run on $Linux 12.04$; however, as was implemented in \textit{Java}, it should be able to run on a variety of platforms. Hardware limitations are not an issue.
+\end{adjustwidth}
+
+\subsection{Assumptions and Dependencies} \label{sec:and}
+\begin{adjustwidth}{2em}{0pt}
+We assume that \textit{Twitter’s} method of downloading a user’s tweets remains unchanged. 
+\end{adjustwidth}
+
+\section{Specific Requirements} \label{sec:specificreq}
+\subsection{External Interface Requirements} \label{sec:eir}
+\subsubsection{User Interface} \label{sec:ui}
+\begin{adjustwidth}{3em}{0pt}
+The user interacts with the system through the command line. \newline
+
+\noindent \textit{The user inputs a max cost and a string of 
+requirements, each with its associated identification number, cost, benefit, and name, and the system outputs 
+a ranked list of those requirements in two categories. The system will determine the maximum benefit while 
+ensuring that the total cost to implement the requirements does not exceed the cost 
+parameter given by the user.}
+\end{adjustwidth}
+
+\subsubsection{Software Interface} \label{sec:softi}
+\begin{adjustwidth}{3em}{0pt}
+Implemented in \textit{Ubuntu} $12.04$ \textit{LTS}. \textit{Knightingale} interfaces with \textit{jcommander} and a million other things.
+\end{adjustwidth}
+
+\section{System Features} \label{sec:sysfeat}
+\subsection{Analytics System} \label{sec:analytics}
+\subsubsection{Description and Priority} \label{description}
+\begin{adjustwidth}{3em}{0pt}
+The analytics system is at the heart of \textit{Knightingale}; it is of the highest priority. Without an analytics system, there would be no \textit{Knightingale}.
+\end{adjustwidth}
+
+\subsubsection{Stimulus/Response Sequences} \label{sec:stimulus}
+\begin{adjustwidth}{3em}{0pt}
+Once the user has downloaded their tweets in a $.ZIP$ file from \textit{Twitter}, they can...[put this in]
+\end{adjustwidth}
+
+\subsubsection{Functional Requirements} \label{sec:functional}
+\begin{adjustwidth}{3em}{0pt}
+\textit{Knightingale} should throw an error message if the user is not reading in the proper file.
+\end{adjustwidth}
+
+\begin{itemize}
+\item REQ-1: Must allow user to connect to \textit{Twitter} servers
+\item REQ-2: Must allow user to refresh tweet database
+\begin{itemize}
+\item Includes tweets created since the download of the $.ZIP$
+\end{itemize}
+\item REQ-3: Must allow user to specify a new $.ZIP$ file
+\begin{itemize}
+\item Reloading into the local database
+\item Reinitialize the database by clearing existing tweets
+\end{itemize}
+\item REQ-4: Offer at least 5 metrics about a user’s tweets and tweeting behavior
+\begin {itemize} 
+\item a. Composition of Tweets
+\begin{itemize}
+\item i. Number of retweets and replies
+\item ii. Original content vs. non-original content
+\end{itemize}
+\item b. Contents of Tweets
+\begin{itemize}
+\item i. Number of hashtags
+\item ii. Most common hashtags
+\end{itemize}
+\item c. User Interactions
+\begin{itemize}
+\item i. To whom does the user most commonly reply?
+\item ii. Who does the user most commonly retweet?
+\end{itemize}
+\item d. Search Functions
+\begin{itemize}
+\item i. Find all tweets contained a certain word or phrase
+\end{itemize}
+\end{itemize}
+\end{itemize}
+
+\section{Other Nonfunctional Requirements} \label{sec:othernonfunc}
+\subsection{Performance Requirements} \label{sec:performance}
+\begin{adjustwidth}{2em}{0pt}
+There are no constraints on the speed, response time, or throughput of \textit{Knightingale}, although it is understood that a faster system is ideal.
+\end{adjustwidth}
+
+\subsection{Security Requirements} \label{sec:security}
+\begin{adjustwidth}{2em}{0pt}
+Security requirements related to \textit{Knightingale} are similar to those related to any password-protected information. It is the responsibility of the user to ensure that their password is secure if they do not want any information stolen. \newline
+
+\noindent Regardless, since \textit{Knightingale} takes it’s data source from information in the public domain - a user’s tweets - this concern may be unfounded. \newline
+
+\noindent User authentication requirements? \newline
+\noindent \textit{Twitter4j} and \textit{Twitter’s} $API$ using $OAUTH$.
+\end{adjustwidth} 
+
+\subsection{Software Quality Attributes} \label{sec:quality}
+\begin{adjustwidth}{2em}{0pt}
+A master copy of \textit{Knightingale} will be kept by the development team; it will also be stored on \textit{BitBucket} in our version control repository. The developers will seek faults in the system and try to correct them. We estimate a high $MTTF$ (mean time to failure). \newline
+
+\noindent Maintenance will be aimed at improving the quality of the system. 
+\end{adjustwidth}
+
+\section{Other Requirements} \label{sec:other}
+\subsection{Database Requirements} \label{sec:database}
+\begin{adjustwidth}{2em}{0pt}
+\textit{Knightingale} uses a $SQL$ database to store all the information provided by \textit{Twitter}. The database has two tables: one named $Tweets$, the other named $Users$. The $Tweets$ table contains $10$ columns and the $Users$ table contains $2$ columns. The $Tweets$ tables is constructed in the same order that the information provided by \textit{Twitter} with matching column names. The $Users$ table has $user_id$ as its first column which gets populated with all replied and retweeted user, and $user_name$ being the second column which is populated with a \textit{Twitter4J} call to match user $ids$ to their \textit{Twitter} profile name.
+\end{adjustwidth}
+
+\subsection{Deployment Requirements} \label{sec:deployment}
+\begin{adjustwidth}{2em}{0pt}
+\textit{Knightingale} will be available on \textit{Google Code} and from the \textit{GitHub} version control repository. \newline
+\noindent \textbf{Google Code}: https://code.google.com/p/knightingale/ \newline
+\noindent \textbf{Github}: https://code.google.com/p/knightingale/https://code.google.com/p/knightingale/
+\end{adjustwidth}
+
+\subsection{Logistical Requirements} \label{sec:logistic}
+\begin{adjustwidth}{2em}{0pt}
+\textit{Knightingale} must be implemented in \textit{Java}. It must use \textit{JCommander} to parse command-line arguments, \textit{SQLite} Version $3$ to store all tweets, store information about tweets, and extract information about the tweets, and use the \textit{Twitter4J API} to extract current information from \textit{Twitter}.
+\end{adjustwidth} 
+
+\subsection{Testing Requirements} \label{sec:testing}
+\begin{adjustwidth}{2em}{0pt}
+The entire system must be tested with \textit{JUnit} test cases, and it must have a high level of coverage according to \textit{JaCoCo}. Developers will regularly analyze the source code and test suites using \textit{JDepend}, \textit{JavaNCSS}, and \textit{MAJOR}. \newline 
+
+\noindent All analyses must be accessible through an \textit{Ant} build system which supports compilation, documentation, and cleaning.
+\end{adjustwidth}
+
+\subsection{Additional Requirements} \label{sec:additional}
+\begin{adjustwidth}{2em}{0pt}
+In order to interface with \textit{Twitter}, \textit{Knightingale} must be registered with the \textit{Twitter Development Network}. Additionally, it must be able to access \textit{Twitter} through the \textit{Twitter4J} system.
+\end{adjustwidth}
+
+\section{Further Requirements} \label{sec:further}
+\subsection{Additional Metrics} \label{sec:metrics}
+\begin{adjustwidth}{2em}{0pt}
+In the future, other metrics may be added to the system. Currently, the developers are considering adding a sentiment analysis metric to the system so that the user can determine whether most of their tweets of happy, sad, angry, neutral, annoyed, etc. If this is implemented, it will be added after the first release of the system.
+\end{adjustwidth}
+
+\subsection{Extra Credit Requirements} \label{sec:extracredit}
+\begin{adjustwidth}{2em}{0pt}
+The developers can choose to implement alternative interfaces to the analytics system. For example, the development team may choose to implement a mobile application that allows user to upload $.ZIP$ files and perform analyses. They could implement a web interface with a similar function, or a comprehensive \textit{GUI} for \textit{Knightingale}. 
+\end{adjustwidth}
+
+\section{Appendix A: Glossary} \label{appendixa}
+\begin{adjustwidth}{1em}{0pt}
+\textbf{API}: Application Programmer Interface \newline
+
+\noindent \textbf{GUI}: Graphical User Interface. The $GUI$ allows the user to interact with the program through images and mouse clicks rather than through the keyboard. \newline
+
+\noindent \textbf{IEEE}: Institute of Electrical and Electronics Engineers \newline
+
+\noindent \textbf{LaTeX}: A document preparation language. More information can be found here: http://www.latex-project.org/ \newline
+
+\noindent \textbf{MTTF}: Mean Time to Failure \newline
+
+\noindent \textbf{SRS}: Software Requirements Specifications: This document is an $SRS$. \newline
+
+\noindent \textbf{.ZIP}: An archive file format that supports lossless file compression. \newline
+\end{adjustwidth}
+
+\section{Appendix B: Analysis Models} \label{appexdixb}
+\begin{adjustwidth}{1em}{0pt}
+Optionally, include any pertinent analysis models, such as data flow diagrams, class diagrams, state-transition diagrams, or entity-relationship diagrams.
+\end{adjustwidth}
+
+\section{Appendix C: To Be Determined List} \label{appendixc}
+\begin{adjustwidth}{1em}{0pt}
+Collect a numbered list of the TBD (to be determined) reference that remain in the $SRS$ so they can be tracked to closure. 
+\end{adjustwidth}
+\end{document}
