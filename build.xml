@@ -70,46 +70,6 @@
         </java>
 	</target>
 	
-	<!-- RUNNING TASK - "ant analyze" -->
-	<target name="analyze" depends="compile">
-		<java fork="true" classname="edu.allegheny.tweetanalyze.analytics.Analyzer" maxmemory="1024m">
-			<arg line="${args}"/>
-			<classpath refid="run.classpath" />
-        </java>
-	</target>
-	
-	<!-- RUNNING TASK - "ant clouds" -->
-	<target name="clouds" depends="compile">
-		<java fork="true" classname="edu.allegheny.tweetanalyze.ui.gui.UserCloud" maxmemory="1024m">
-			<arg line="${args}"/>
-			<classpath refid="run.classpath" />
-        </java>
-	</target>
-
-
-	<!-- RUNNING TASK - "ant db" -->
-	<target name="db" depends="compile">
-		<java fork="true" classname="edu.allegheny.tweetanalyze.database.DatabaseHelper" maxmemory="1024m">
-			<arg line="${args}"/>
-			<classpath refid="run.classpath" />
-        </java>
-	</target>
-
-	<!-- RUNNING TASK - "ant token" -->
-	<target name="token" depends="compile">
-		<java fork="true" classname="edu.allegheny.tweetanalyze.AccessTokenHelper" maxmemory="1024m">
-			<arg line="${args}"/>
-			<classpath refid="run.classpath" />
-        </java>
-	</target>
-
-	<!-- RUNNING TASK - "ant refresh" -->
-	<target name="refresh" depends="compile">
-		<java fork="true" classname="edu.allegheny.tweetanalyze.TweetRefreshClient" maxmemory="1024m">
-			<arg line="${args}"/>
-			<classpath refid="run.classpath" />
-        </java>
-	</target>
 
 	<!-- RUNNING TASK - "ant test" -->
 	<target name="test" depends="compile">
@@ -142,7 +102,10 @@
 				<classfiles>
 					<fileset dir="${result.classes.dir}">
 						<exclude name="**/gui/*.class" />
+						<exclude name="**/database/*.class" />
+						<exclude name="**/refresh/*.class" />
 					    <exclude name="**/*Test*.class" />
+					    <exclude name="**/CommandArgs.class" />
       				</fileset>
 				</classfiles>
 				<sourcefiles encoding="UTF-8">
