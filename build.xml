@@ -16,15 +16,8 @@
 	<property name="build.dir" location="bin/" />
 	<property name="dist.dir" location="dist/" />
 	<property name="dist.name" value="tweetanalyze" />
-	<property name="config.logging.dir" value="config/logging" />
-	<property name="config.logging.test.dir" value="config/logging/test" />
 	<property name="config.dir" value="config" />
 	<property name="version" value="1.0" />
-
-	<!-- Load the log4j properties -->
-	<loadproperties>
-		<file file="config/logging/log4j.properties" />
-	</loadproperties>
 
 	<!-- The standard classpath for building the system -->
 	<path id="build.classpath">
@@ -34,20 +27,6 @@
 	<!-- The classpath for running the system -->
 	<path id="run.classpath">
 		<pathelement path="${build.dir}"/>
-		<fileset dir="${lib.dir}" includes="*.jar"/>
-	</path>
-
-	<!--The classpath for running a task and including the log4j properties-->
-	<path id="run.classpath.logging">
-		<pathelement path="${build.dir}"/>
-		<file file="${config.logging.dir}" />
-		<fileset dir="${lib.dir}" includes="*.jar"/>
-	</path>
-
-	<!--The classpath for running a task and including the log4j testing properties-->
-	<path id="test.classpath.logging">
-		<pathelement path="${build.dir}"/>
-		<file file="${config.logging.test.dir}" />
 		<fileset dir="${lib.dir}" includes="*.jar"/>
 	</path>
 
@@ -136,7 +115,7 @@
 	<target name="test" depends="compile">
 		<junit fork="yes">
 			<test name="edu.allegheny.tweetanalyze.test.MasterTestSuite" />
-			<classpath refid="test.classpath.logging" />
+			<classpath refid="run.classpath" />
 			<formatter type="brief" usefile="false" />
 		</junit>
 	</target>
