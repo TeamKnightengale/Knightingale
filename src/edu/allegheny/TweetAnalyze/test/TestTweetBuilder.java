@@ -151,7 +151,7 @@ public class TestTweetBuilder {
 
 			Status mockStatus = mock(Status.class); 					// are you mocking me?
 			when(mockStatus.isRetweet()).thenReturn(true);				// (ugh, this test is gonna be slllloooooww)
-			when(mockStatus.getInReplyToUserId()).thenReturn(new Long(0));
+			when(mockStatus.getInReplyToUserId()).thenReturn(new Long(-1));
 			when(mockStatus.getURLEntities()).thenReturn(expectedURLEntities);
 			when(mockStatus.getCreatedAt()).thenReturn(expectedTimestamp);
 			when(mockStatus.getId()).thenReturn(expectedID);
@@ -174,6 +174,52 @@ public class TestTweetBuilder {
 			assertTrue("FAIL: TweetBuilder built a non-retweet tweet from a retweet that was not a retweet", tweetUnderTest.isRetweet());
 			assertEquals(tweetUnderTest.getRetweetedUserID(), expectedRetweetedUserID);
 			assertEquals(tweetUnderTest.getRetweetedStatusID(), expectedRetweetedStatusID);
+		}
+	}
+
+	public void testReplyFromStatusWithURLs() {
+		long 	expectedID;
+		long 	expectedRepliedUserID;
+		String 	expectedText;
+		String	expectedSource;
+		Date 	expectedTimestamp;
+		URLEntity[] expectedURLEntities = new URLEntity[2];
+
+		URLEntity mockURLOne = mock(URLEntity.class);
+		URLEntity mockURLTwo = mock(URLEntity.class);
+		when(mockURLOne.getExpandedURL()).thenReturn("http://twitter4j.org/javadoc/twitter4j/URLEntity.html");
+		when(mockURLTwo.getExpandedURL()).thenReturn("https://code.google.com/p/mockito/");
+
+		expectedURLEntities[0] = mockURLOne;
+		expectedURLEntities[1] = mockURLTwo;
+
+		Tweet 	tweetUnderTest;
+
+		for (int i = 0; i < 100; i++) {	// do it 100 times with random values in order
+			expectedID = generator.nextLong();
+			expectedText = generator.nextLong() + " " + generator.nextLong() + " " + generator.nextLong();
+			expectedSource = generator.nextLong() + " " + generator.nextLong() + " " + generator.nextLong();
+			expectedTimestamp = randomTimestamp(generator);
+			expectedRepliedUserID = generator.nextLong();
+
+			Status mockStatus = mock(Status.class); 					// are you mocking me?
+			when(mockStatus.isRetweet()).thenReturn(true);				// (ugh, this test is gonna be slllloooooww)
+			when(mockStatus.getInReplyToUserId()).thenReturn(expectedRepliedUserID);
+			when(mockStatus.getURLEntities()).thenReturn(expectedURLEntities);
+			when(mockStatus.getCreatedAt()).thenReturn(expectedTimestamp);
+			when(mockStatus.getId()).thenReturn(expectedID);
+			when(mockStatus.getText()).thenReturn(expectedText);
+			when(mockStatus.getSource()).thenReturn(expectedSource); 	// as a matter of fact I am mocking you
+
+			tweetUnderTest = TweetBuilder.buildTweet(mockStatus);
+
+			assertNotNull(tweetUnderTest);
+			assertEquals(tweetUnderTest.getTweetID(), expectedID);
+			assertSame(tweetUnderTest.getTimestamp(), expectedTimestamp);
+			assertEquals(tweetUnderTest.getExpandedURLs(), new ArrayList<String>(Arrays.asList("http://twitter4j.org/javadoc/twitter4j/URLEntity.html","https://code.google.com/p/mockito/")));
+			assertTrue("FAIL: TweetBuilder built a reply froma tweet that was not a reply", tweetUnderTest.isReply());
+			assertFalse("FAIL: TweetBuilder built a retweet from status that is a retweet", tweetUnderTest.isRetweet());
+			assertEquals(tweetUnderTest.getInReplyToUserID(), expectedRepliedUserID);
 		}
 	}
 

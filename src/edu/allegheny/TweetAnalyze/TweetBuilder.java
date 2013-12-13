@@ -55,8 +55,8 @@ public class TweetBuilder
 
 			if (status.isRetweet())
 			{	
-				long retweetedUserID = status.getRetweetedStatus().getId();
-				long retweetedStatusID = status.getRetweetedStatus().getUser().getId();
+				long retweetedUserID = status.getRetweetedStatus().getUser().getId();
+				long retweetedStatusID = status.getRetweetedStatus().getId();
 				Date retweetedStatusTimestamp = status.getRetweetedStatus().getCreatedAt();
 				tweet = new Tweet(tweetID, timestamp, source, text,retweetedUserID, retweetedStatusID, retweetedStatusTimestamp, expandedURLs);
 			}
