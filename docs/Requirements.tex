@@ -60,16 +60,33 @@ Section \ref{sec:context}: Context of Product \newline
 Section \ref{sec:functions}: Product Functions \newline
 Section \ref{sec:userc}: User Characteristics \newline
 Section \ref{sec:operating}: Operating Environment \newline
-Section \ref{sec:constraints}: Constraints \newline
+Section \ref{sec:constraints}: Design and Implementation Constraints \newline
 Section \ref{sec:and}: Assumptions and Dependencies \newline
 Section \ref{sec:specificreq}: Specific Requirements \newline
 Section \ref{sec:eir}: External Interface Requirements \newline
 Section \ref{sec:ui}: User Interface \newline
 Section \ref{sec:softi}: Software Interface \newline
-Section \ref{sec:funcreq}: Functional Requirements \newline
-Section \ref{sec:perfreq}: Performance Requirements \newline
-Section \ref{sec:designc}: Design Constraints \newline
-Section \ref{sec:qreq}: Quality Requirements \newline
+Section \ref{sec:sysfeat}: System Features \newline
+Section \ref{sec:analytics}: Analytics System \newline
+Section \ref{sec:description}: Description and Priority \newline
+Section \ref{sec:stimulus}: Stimulus/Response Sequences \newline
+Section \ref{sec:func}: Functional Requirements \newline
+Section \ref{sec:nonfunc}: Nonfunctional Requirements \newline
+Section \ref{sec:performance}: Performance Requirements \newline
+Section \ref{sec:security}: Security Requirements \newline
+Section \ref{sec:quality}: Software Quality Attributes \newline
+Section \ref{sec:other}: Other Requirements \newline
+Section \ref{sec:database}: Database Requirements \newline
+Section \ref{sec:deployment}: Deployment Requirements \newline
+Section \ref{sec:logistic}: Logistical Requirements \newline
+Section \ref{sec:testing}: Testing Requirements \newline
+Section \ref{sec:additional}: Additional Requirements \newline
+Section \ref{sec:further}: Further Requirements \newline
+Section \ref{sec:metrics}: Additional Metrics \newline
+Section \ref{sec:extracredit}: Extra Credit Requirements \newline
+Section \ref{sec:appendixa}: Appendix A: Glossary \newline
+Section \ref{sec:appendixb}: Appendix B: Analysis Models \newline
+Section \ref{sec:appendixc}: Appendix C: To Be Determined List \newline
 \end{adjustwidth}
 
 \section{General Description of the Product} \label{sec:general}
@@ -131,7 +148,7 @@ Implemented in \textit{Ubuntu} $12.04$ \textit{LTS}. \textit{Knightingale} inter
 
 \section{System Features} \label{sec:sysfeat}
 \subsection{Analytics System} \label{sec:analytics}
-\subsubsection{Description and Priority} \label{description}
+\subsubsection{Description and Priority} \label{sec:description}
 \begin{adjustwidth}{3em}{0pt}
 The analytics system is at the heart of \textit{Knightingale}; it is of the highest priority. Without an analytics system, there would be no \textit{Knightingale}.
 \end{adjustwidth}
@@ -141,7 +158,7 @@ The analytics system is at the heart of \textit{Knightingale}; it is of the high
 Once the user has downloaded their tweets in a \textit{.ZIP} file from \textit{Twitter}, they can...[put this in]
 \end{adjustwidth}
 
-\subsubsection{Functional Requirements} \label{sec:functional}
+\subsubsection{Functional Requirements} \label{sec:func}
 \begin{adjustwidth}{3em}{0pt}
 \textit{Knightingale} should throw an error message if the user is not reading in the proper file.
 \end{adjustwidth}
@@ -181,7 +198,7 @@ Once the user has downloaded their tweets in a \textit{.ZIP} file from \textit{T
 \end{itemize}
 \end{itemize}
 
-\section{Other Nonfunctional Requirements} \label{sec:othernonfunc}
+\section{Other Nonfunctional Requirements} \label{sec:nonfunc}
 \subsection{Performance Requirements} \label{sec:performance}
 \begin{adjustwidth}{2em}{0pt}
 There are no constraints on the speed, response time, or throughput of \textit{Knightingale}, although it is understood that a faster system is ideal.
@@ -245,7 +262,7 @@ In the future, other metrics may be added to the system. Currently, the develope
 The developers can choose to implement alternative interfaces to the analytics system. For example, the development team may choose to implement a mobile application that allows user to upload \textit{.ZIP} files and perform analyses. They could implement a web interface with a similar function, or a comprehensive \textit{GUI} for \textit{Knightingale}. 
 \end{adjustwidth}
 
-\section{Appendix A: Glossary} \label{appendixa}
+\section{Appendix A: Glossary} \label{sec:appendixa}
 \begin{adjustwidth}{1em}{0pt}
 \textbf{API}: Application Programmer Interface \newline
 
@@ -262,12 +279,12 @@ The developers can choose to implement alternative interfaces to the analytics s
 \noindent \textbf{.ZIP}: An archive file format that supports lossless file compression. \newline
 \end{adjustwidth}
 
-\section{Appendix B: Analysis Models} \label{appexdixb}
+\section{Appendix B: Analysis Models} \label{sec:appendixb}
 \begin{adjustwidth}{1em}{0pt}
 Optionally, include any pertinent analysis models, such as data flow diagrams, class diagrams, state-transition diagrams, or entity-relationship diagrams.
 \end{adjustwidth}
 
-\section{Appendix C: To Be Determined List} \label{appendixc}
+\section{Appendix C: To Be Determined List} \label{sec:appendixc}
 \begin{adjustwidth}{1em}{0pt}
 Collect a numbered list of the TBD (to be determined) reference that remain in the \textit{SRS} so they can be tracked to closure. 
 \end{adjustwidth}
