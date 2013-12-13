@@ -5,11 +5,11 @@
 //              /___/                /___/          
 //  Open-source Twitter analytics...with style!
 
-package edu.allegheny.TweetAnalyze.parser;
+package edu.allegheny.tweetanalyze.parser;
 
 import au.com.bytecode.opencsv.*;
-import edu.allegheny.TweetAnalyze.Tweet;
-import edu.allegheny.TweetAnalyze.TweetBuilder;
+import edu.allegheny.tweetanalyze.Tweet;
+import edu.allegheny.tweetanalyze.TweetBuilder;
 
 import java.io.File;
 import java.io.FileReader;

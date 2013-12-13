@@ -1,6 +1,6 @@
-package edu.allegheny.TweetAnalyze.ui.cli;
+package edu.allegheny.tweetanalyze.ui.cli;
 
-import edu.allegheny.TweetAnalyze.ui.FrequencyVisualization;
+import edu.allegheny.tweetanalyze.ui.FrequencyVisualization;
 
 public class AsciiGraph implements FrequencyVisualization {
 	

@@ -5,9 +5,9 @@
 //              /___/                /___/          
 //  Open-source Twitter analytics...with style!
 
-package edu.allegheny.TweetAnalyze.analytics;
+package edu.allegheny.tweetanalyze.analytics;
 
-import edu.allegheny.TweetAnalyze.database.DatabaseHelper;
+import edu.allegheny.tweetanalyze.database.DatabaseHelper;
 
 import java.sql.*;
 import java.text.ParseException;

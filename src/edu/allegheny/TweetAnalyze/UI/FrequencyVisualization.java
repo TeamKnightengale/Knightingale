@@ -5,7 +5,7 @@
 //              /___/                /___/          
 //  Open-source Twitter analytics...with style!
 
-package edu.allegheny.TweetAnalyze.ui;
+package edu.allegheny.tweetanalyze.ui;
 
 public interface FrequencyVisualization {
 

@@ -1,4 +1,4 @@
-package  edu.allegheny.TweetAnalyze.database;
+package  edu.allegheny.tweetanalyze.database;
 
 import java.sql.*;
 import javax.sql.rowset.*;
@@ -14,10 +14,10 @@ import java.text.SimpleDateFormat;
 
 import java.io.File;
 
-import edu.allegheny.TweetAnalyze.*;
-import edu.allegheny.TweetAnalyze.parser.*;
+import edu.allegheny.tweetanalyze.*;
+import edu.allegheny.tweetanalyze.parser.*;
 
-import edu.allegheny.TweetAnalyze.LogConfigurator; // REMOVE WHEN MAIN METHOD IS REMOVED
+import edu.allegheny.tweetanalyze.LogConfigurator; // REMOVE WHEN MAIN METHOD IS REMOVED
 
 public class DatabaseHelper
 {
@@ -77,8 +77,8 @@ public class DatabaseHelper
 
 	public void createUsersTable()
 	{
-	try
-	{
+		try
+		{
 		Class.forName("org.sqlite.JDBC");
 			c = DriverManager.getConnection("jdbc:sqlite:tweets.db");
 			stmt = c.createStatement();
@@ -200,21 +200,21 @@ public class DatabaseHelper
 
 	public void insertUser()
 	{
-	try {
+		try {
 			Class.forName("org.sqlite.JDBC");
 			c = DriverManager.getConnection("jdbc:sqlite:tweets.db");
 			c.setAutoCommit(false);
 			stmt = c.createStatement();
-			stmt.executeUpdate("INSERT INTO users (user_id) " +
+			stmt.executeUpdate("INSERT OR IGNORE INTO users (user_id) " +
 				   "SELECT in_reply_to_user_id FROM tweets " +
 			       "UNION SELECT retweeted_status_user_id FROM tweets");   
 			stmt.close();
 			c.commit();
 			c.close();
-		}catch(Exception e) 
-		{
-			logger.log(Level.SEVERE, "Problem updating users table entries:", e);
-		}
+			}catch(Exception e) 
+			{
+				logger.log(Level.SEVERE, "Problem updating users table entries:", e);
+			}
 	}
 
 	/**

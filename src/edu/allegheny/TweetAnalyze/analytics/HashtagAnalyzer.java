@@ -5,11 +5,11 @@
 //              /___/                /___/          
 //  Open-source Twitter analytics...with style!
 
-package edu.allegheny.TweetAnalyze.analytics;
+package edu.allegheny.tweetanalyze.analytics;
 
-import edu.allegheny.TweetAnalyze.Tweet;
-import edu.allegheny.TweetAnalyze.TweetBuilder;
-import edu.allegheny.TweetAnalyze.database.DatabaseHelper;
+import edu.allegheny.tweetanalyze.Tweet;
+import edu.allegheny.tweetanalyze.TweetBuilder;
+import edu.allegheny.tweetanalyze.database.DatabaseHelper;
 
 import java.util.List;
 import java.util.ArrayList;
@@ -30,7 +30,7 @@ import java.text.ParseException;
 
 public class HashtagAnalyzer extends Analyzer {
 
-	public static Logger logger = Logger.getLogger(SimpleAnalyzer.class.getName());
+	public static Logger logger = Logger.getLogger(HashtagAnalyzer.class.getName());
 
 	public HashtagAnalyzer(DatabaseHelper db) {
 		super(db);

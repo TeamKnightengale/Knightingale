@@ -1,8 +1,8 @@
-package edu.allegheny.TweetAnalyze.test;
+package edu.allegheny.tweetanalyze.test;
 
 import static org.junit.Assert.*;
 
-import edu.allegheny.TweetAnalyze.Tweet;
+import edu.allegheny.tweetanalyze.Tweet;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -137,9 +137,20 @@ public class TestTweet
     @Test
     public void testIsRetweetFalse() throws ParseException {
         Date timestamp = format.parse("2010-06-20 00:00:00 +0000");
+        Date otherTimestamp = format.parse("2012-04-19 00:22:19 +0000");
+        Date nullTimestamp = null;
 
         Tweet actual = new Tweet (numberGenerator.nextLong(), timestamp, "Name", "Things", numberGenerator.nextLong(), numberGenerator.nextLong());
 
+        assertFalse(actual.isRetweet());
+
+        actual = new Tweet (numberGenerator.nextLong(), timestamp, "Name", "Thing", 0, numberGenerator.nextLong(), otherTimestamp);
+        assertFalse(actual.isRetweet());
+
+        actual = new Tweet (numberGenerator.nextLong(), timestamp, "Name", "Thing", numberGenerator.nextLong(), 0, otherTimestamp);
+        assertFalse(actual.isRetweet());
+
+        actual = new Tweet (numberGenerator.nextLong(), timestamp, "Name", "Thing", numberGenerator.nextLong(), numberGenerator.nextLong(), nullTimestamp);
         assertFalse(actual.isRetweet());
     }
     
@@ -176,6 +187,12 @@ public class TestTweet
 
         Tweet actual = new Tweet (numberGenerator.nextLong(), timestamp, "Name", "Thing", numberGenerator.nextLong(), numberGenerator.nextLong(), otherTimestamp, url);
         
+        assertFalse(actual.isReply());
+
+        actual = new Tweet (numberGenerator.nextLong(), timestamp, "Name", "Thing", numberGenerator.nextLong(), 0);
+        assertFalse(actual.isReply());
+
+        actual = new Tweet (numberGenerator.nextLong(), timestamp, "Name", "Thing", 0, numberGenerator.nextLong());
         assertFalse(actual.isReply());
     }
 

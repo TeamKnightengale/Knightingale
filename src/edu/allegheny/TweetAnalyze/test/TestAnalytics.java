@@ -1,13 +1,13 @@
-package edu.allegheny.TweetAnalyze.test;
+package edu.allegheny.tweetanalyze.test;
 
-import edu.allegheny.TweetAnalyze.analytics.CompositionAnalyzer;
-import edu.allegheny.TweetAnalyze.analytics.FrequencyAnalyzer;
-import edu.allegheny.TweetAnalyze.analytics.HashtagAnalyzer;
-import edu.allegheny.TweetAnalyze.analytics.SearchAnalyzer;
-import edu.allegheny.TweetAnalyze.analytics.UserAnalyzer;
-import edu.allegheny.TweetAnalyze.database.DatabaseHelper;
-import edu.allegheny.TweetAnalyze.Tweet;
-import edu.allegheny.TweetAnalyze.TweetBuilder;
+import edu.allegheny.tweetanalyze.analytics.CompositionAnalyzer;
+import edu.allegheny.tweetanalyze.analytics.FrequencyAnalyzer;
+import edu.allegheny.tweetanalyze.analytics.HashtagAnalyzer;
+import edu.allegheny.tweetanalyze.analytics.SearchAnalyzer;
+import edu.allegheny.tweetanalyze.analytics.UserAnalyzer;
+import edu.allegheny.tweetanalyze.database.DatabaseHelper;
+import edu.allegheny.tweetanalyze.Tweet;
+import edu.allegheny.tweetanalyze.TweetBuilder;
 
 import  org.junit.*;
 import  org.junit.rules.ExpectedException;
@@ -30,7 +30,7 @@ import  java.text.ParseException;
 import  java.sql.*;
 
 /**
- * Tests for {@link(edu.allegheny.TweetAnalyze.analytics.SimpleAnalyzer.java}
+ * Tests for {@link(edu.allegheny.tweetanalyze.analytics.SimpleAnalyzer.java}
  * Mocking now, even though i was against it initially. 
  * Still missing some stuff from tests.
  * @Author Gabe Kelly

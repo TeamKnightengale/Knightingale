@@ -5,7 +5,7 @@
 //              /___/                /___/          
 //  Open-source Twitter analytics...with style!
 
-package edu.allegheny.TweetAnalyze;
+package edu.allegheny.tweetanalyze;
 
 import java.util.List;
 import java.util.Date;

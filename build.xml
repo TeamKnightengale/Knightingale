@@ -15,7 +15,7 @@
 	<property name="src.dir" location="src/" />
 	<property name="build.dir" location="bin/" />
 	<property name="dist.dir" location="dist/" />
-	<property name="dist.name" value="TweetAnalyze" />
+	<property name="dist.name" value="tweetanalyze" />
 	<property name="config.logging.dir" value="config/logging" />
 	<property name="config.logging.test.dir" value="config/logging/test" />
 	<property name="config.dir" value="config" />
@@ -81,15 +81,10 @@
 
 	<!-- RUNNING TARGETS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
 
-	<!-- RUNNING TASK - "ant run" -->
-	<target name="run">
-		<antcall target="TweetAnalyze">
-		</antcall>
-	</target>
 
-	<!-- RUNNING TASK - "ant TweetAnalyze" -->
-	<target name="TweetAnalyze">
-		<java fork="true" classname="edu.allegheny.TweetAnalyze.CLI.CLI" maxmemory="1024m">
+	<!-- RUNNING TASK - "ant run" -->
+	<target name="run" depends="compile">
+		<java fork="true" classname="edu.allegheny.tweetanalyze.ui.cli.KnightingaleCLI" maxmemory="1024m">
 			<arg line="${args}"/>
 			<classpath refid="run.classpath" />
         </java>
@@ -97,7 +92,7 @@
 	
 	<!-- RUNNING TASK - "ant analyze" -->
 	<target name="analyze" depends="compile">
-		<java fork="true" classname="edu.allegheny.TweetAnalyze.analytics.Analyzer" maxmemory="1024m">
+		<java fork="true" classname="edu.allegheny.tweetanalyze.analytics.Analyzer" maxmemory="1024m">
 			<arg line="${args}"/>
 			<classpath refid="run.classpath" />
         </java>
@@ -105,7 +100,7 @@
 	
 	<!-- RUNNING TASK - "ant clouds" -->
 	<target name="clouds" depends="compile">
-		<java fork="true" classname="edu.allegheny.TweetAnalyze.ui.gui.UserCloud" maxmemory="1024m">
+		<java fork="true" classname="edu.allegheny.tweetanalyze.ui.gui.UserCloud" maxmemory="1024m">
 			<arg line="${args}"/>
 			<classpath refid="run.classpath" />
         </java>
@@ -114,7 +109,7 @@
 
 	<!-- RUNNING TASK - "ant db" -->
 	<target name="db" depends="compile">
-		<java fork="true" classname="edu.allegheny.TweetAnalyze.database.DatabaseHelper" maxmemory="1024m">
+		<java fork="true" classname="edu.allegheny.tweetanalyze.database.DatabaseHelper" maxmemory="1024m">
 			<arg line="${args}"/>
 			<classpath refid="run.classpath" />
         </java>
@@ -122,7 +117,7 @@
 
 	<!-- RUNNING TASK - "ant token" -->
 	<target name="token" depends="compile">
-		<java fork="true" classname="edu.allegheny.TweetAnalyze.AccessTokenHelper" maxmemory="1024m">
+		<java fork="true" classname="edu.allegheny.tweetanalyze.AccessTokenHelper" maxmemory="1024m">
 			<arg line="${args}"/>
 			<classpath refid="run.classpath" />
         </java>
@@ -130,7 +125,7 @@
 
 	<!-- RUNNING TASK - "ant refresh" -->
 	<target name="refresh" depends="compile">
-		<java fork="true" classname="edu.allegheny.TweetAnalyze.TweetRefreshClient" maxmemory="1024m">
+		<java fork="true" classname="edu.allegheny.tweetanalyze.TweetRefreshClient" maxmemory="1024m">
 			<arg line="${args}"/>
 			<classpath refid="run.classpath" />
         </java>
@@ -139,7 +134,7 @@
 	<!-- RUNNING TASK - "ant test" -->
 	<target name="test" depends="compile">
 		<junit fork="yes">
-			<test name="edu.allegheny.TweetAnalyze.test.MasterTestSuite" />
+			<test name="edu.allegheny.tweetanalyze.test.MasterTestSuite" />
 			<classpath refid="test.classpath.logging" />
 			<formatter type="brief" usefile="false" />
 		</junit>
@@ -147,9 +142,9 @@
 
 	<!-- RUNNING TASK - "ant coveragetest" -->
 	<target name="coveragetest" depends="compile">
-		<jacoco:coverage destfile="${result.exec.file}" excludes="edu.allegheny.TweetAnalyze.test.*">
+		<jacoco:coverage destfile="${result.exec.file}" excludes="edu.allegheny.tweetanalyze.test.*">
 			<junit fork="yes" forkmode="once">
-				<test name="edu.allegheny.TweetAnalyze.test.MasterTestSuite" />
+				<test name="edu.allegheny.tweetanalyze.test.MasterTestSuite" />
 				<classpath refid="run.classpath" />
 				<formatter type="brief" usefile="false" />
 			</junit>
@@ -163,7 +158,7 @@
 				<file file="${result.exec.file}" />
 			</executiondata>
 
-			<structure name="TweetAnalyzeCoverage Report">
+			<structure name="tweetanalyzeCoverage Report">
 				<classfiles>
 					<fileset dir="${result.classes.dir}">
 						<exclude name="**/gui/*.class" />
@@ -175,9 +170,9 @@
 				</sourcefiles>
 			</structure>
 			
-			<html destdir="${result.report.dir}/TweetAnalyzeTest/" />
-			<csv destfile="${result.report.dir}/TweetAnalyzeTest/report.csv" />
-			<xml destfile="${result.report.dir}/TweetAnalyzeTest/report.xml" />
+			<html destdir="${result.report.dir}/tweetanalyzeTest/" />
+			<csv destfile="${result.report.dir}/tweetanalyzeTest/report.csv" />
+			<xml destfile="${result.report.dir}/tweetanalyzeTest/report.xml" />
 		</jacoco:report>
 	</target>
 	
@@ -194,16 +189,16 @@
 
 	<!-- Based on the demo Javadoc settings on the Ant web page. -->
 	<target name="javadoc">
-		<javadoc packagenames="edu.allegheny.TweetAnalyze.*"
+		<javadoc packagenames="edu.allegheny.tweetanalyze.*"
 				 sourcepath="src"
-				 excludepackagenames="edu.allegheny.TweetAnalyze.test"
+				 excludepackagenames="edu.allegheny.tweetanalyze.test"
 				 defaultexcludes="yes"
 				 destdir="bin/doc/api"
 				 author="true"
 				 version="true"
 				 use="true"
-				 windowtitle="TweetAnalyze API">
-			<doctitle><![CDATA[<h1>TweetAnalyze</h1>]]></doctitle>
+				 windowtitle="tweetanalyze API">
+			<doctitle><![CDATA[<h1>tweetanalyze</h1>]]></doctitle>
 			<bottom><![CDATA[<i>Copyright &#169; 2013, Hawk Weisman, Dibyojoti Mukherjee, Ian MacMillan, Gabriel Kelly, and Jake Ballinger</i>]]></bottom>
 			<tag name="todo" scope="all" description="To do:"/>
 			<link offline="true" href="http://docs.oracle.com/javase/7/docs/api/" packagelistLoc="C:\tmp"/>
