@@ -105,7 +105,7 @@
 						<exclude name="**/database/*.class" />
 						<exclude name="**/refresh/*.class" />
 					    <exclude name="**/*Test*.class" />
-					    <exclude name="**/CommandArgs.class" />
+					    <exclude name="**/cli/*.class" />
       				</fileset>
 				</classfiles>
 				<sourcefiles encoding="UTF-8">

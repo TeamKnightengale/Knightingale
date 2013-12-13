@@ -6,7 +6,7 @@
 \titlespacing*{\subsection} {2em}{3.25ex plus 1ex minus .2ex}{1.5ex plus .2ex}
 \titlespacing*{\subsubsection} {3em}{3.25ex plus 1ex minus .2ex}{1.5ex plus .2ex}
 \title{Design Document}
-\author{Jake Ballinger}
+\author{Jake Ballinger, Dibyo Mukherjee, Hawk Weisman, Gabe Kelly, Ian MacMillan}
 \begin{document}
 \maketitle
 
@@ -30,11 +30,6 @@ This document was written following \textit{IEEE} conventions. It was formatted 
 \noindent Names, classes, and methods will be italicized, and both numbers and variables are modified with the $\$$ wrapper in \LaTeX.
 \end{adjustwidth}
 
-\subsection{Acronyms, Abbreviations, and Definitions} \label{sec:abbr}
-\begin{adjustwidth}{2em}{0pt}
-MAKE UP SHIT
-\end{adjustwidth}
-
 \subsection{Scope of the Product} \label{sec:scope}
 \begin{adjustwidth}{2em}{0pt}
 \textit{Knightingale} is a \textit{Twitter} analytics system. Refer to Section $1.4$ of the Requirements Document.
@@ -53,7 +48,6 @@ Section \ref{sec:datadescript}: Data Description \newline
 Section \ref{sec:component}: Component Design \newline
 Section \ref{sec:human}: Human Interface Design \newline
 Section \ref{sec:ui}: Overview of User Interface \newline
-Section \ref{sec:obs}: Screen Objects and Actions \newline
 \end{adjustwidth}
 
 \section{System Overivew} \label{sec:overview}
@@ -68,18 +62,33 @@ Section \ref{sec:obs}: Screen Objects and Actions \newline
 \section{Data Design} \label{sec:datadesign}
 \subsection{Data Description} \label{sec:datadescript}
 \begin{adjustwidth}{2em}{0pt}
-The information domain of \textit{Knightingale} is the \textit{.ZIP} file downloaded from \textit{Twitter}. The classes \textit{DatabaseHelper.java} takes all of this information from the parser 
 
-Explain how the information domain of your system is transformed into data structures. Describe how the major data of system entities are stored, processed and organized. List any databases or data storage items. 
+The information domain of \textit{Knightingale} is the  twitter archive\textit{.ZIP} file downloaded from \textit{Twitter}. The zip file is parsed as an ArrayList of Tweets using the ZipParser and TweetBuilder classes that is then stored in a SQLite3 database. 
+\textit{Knightingale} uses a \textit{SQLite} database to store all the information provided by \textit{Twitter}. The database has two tables: one named \texttt{Tweets}, the other named \texttt{Users}. The \texttt{Tweets} table contains $10$ columns and the \texttt{Users} table contains $2$ columns. The \texttt{Tweets} tables is constructed in the same order as the information provided by \textit{Twitter}, with matching column names. The \texttt{Users} table has \textit{user\_id} as its first column which gets populated with all replied and retweeted user, and \textit{user\_name} being the second column which is populated with a \textit{Twitter4J} call to match user \texttt{IDs} to their \textit{Twitter} profile name. Rows from the tweets table are usually extracted as ResultSets from the database and then converted to Tweets using the TweetBuilder class. ArrayLists of tweets are usually passed around in the various analysis methods.
+
 \end{adjustwidth}
 
 \subsection{Component Design} \label{sec:component}
 \begin{adjustwidth}{1em}{0pt}
-- Go through classes
-- What are the methods and what do they do?
-
-In this section, we take a closer look at what each component does in a more systematic way. 
-Describe any local data when necessary.
+The major components of the system are as follows:
+\begin{description}
+	\item[Package \texttt{tweetanalyze}] This package contains some fundamental blocks of the system:
+		\begin{description}
+		\item[\texttt{Tweet.java}] : This class models a tweet as it is stored in the twitter archive zip file.
+		\item[\texttt{TweetBuilder.java}] : This class has methods to build tweets from \texttt{twitter4j Statuses}, \texttt{ResultSet}, and arrays of Strings.
+		\item[\texttt{LogConfigurator.java}] : This class sets up logging for the system.
+		\end{description}
+	\item[Package \texttt{parser}]
+		\begin{description}
+		\item[\texttt{CSVParser.java}] : Parse a tweets.csv file as found in the Twitter archive.
+		\item[\texttt{ZipParser.java}] : Extract the zip Twitter archive and calls CSVParser on the tweets.csv
+	\end{description}	
+	\item[Package \texttt{analytics}]
+		\begin{description}
+		\item[\texttt{Analyzer.java}] : Master class for analysis that is extended by all other analysis classes.
+		\item[\texttt{CompositionAnalyser.java}] : Composition analysis for 
+	\end{description}	
+\end{description}
 \end{adjustwidth}
 
 \section{Human Interface Design} \label{sec:human}
@@ -88,9 +97,4 @@ Describe any local data when necessary.
 Describe the functional of the system from the user’s perspective. Explain how the user will be able to use your system to complete all the expected features and the feedback information that will be displayed for the user.
 \end{adjustwidth}
 
-
-\subsection{Screen Objects and Actions} \label{sec:obs}
-\begin{adjustwidth}{2em}{0pt}
-A discussion of screen objects and actions associated with those objects. 
-\end{adjustwidth}
 \end{document}
