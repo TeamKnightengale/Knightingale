@@ -11,7 +11,7 @@
 \maketitle
 
 \begin{center}
-\centering ``A ship on the beach is a beacon to the sea." \newline
+\centering ``A ship on the beach is a lighthouse to the sea." \newline
 \centering - Dutch Proverb
 \end{center}
 
@@ -19,12 +19,12 @@
 \subsection{Purpose of the Product} \label{sec:purpose}
 \begin{adjustwidth}{2em}{0pt}
 Many \textit{Twitter} users have amassed a such plethora of tweets that it is cumbersome to manually search through them, an ability that many \textit{Twitter} users would find useful. Presently, to do this, the user must download all of their tweets; however, because of the way \textit{Twitter} rate limits its \textit{API}, this can be difficult. \newline
-``
+
 \noindent How wonderful would it be if we could search through all of our tweets? And what if we could do not only that, but what if we also could analyze the way we tweet?\newline
 
 \noindent This is the purpose of \textit{Knightingale}. \newline
 
-\noindent This is the first release of \textit{Knightingale}. This \textit{SRS} will detail the requirements of the system; for further details about the system, see the architecture and design documents.
+\noindent This is the first release of \textit{Knightingale}. This \textit{SRS} will detail the requirements of the system; for more information, see the architecture and design documents.
 \end{adjustwidth}
 
 \subsection{Document Conventions} \label{sec:conventions}
@@ -36,9 +36,9 @@ This document was written following \textit{IEEE} conventions. It was formatted 
 
 \subsection{Acronyms, Abbreviations, and Definitions} \label{sec:abbr}
 \begin{adjustwidth}{2em}{0pt}
-As this document is at a higher level, it is intended for more general consumption; a reader with little background in computer science or analysis should be able to reference this document for a simple understanding of the system’s functioning. That said, the developers have referenced this document in both draft and completed form. As such, it’s lack of technical details has not invalidated its usefulness. \newline
+This document is intended for general consumption; a reader with little background in computer science or analysis should be able to reference this document for a simple understanding of the system’s functioning. That said, the developers have referenced this document in both draft and completed form. As such, it’s lack of technical details has not invalidated its usefulness. \newline
 
-\noindent For the casual consumer looking to learn more ab``out \textit{Knightingale}, I suggest skipping to Section $1.4$, which describes the scope of the product. From there, I would read Sections $2.1$, the \textit{Product Perspective}, which provides some of the background information and history of the product; $2.2$, the \textit{Product Functions}, which summarizes the major functions of the product, Section $2.4$, which specifies the operating environment of \textit{Knightingale}, and \textit{Appendix A}, the glossary, which will be an aid to decode the document’s terminology. We've devoted \textit{Appendix B} to the visualization of some of these concepts. \newline
+\noindent For the casual consumer looking to learn more about \textit{Knightingale}, I suggest skipping to Section $1.4$, which describes the scope of the product. From there, I would read Sections $2.1$, the \textit{Product Perspective}, which provides some of the background information and history of the product; $2.2$, the \textit{Product Functions}, which summarizes the major functions of the product, Section $2.4$, which specifies the operating environment of \textit{Knightingale}, and \textit{Appendix A}, the glossary, which will be an aid to decode the document’s terminology. \newline
 
 \noindent More technical consumers will enjoy reading the document in its entirety; however, for an expedited experience, I suggest following the same sequence as was outlined for the casual consumer, with some additions: Section $1.4$, the entirety of Sections $2$ and $4$, and Sections $5.1$ and $5.4$, and \textit{Appendix B}. \newline
 \end{adjustwidth}
@@ -203,8 +203,7 @@ Security requirements related to \textit{Knightingale} are similar to those rela
 
 \noindent Regardless, since \textit{Knightingale} takes its data source from information in the public domain - a user's tweets - this concern may be unfounded. \newline
 
-\noindent User authentication requirements? \newline
-\noindent \textit{Twitter4j} and \textit{Twitter's} \textit{API} using \textit{OAUTH}.
+\noindent The user will be authenticaed with \textit{Twitter4j} and \textit{Twitter's} \textit{API} using \textit{OAUTH}.
 \end{adjustwidth} 
 
 \subsection{Software Quality Attributes} \label{sec:quality}
@@ -217,7 +216,7 @@ A master copy of \textit{Knightingale} will be kept by the development team; it 
 \section{Other Requirements} \label{sec:other}
 \subsection{Database Requirements} \label{sec:database}
 \begin{adjustwidth}{2em}{0pt}
-\textit{Knightingale} uses a \textit{SQLite} database to store all the information provided by \textit{Twitter}. The database has two tables: one named \texttt{Tweets}, the other named \texttt{Users}. The \texttt{Tweets} table contains $10$ columns and the \texttt{Users} table contains $2$ columns. The \texttt{Tweets} tables is constructed in the same order as the information provided by \textit{Twitter}, with matching column names. The \texttt{Users} table has \textit{user\_id} as its first column which gets populated with all replied and retweeted user, and \textit{user\_name} being the second column which is populated with a \textit{Twitter4J} call to match user \texttt{IDs} to their \textit{Twitter} profile name.
+\textit{Knightingale} uses a \textit{SQLite} database to store all the information provided by \textit{Twitter}. The database has two tables: one named \texttt{Tweets}, the other named \texttt{Users}. The \texttt{Tweets} table contains $10$ columns and the \texttt{Users} table contains $2$ columns. The \texttt{Tweets} tables is constructed in the same order as the information provided by \textit{Twitter}, with matching column names. The \texttt{Users} table has \textit{user\_id} as its first column which gets populated with all replied and retweeted user, and \textit{user\_name} being the second column which is populated with a \textit{Twitter4j} call to match user \texttt{IDs} to their \textit{Twitter} profile name.
 \end{adjustwidth}
 
 \subsection{Deployment Requirements} \label{sec:deployment}
@@ -247,7 +246,7 @@ In order to interface with \textit{Twitter}, \textit{Knightingale} must be regis
 \section{Further Requirements} \label{sec:further}
 \subsection{Additional Metrics} \label{sec:metrics}
 \begin{adjustwidth}{2em}{0pt}
-In the future, other metrics may be added to the system. Currently, the developers are considering adding a sentiment analysis metric to the system so that the user can determine whether most of their tweets are happy, sad, angry, neutral, annoyed, etc. If this is implemented, it will be added after the first release of the system. (This agent was indepently developed on another team by one of the developers.) 
+In the future, other metrics may be added to the system. Currently, the developers are considering adding a sentiment analysis metric to the system so that the user can determine whether most of their tweets are happy, sad, angry, neutral, annoyed, etc. If this is implemented, it will be added after the first release of the system. (This agent was independently developed on another team by one of the developers.) 
 \end{adjustwidth}
 
 \subsection{Extra Credit Requirements} \label{sec:extracredit}
@@ -271,13 +270,19 @@ The developers can choose to implement alternative interfaces to the analytics s
 
 \noindent \textbf{UI}: User Interface \newline
 
+\noindent \textbf{YAGNI}: You Aren't Gonna Need It
+
 \noindent \textbf{.ZIP}: An archive file format that supports lossless file compression. \newline
 \end{adjustwidth}
 
 \section{Appendix B: To Be Determined List} \label{sec:appendixb}
 \begin{adjustwidth}{1em}{0pt}
+This is a running list of future ideas that could be implemented. They were not implemented in the current project due to time constraints. As a development team, especially when creating the first release version of a systemm, we adhere to the principle of YAGNI.
 \begin{enumerate}
-\end{enumerate}
-Collect a numbered list of the TBD (to be determined) reference that remain in the \textit{SRS} so they can be tracked to closure. 
+\item Markov Model (for prediction)
+\item Swing UI
+\item GIS Analytics
+\item Sentiment Analysis
+\end{enumerate} 
 \end{adjustwidth}
 \end{document}
