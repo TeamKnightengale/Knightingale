@@ -32,13 +32,6 @@ public class AccessTokenHelper
 {
 	public static Logger logger = Logger.getLogger(AccessTokenHelper.class.getName());
 
-	public static void main(String argv[]) 
-	{
-		AccessTokenHelper tokenHelper = new AccessTokenHelper();
-		tokenHelper.deleteAccessTokens();
-		tokenHelper.getnewTokens();
-	}
-
 	public void getnewTokens() 
 	{
 		deleteAccessTokens(); //First, delete old access tokens;

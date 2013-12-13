@@ -17,8 +17,6 @@ import java.io.File;
 import edu.allegheny.tweetanalyze.*;
 import edu.allegheny.tweetanalyze.parser.*;
 
-import edu.allegheny.tweetanalyze.LogConfigurator; // REMOVE WHEN MAIN METHOD IS REMOVED
-
 public class DatabaseHelper
 {
 	private static Connection c = null;
@@ -26,28 +24,6 @@ public class DatabaseHelper
 	private static ResultSet rs = null;
 	private static SimpleDateFormat timestampFormat = new SimpleDateFormat("yyyy-MM-dd kk:mm:ss z");
 	public static Logger logger = Logger.getLogger(DatabaseHelper.class.getName());
-	
-	public DatabaseHelper()
-	{
-	}
-
-	public static void main(String[] argv) throws Exception
-	{
-		try {
-			LogConfigurator.setup(); // setup the logger.
-		} catch (Exception e) {
-		   e.printStackTrace();
-		}
-		DatabaseHelper db = new DatabaseHelper();
-		File zipFile = new File("tweets.zip");
-		db.dropTweetsTable();
-		db.createTweetsTable();
-		db.createUsersTable();
-		db.insertTweets((ArrayList<Tweet>) ZipParser.parse(zipFile));
-		db.insertUser();
-		db.getAllTweets();
-		System.out.println(db.getLastTweetID());
-	}
 
 	public void createTweetsTable() 
 	{
