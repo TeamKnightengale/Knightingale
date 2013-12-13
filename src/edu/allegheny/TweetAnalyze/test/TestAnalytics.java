@@ -352,7 +352,7 @@ public class TestAnalytics
 
         url.add("http://docs.mockito.googlecode.com/hg/org/mockito/Mockito.html");
 
-        Tweet one = new Tweet(33l, time, "you", "COOKIES!", 21l, 1l, time);
+        Tweet one = new Tweet(33l, time, "you", "COOKIES!", 1l, 21l, time);
 
         //Tweet two = new Tweet(300000000000000000l, time, "Me", "Estamos fudidos", 4l, 5l, time, url);
 
