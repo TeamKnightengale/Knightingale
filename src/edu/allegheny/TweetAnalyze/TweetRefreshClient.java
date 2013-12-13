@@ -36,13 +36,6 @@ public class TweetRefreshClient
 		this.db = db;
 	}
 
-	public static void main(String argv[]) 
-	{
-		TweetRefreshClient client = new TweetRefreshClient(new DatabaseHelper());
-		int numberOfNewTweets = client.refreshTweets();
-		System.out.println("\n" + numberOfNewTweets + " new tweets\n");
-	}
-
 	public int refreshTweets()
 	{
 		//Make sure you have the right Access Tokens
