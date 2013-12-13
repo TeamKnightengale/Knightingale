@@ -242,11 +242,13 @@ public class TestAnalytics
 
     }
 
+    
     /**
      * testTweetsWithHyperlinks()
      * This tests the tweetsWithHyperlinks()
      * of the search analytics class
      * */
+     /*
     @Test//(expected=NullPointerException.class)
     public void testTweetsWithHyperlinks() throws SQLException, ParseException, ClassNotFoundException, Exception
     {
@@ -283,7 +285,7 @@ public class TestAnalytics
         assertEquals(expected.get(0).getSource(), actual.get(0).getSource());
         assertEquals(expected.get(0).getText(), actual.get(0).getText());
         assertEquals(expected.get(0).getExpandedURLs(), actual.get(0).getExpandedURLs());
-        }
+        } */
     
     /**
      * testRepliedToUsers()

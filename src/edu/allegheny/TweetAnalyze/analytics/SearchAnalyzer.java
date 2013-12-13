@@ -52,33 +52,4 @@ public class SearchAnalyzer extends Analyzer {
 		return searchResults;
 	}
 
-
-	/**
-	 * @return a List containing all tweets in the user's database that contain hyperlinks.
-	 * @FIXME: throws java.sql.SQLException: [SQLITE_ERROR] SQL error or missing database (near "expanded_urls": syntax error)
-	 */
-	public List<Tweet> tweetsWithHyperlinks () throws SQLException, ParseException {
-
-		List<Tweet> tweetsWithHyperlinks = new ArrayList<Tweet>();;
-		String hyperlinksQuery = "SELECT * FROM tweets WHERE expanded_urls IS NOT 0";
-
-		tweetsWithHyperlinks = TweetBuilder.buildTweetFromResultSet(db.execute(hyperlinksQuery));	                                      
-
-		return tweetsWithHyperlinks;
-	}
-
-	/**
-	 * @return list of tweets in october
-	 * @FIXME: doesn't work
-	 * @TODO: Change from tweetsInOctober to tweetsAsMonth(String Month)?
-	 */
-	public List<Tweet> tweetsInOctober () throws SQLException, ParseException {
-		List<Tweet> tweetsInOctober = new ArrayList<Tweet>();
-		String tweetsInOctoberQuery = "SELECT * FROM Tweets WHERE timestamp " 
-									+ "BETWEEN '2013-09-30 23:59:59' AND '2013-11-01 00:00:01'";
-
-		tweetsInOctober = TweetBuilder.buildTweetFromResultSet(db.execute(tweetsInOctoberQuery));	 
-
-		return tweetsInOctober; 
-	}
 }
