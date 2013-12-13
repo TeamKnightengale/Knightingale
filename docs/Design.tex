@@ -54,7 +54,7 @@ Section \ref{sec:ui}: Overview of User Interface \newline
 \begin{adjustwidth}{1em}{0pt}
 \textit{Knightingale} was, at least in theory, conceived by \textit{Dr. Gregory Kapfhammer} at \textit{Allegheny College}. He assigned the creation of the system to the students in his \textit{Computer Science} $290$ \textit{Principles of Software Development} class as their final project. Four teams of five students would each develop their own \textit{Twitter} analytics system. \textit{Knightingale} is one of those systems. \newline
 
-\noindent What sets \textit{Knightingale} apart from its competition is its user-friendly interface, modularity, and expandability. The Knightingale command-line interface is exceptionally easy to use for any user with a basic background in command-line tools, and a \texit{Swing} graphical user interface is planned as well. The structiure of the system makes it very easy to add new features and other components at any point in time. \newline
+\noindent What sets \textit{Knightingale} apart from its competition is its user-friendly interface, modularity, and expandability. The Knightingale command-line interface is exceptionally easy to use for any user with a basic background in command-line tools, and a \texttt{Swing} graphical user interface is planned as well. The structiure of the system makes it very easy to add new features and other components at any point in time. \newline
 
 \noindent To further develop an example given in Section $1.1$, consider the situation of a clinical psychologist. It is common knowledge that a person's use of social media can be linked to their loneliness. The clinical psychologist might use the metrics provided by \textit{Knightingale} to better understand her client. Another example concerns a person engaged in social-media marketing for their company on Twitter. Such an individual could easily make use of \textit{Knightingale} to collect information about their company's Twitter feed to improve their marketing efforts or communicate information to their colleagues.
 \end{adjustwidth}
@@ -63,40 +63,62 @@ Section \ref{sec:ui}: Overview of User Interface \newline
 \subsection{Data Description} \label{sec:datadescript}
 \begin{adjustwidth}{2em}{0pt}
 
-The information domain of \textit{Knightingale} is the  twitter archive\textit{.ZIP} file downloaded from \textit{Twitter}. The zip file is parsed as an ArrayList of Tweets using the ZipParser and TweetBuilder classes that is then stored in a SQLite3 database. 
+The information domain of \textit{Knightingale} is the \textit{.ZIP} file downloaded from \textit{Twitter}, as well as information pulled directly from \textit{Twitter} through the \textit{Twitter4j} API. When the user adds a new twitter archive to the \textit{Knightingale} system, the Parser package is used to extract tweets from the archive file, which may then be discarded. The Database package is then used to insert these tweets into the SQLite 3 relational database. The database automatically generates a separate table of Twitter user IDs by selecting all of the unique user ID values that appear in the Tweets database. This table represents all of the Twitter users known by the system. These IDs are then associated with Twitter user names through communication with the \textit{Twitter} API. 
+
 \textit{Knightingale} uses a \textit{SQLite} database to store all the information provided by \textit{Twitter}. The database has two tables: one named \texttt{Tweets}, the other named \texttt{Users}. The \texttt{Tweets} table contains $10$ columns and the \texttt{Users} table contains $2$ columns. The \texttt{Tweets} tables is constructed in the same order as the information provided by \textit{Twitter}, with matching column names. The \texttt{Users} table has \textit{user\_id} as its first column which gets populated with all replied and retweeted user, and \textit{user\_name} being the second column which is populated with a \textit{Twitter4J} call to match user \texttt{IDs} to their \textit{Twitter} profile name. Rows from the tweets table are usually extracted as ResultSets from the database and then converted to Tweets using the TweetBuilder class. ArrayLists of tweets are usually passed around in the various analysis methods.
 
-The information domain of \textit{Knightingale} is the \textit{.ZIP} file downloaded from \textit{Twitter}, as well as information pulled directly from \textit{Twitter} through the \textit{Twitter4j} API. When the user adds a new twitter archive to the \textit{Knightingale} system, the Parser package is used to extract tweets from the archive file, which may then be discarded. The Database package is then used to insert these tweets into the SQLite 3 relational database. The database automatically generates a separate table of Twitter user IDs by selecting all of the unique user ID values that appear in the Tweets database. This table represents all of the Twitter users known by the system. These IDs are then associated with \twitter{Twitter} user names through communication with the \textit{Twitter} API.
->>>>>>> 21d22061353fed9e9383c4af192cdab558df7594
+
 \end{adjustwidth}
 
 \subsection{Component Design} \label{sec:component}
 \begin{adjustwidth}{1em}{0pt}
 The major components of the system are as follows:
 \begin{description}
+	
 	\item[Package \texttt{tweetanalyze}] This package contains some fundamental blocks of the system:
 		\begin{description}
 		\item[\texttt{Tweet.java}] : This class models a tweet as it is stored in the twitter archive zip file.
 		\item[\texttt{TweetBuilder.java}] : This class has methods to build tweets from \texttt{twitter4j Statuses}, \texttt{ResultSet}, and arrays of Strings.
 		\item[\texttt{LogConfigurator.java}] : This class sets up logging for the system.
 		\end{description}
+	
 	\item[Package \texttt{parser}]
 		\begin{description}
 		\item[\texttt{CSVParser.java}] : Parse a tweets.csv file as found in the Twitter archive.
 		\item[\texttt{ZipParser.java}] : Extract the zip Twitter archive and calls CSVParser on the tweets.csv
-	\end{description}	
+		\end{description}	
+
 	\item[Package \texttt{analytics}]
 		\begin{description}
 		\item[\texttt{Analyzer.java}] : Master class for analysis that is extended by all other analysis classes.
 		\item[\texttt{CompositionAnalyser.java}] : Composition analysis for tweets
-	\end{description}	
+		\item[\texttt{CompositionAnalyser.java}] : Composition analysis of replies and rewtweets.
+		\item[\texttt{FrequencyAnalyser.java}] : Analyses frequency of replies, and retweets.
+		\item[\texttt{HashtagAnalyser.java}] : Analysis of hashtags within tweets.
+		\item[\texttt{SearchAnalyser.java}] : Search through tweets using SQL \texttt{LIKE} operator.
+		\item[\texttt{UserAnalyser.java}] : User analysis i.e what users does the user interact with?
+		\end{description}
+
+	\item[Package \texttt{database}]
+		\begin{description}
+		\item[\texttt{DatabaseHelper.java}] : Access Layer for database. Has methods to create tables, insert tweets, an execute 	method for other classes to run queries among other methods.
+		\end{description}
+
+	\item[Package \texttt{refresh}]
+		\begin{description}
+		\item[\texttt{AccessTokenHelper.java}] : Get new OAuth access tokens and delete old ones from Twitter.
+		\item[\texttt{TweetRefreshClient.java}] : Use AccessToken to access TwitterAPI to get new tweets.
+		\end{description}
+
+	\item[Package \texttt{ui}] This package has two subpackages\textendash CLI and UI. CLI hold the JCommander based UI while GUI has Java \texttt{Swing} classes for word cloud from various analysis.
+
 \end{description}
 \end{adjustwidth}
 
 \section{Human Interface Design} \label{sec:human}
 \subsection{Overview of User Interface} \label{sec:ui}
 \begin{adjustwidth}{2em}{0pt}
-\texit{Knightingale}'s primary point of contact with the user is a command-line interface, although a Swing graphical user interface is a planned feature. The user may interact with the system using a series of command-line arguments to the \texttt{knightingale} command.
+\textit{Knightingale}'s primary point of contact with the user is a command-line interface, although a Swing graphical user interface is a planned feature. The user may interact with the system using a series of command-line arguments to the \texttt{knightingale} command.
 \begin{itemize}
 \item \texttt{search <search term>}: search for all tweets with a word
 \item \texttt{refresh}: get new tweets for the user from Twitter's servers
