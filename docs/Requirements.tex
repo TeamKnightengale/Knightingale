@@ -11,15 +11,15 @@
 \maketitle
 
 \begin{center}
-\centering  ``...I have always found that plans are useless, but planning is indispensable." \newline
-\centering - Dwight D. Eisenhower
+\centering ``A ship on the beach is a beacon to the sea." \newline
+\centering - Dutch Proverb
 \end{center}
 
 \section{Introduction to Document} \label{sec:intro}
 \subsection{Purpose of the Product} \label{sec:purpose}
 \begin{adjustwidth}{2em}{0pt}
 Many \textit{Twitter} users have amassed a such plethora of tweets that it is cumbersome to manually search through them, an ability that many \textit{Twitter} users would find useful. Presently, to do this, the user must download all of their tweets; however, because of the way \textit{Twitter} rate limits its \textit{API}, this can be difficult. \newline
-
+``
 \noindent How wonderful would it be if we could search through all of our tweets? And what if we could do not only that, but what if we also could analyze the way we tweet?\newline
 
 \noindent This is the purpose of \textit{Knightingale}. \newline
@@ -38,7 +38,7 @@ This document was written following \textit{IEEE} conventions. It was formatted 
 \begin{adjustwidth}{2em}{0pt}
 As this document is at a higher level, it is intended for more general consumption; a reader with little background in computer science or analysis should be able to reference this document for a simple understanding of the system’s functioning. That said, the developers have referenced this document in both draft and completed form. As such, it’s lack of technical details has not invalidated its usefulness. \newline
 
-\noindent For the casual consumer looking to learn more about \textit{Knightingale}, I suggest skipping to Section $1.4$, which describes the scope of the product. From there, I would read Sections $2.1$, the \textit{Product Perspective}, which provides some of the background information and history of the product; $2.2$, the \textit{Product Functions}, which summarizes the major functions of the product, Section $2.4$, which specifies the operating environment of \textit{Knightingale}, and \textit{Appendix A}, the glossary, which will be an aid to decode the document’s terminology. We've devoted \textit{Appendix B} to the visualization of some of these concepts. \newline
+\noindent For the casual consumer looking to learn more ab``out \textit{Knightingale}, I suggest skipping to Section $1.4$, which describes the scope of the product. From there, I would read Sections $2.1$, the \textit{Product Perspective}, which provides some of the background information and history of the product; $2.2$, the \textit{Product Functions}, which summarizes the major functions of the product, Section $2.4$, which specifies the operating environment of \textit{Knightingale}, and \textit{Appendix A}, the glossary, which will be an aid to decode the document’s terminology. We've devoted \textit{Appendix B} to the visualization of some of these concepts. \newline
 
 \noindent More technical consumers will enjoy reading the document in its entirety; however, for an expedited experience, I suggest following the same sequence as was outlined for the casual consumer, with some additions: Section $1.4$, the entirety of Sections $2$ and $4$, and Sections $5.1$ and $5.4$, and \textit{Appendix B}. \newline
 \end{adjustwidth}
@@ -85,14 +85,13 @@ Section \ref{sec:further}: Further Requirements \newline
 Section \ref{sec:metrics}: Additional Metrics \newline
 Section \ref{sec:extracredit}: Extra Credit Requirements \newline
 Section \ref{sec:appendixa}: Appendix A: Glossary \newline
-Section \ref{sec:appendixb}: Appendix B: Analysis Models \newline
-Section \ref{sec:appendixc}: Appendix C: To Be Determined List \newline
+Section \ref{sec:appendixb}: Appendix B: To Be Determined List \newline
 \end{adjustwidth}
 
 \section{General Description of the Product} \label{sec:general}
 \subsection{Context of Product} \label{sec:context}
 \begin{adjustwidth}{2em}{0pt}
-\textit{Knightingale} was developed as the final project for the \textit{Computer Science 290 Principles of Software Development} class at \textit{Allegheny College}. It is a new, self-contained product. 
+\textit{Knightingale} was developed as the final project for the \textit{Computer Science 290: Principles of Software Development} class at \textit{Allegheny College}. It is a new, self-contained product. 
 \end{adjustwidth}
  
 \subsection{Product Functions} \label{sec:functions}
@@ -120,7 +119,7 @@ Development on \textit{Knightingale} took place on both the \textit{Mac OS X} an
 
 \subsection{Design and Implementation Constraints} \label{sec:constraints}
 \begin{adjustwidth}{2em}{0pt}
-\textit{Knightingale} is designed to run on \textit{Ubuntu} $12.04$; however, as was implemented in \textit{Java}, it should be able to run on a variety of platforms. Hardware limitations are not an issue.
+\textit{Knightingale} is designed to run on \textit{Ubuntu} $12.04$; however, as was implemented in \textit{Java}, it should be able to run on a variety of platforms. Hardware limitations are not an issue. \textit{Knightingale} runs on devices without graphics
 \end{adjustwidth}
 
 \subsection{Assumptions and Dependencies} \label{sec:and}
@@ -133,17 +132,11 @@ We assume that \textit{Twitter's} method of downloading a user's tweets remains 
 \subsubsection{User Interface} \label{sec:ui}
 \begin{adjustwidth}{3em}{0pt}
 The user interacts with the system through the command line. \newline
-
-\noindent \textit{The user inputs a max cost and a string of 
-requirements, each with its associated identification number, cost, benefit, and name, and the system outputs 
-a ranked list of those requirements in two categories. The system will determine the maximum benefit while 
-ensuring that the total cost to implement the requirements does not exceed the cost 
-parameter given by the user.}
 \end{adjustwidth}
 
 \subsubsection{Software Interface} \label{sec:softi}
 \begin{adjustwidth}{3em}{0pt}
-Implemented in \textit{Ubuntu} $12.04$ \textit{LTS}. \textit{Knightingale} interfaces with \textit{jcommander} and a million other things.
+Implemented in \textit{Ubuntu} $12.04$ \textit{LTS}. \textit{Knightingale} interfaces with \textit{JCommander}, \textit{Ant}, \textit{JaCoCo}, \textit{MAJOR}, \textit{JDepend}, \textit{JavaNCSS}, \textit{SQLite} Version $3$, and \textit{Twitter4J}.
 \end{adjustwidth}
 
 \section{System Features} \label{sec:sysfeat}
@@ -218,7 +211,7 @@ Security requirements related to \textit{Knightingale} are similar to those rela
 \begin{adjustwidth}{2em}{0pt}
 A master copy of \textit{Knightingale} will be kept by the development team; it will also be stored on \textit{BitBucket} in our version control repository. The developers will seek faults in the system and try to correct them. We estimate a high \textit{MTTF} (mean time to failure). \newline
 
-\noindent Maintenance will be aimed at improving the quality of the system. 
+\noindent Maintenance will be aimed at improving the quality of the system and including the planned features listed in \textit{Appendix B}.
 \end{adjustwidth}
 
 \section{Other Requirements} \label{sec:other}
@@ -248,13 +241,13 @@ The entire system must be tested with \textit{JUnit} test cases, and it must hav
 
 \subsection{Additional Requirements} \label{sec:additional}
 \begin{adjustwidth}{2em}{0pt}
-In order to interface with \textit{Twitter}, \textit{Knightingale} must be registered with the \textit{Twitter Development Network}. Additionally, it must be able to access \textit{Twitter} through the \textit{Twitter4J} system.
+In order to interface with \textit{Twitter}, \textit{Knightingale} must be registered with the \textit{Twitter Development Network}. Additionally, it must be able to access \textit{Twitter} through the \textit{Twitter4j} system.
 \end{adjustwidth}
 
 \section{Further Requirements} \label{sec:further}
 \subsection{Additional Metrics} \label{sec:metrics}
 \begin{adjustwidth}{2em}{0pt}
-In the future, other metrics may be added to the system. Currently, the developers are considering adding a sentiment analysis metric to the system so that the user can determine whether most of their tweets are happy, sad, angry, neutral, annoyed, etc. If this is implemented, it will be added after the first release of the system.
+In the future, other metrics may be added to the system. Currently, the developers are considering adding a sentiment analysis metric to the system so that the user can determine whether most of their tweets are happy, sad, angry, neutral, annoyed, etc. If this is implemented, it will be added after the first release of the system. (This agent was indepently developed on another team by one of the developers.) 
 \end{adjustwidth}
 
 \subsection{Extra Credit Requirements} \label{sec:extracredit}
@@ -276,16 +269,15 @@ The developers can choose to implement alternative interfaces to the analytics s
 
 \noindent \textbf{SRS}: Software Requirements Specifications: This document is an \textit{SRS}. \newline
 
+\noindent \textbf{UI}: User Interface \newline
+
 \noindent \textbf{.ZIP}: An archive file format that supports lossless file compression. \newline
 \end{adjustwidth}
 
-\section{Appendix B: Analysis Models} \label{sec:appendixb}
+\section{Appendix B: To Be Determined List} \label{sec:appendixb}
 \begin{adjustwidth}{1em}{0pt}
-Optionally, include any pertinent analysis models, such as data flow diagrams, class diagrams, state-transition diagrams, or entity-relationship diagrams.
-\end{adjustwidth}
-
-\section{Appendix C: To Be Determined List} \label{sec:appendixc}
-\begin{adjustwidth}{1em}{0pt}
+\begin{enumerate}
+\end{enumerate}
 Collect a numbered list of the TBD (to be determined) reference that remain in the \textit{SRS} so they can be tracked to closure. 
 \end{adjustwidth}
 \end{document}
