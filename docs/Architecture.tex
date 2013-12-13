@@ -11,14 +11,14 @@
 \maketitle
 
 \begin{center}
-\centering  "...I have always found that plans are useless, but planning is indispensable." \newline
-\centering - Dwight D. Eisenhower
+\centering  "Add little to little and there will be a big pile." \newline
+\centering - Ovid
 \end{center}
 
 \section{Introduction to Document} \label{sec:intro}
 \subsection{Identifying Information} \label{sec:identify}
 \begin{adjustwidth}{2em}{0pt}
-This Architecture Document describes the system architecture and organization for \textit{Knightingale}, a \textit{Twitter} analytics system. \textit{Knightingale} uses a SHIT FUCK ME design.
+This Architecture Document describes the system architecture and organization for \textit{Knightingale}, a \textit{Twitter} analytics system.
 \end{adjustwidth}
 
 \subsection{Document Conventions} \label{sec:conventions}
@@ -50,7 +50,6 @@ To give a brief overview, \textit{Knightingale} provides useful information abou
 \begin{adjustwidth}{2em}{0pt}
 Section \ref{sec:arch}: System Architecture \newline
 Section \ref{sec:design}: Architectural Design \newline
-Section \ref{sec:decomp}: Decomposition Description \newline
 Section \ref{sec:rationale}: Design Rationale \newline
 Section \ref{sec:known}: Known Inconsistencies \newline
 \end{adjustwidth}
@@ -95,7 +94,7 @@ Some modules are not included in the test suite for various reasons:
 \begin{enumerate}
 \item GUI - this module was excluded because of time constraints.
 \item DbHelper - we had difficulty in setting up dbUnit. Hence, we manually tested the db with various configurations.
-\item refresh - this was difficult to test because it relied on connections to the Twitter API.
+\item Refresh - this was difficult to test because it relied on connections to the Twitter API.
 \end{enumerate}
 \end{adjustwidth}
 
