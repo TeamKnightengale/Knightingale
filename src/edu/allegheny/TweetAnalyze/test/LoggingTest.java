@@ -30,6 +30,7 @@ public class LoggingTest {
     	testLogger.setUseParentHandlers(false);
     	testLogger.addHandler(testHandler);
     	testLogger.setLevel(Level.ALL);
+        //testLogger.removeHandler(ConsoleHandler);
 	}
 }
 

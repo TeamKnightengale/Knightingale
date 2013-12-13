@@ -20,8 +20,8 @@ import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.io.FileOutputStream;
 
-import	org.apache.logging.log4j.LogManager;
-import	org.apache.logging.log4j.Logger;
+import java.util.logging.Logger;
+import java.util.logging.Level;
 
 /**
  * Use Twitter4J to get new OAuthAccessToken and OAuthAccessTokenSecret. 
@@ -30,7 +30,7 @@ import	org.apache.logging.log4j.Logger;
  */
 public class AccessTokenHelper
 {
-	private static Logger logger = LogManager.getFormatterLogger(AccessTokenHelper.class.getName());
+	public static Logger logger = Logger.getLogger(AccessTokenHelper.class.getName());
 
 	public static void main(String argv[]) 
 	{
@@ -72,11 +72,11 @@ public class AccessTokenHelper
 		}
 		catch(IOException e)
 		{
-			logger.error("AccessTokenHelper: Exception found in getnewTokens()", e);
+			logger.log(Level.SEVERE, "AccessTokenHelper: Exception found in getnewTokens()", e);
 		}
 		catch(twitter4j.TwitterException te)
 		{
-			logger.error("AccessTokenHelper: TwitterException found in getnewTokens()", te);	
+			logger.log(Level.SEVERE, "AccessTokenHelper: TwitterException found in getnewTokens()", te);	
 		}		
 	}
 
@@ -108,7 +108,7 @@ public class AccessTokenHelper
 		}
 		catch (IOException e) 
 		{
-			logger.error("AccessTokenHelper: IOException found in setTokens()", e);
+			logger.log(Level.SEVERE, "AccessTokenHelper: IOException found in setTokens()", e);
 		} 
 		
 	}
@@ -144,7 +144,7 @@ public class AccessTokenHelper
 			}	
 		}
 		catch (IOException e) {
-			logger.error("AccessTokenHelper: IOException found in deleteTokens()", e);
+			logger.log(Level.SEVERE, "AccessTokenHelper: IOException found in deleteTokens()", e);
 		} 
 		
       // Once everything is complete, delete old file..
@@ -188,7 +188,7 @@ public class AccessTokenHelper
 			}	
 		}
 		catch (IOException e) {
-			logger.error("AccessTokenHelper: IOException found in deleteTokens()", e);
+			logger.log(Level.SEVERE, "AccessTokenHelper: IOException found in deleteTokens()", e);
 		}
 
 		return hasAccessToken && hasAccessTokenSecret; 
