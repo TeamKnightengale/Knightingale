@@ -11,15 +11,17 @@ import java.net.URI;
 import java.net.URISyntaxException;
 
 import java.awt.Desktop;
-
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import javax.swing.*;
-
 import java.awt.Color;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+
+import javax.swing.*;
+
+import java.util.logging.Logger;
+import java.util.logging.Level;
 
 import org.mcavallo.opencloud.Tag;
 
@@ -39,8 +41,10 @@ import org.mcavallo.opencloud.Tag;
 public class HashtagLabel extends JPanel implements MouseListener {
 
 	protected Desktop desktop;
-	JLabel label;
-	Tag tag;
+	protected JLabel label;
+	protected Tag tag;
+
+	public static Logger logger = Logger.getLogger(HashtagLabel.class.getName());
 	
 	/**
 	 * @param tag the OpenCloud tag element containing the text and weight for this label
@@ -51,7 +55,12 @@ public class HashtagLabel extends JPanel implements MouseListener {
 	    this.tag = tag;
 	    label.addMouseListener(this);
 	    add(label);
-		desktop = Desktop.getDesktop();
+
+	    if (Desktop.isDesktopSupported()) {
+			desktop = Desktop.getDesktop();
+	    } else {
+	    	logger.log(Level.WARNING, "java.awt.Desktop is not supported on this platform, get a real computer if you want to use browser linking.");
+	    }
 
 		label.setOpaque(false);
 	    label.setFont(label.getFont().deriveFont((float) tag.getWeight() * 10));

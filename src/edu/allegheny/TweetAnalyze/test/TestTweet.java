@@ -554,7 +554,7 @@ public class TestTweet
         assertEquals(expected, actual.getRetweetedStatusID());
     }
 
-        /**
+    /**
      * testGetRetweetedStatusTimestamp
      * Tests if getRetweetedStatusTimesstamp() works
      */
