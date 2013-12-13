@@ -13,6 +13,8 @@ import org.junit.runners.Suite;
 @Suite.SuiteClasses({
 	TestTweet.class,
 	TestParser.class,
+	TestTweetBuilder.class,
+	TestAnalytics.class,
 })
 
 public class MasterTestSuite {
