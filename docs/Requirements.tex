@@ -24,21 +24,21 @@ Many \textit{Twitter} users have amassed a such plethora of tweets that it is cu
 
 \noindent This is the purpose of \textit{Knightingale}. \newline
 
-\noindent This is the first release of \textit{Knightingale}. This $SRS$ will detail the requirements of the system; for further details about the system, see the architecture and design documents.
+\noindent This is the first release of \textit{Knightingale}. This \textit{SRS} will detail the requirements of the system; for further details about the system, see the architecture and design documents.
 \end{adjustwidth}
 
 \subsection{Document Conventions} \label{sec:conventions}
 \begin{adjustwidth}{2em}{0pt}
-This document was written following \textit{IEEE} conventions. It was formatted with \textit{LaTeX}. This is the most high-level of the trio of documents; the architecture document is at a lower level of description, and the design document concerns itself with the implementation and algorithmic details. \newline
+This document was written following \textit{IEEE} conventions. It was formatted with \LaTeX. This is the most high-level of the trio of documents; the architecture document is at a lower level of description, and the design document concerns itself with the implementation and algorithmic details. \newline
 
-\noindent Names, classes, and methods will be italicized, and both numbers and variables are modified with the $\$$ wrapper in \textit{LaTeX}.
+\noindent Names, classes, and methods will be italicized, and both numbers and variables are modified with the $\$$ wrapper in \LaTeX.
 \end{adjustwidth}
 
 \subsection{Acronyms, Abbreviations, and Definitions} \label{sec:abbr}
 \begin{adjustwidth}{2em}{0pt}
 As this document is at a higher level, it is intended for more general consumption; a reader with little background in computer science or analysis should be able to reference this document for a simple understanding of the system’s functioning. That said, the developers have referenced this document in both draft and completed form. As such, it’s lack of technical details has not invalidated its usefulness. \newline
 
-\noindent For the casual consumer looking to learn more about \textit{Knightingale}, I suggest skipping to Section $1.4$, which describes the scope of the product. From there, I would read Sections $2.1$, the \textit{Product Perspective}, which provides some of the background information and history of the product; $2.2$, the \textit{Product Functions}, which summarizes the major functions of the product, Section $2.4$, which specifies the operating environment of \textit{Knightingale}, and \textit{Appendix A}, the glossary, which will be an aid to decode the document’s terminology. We’ve devoted \textit{Appendix B} to the visualization of some of these concepts. \newline
+\noindent For the casual consumer looking to learn more about \textit{Knightingale}, I suggest skipping to Section $1.4$, which describes the scope of the product. From there, I would read Sections $2.1$, the \textit{Product Perspective}, which provides some of the background information and history of the product; $2.2$, the \textit{Product Functions}, which summarizes the major functions of the product, Section $2.4$, which specifies the operating environment of \textit{Knightingale}, and \textit{Appendix A}, the glossary, which will be an aid to decode the document’s terminology. We've devoted \textit{Appendix B} to the visualization of some of these concepts. \newline
 
 \noindent More technical consumers will enjoy reading the document in its entirety; however, for an expedited experience, I suggest following the same sequence as was outlined for the casual consumer, with some additions: Section $1.4$, the entirety of Sections $2$ and $4$, and Sections $5.1$ and $5.4$, and \textit{Appendix B}. \newline
 \end{adjustwidth}
@@ -80,7 +80,7 @@ Section \ref{sec:qreq}: Quality Requirements \newline
  
 \subsection{Product Functions} \label{sec:functions}
 \begin{adjustwidth}{2em}{0pt}
-\textit{Twitter} allows users to down a $.ZIP$ file of all of their tweets. \textit{Knightingale} reads in this file and stores the tweets in a database. From there, it can perform certain user-specified analyses:
+\textit{Twitter} allows users to download a \textit{.ZIP} file of all of their tweets. \textit{Knightingale} reads in this file and stores the tweets in a database. From there, it can perform certain user-specified analyses:
 \begin{itemize}
 \item Composition of Tweets
 \item Content of Tweets
@@ -93,22 +93,22 @@ Section \ref{sec:qreq}: Quality Requirements \newline
 \begin{adjustwidth}{2em}{0pt}
 The average \textit{Twitter} user can use \textit{Knightingale} to learn more about their tweeting habits. For this type of user, \textit{Knightingale} is designed to be a fun tool. \newline
 
-\noindent Researchers and academics can use Nightingale as a tool to gather information. Psychologists can use \textit{Knightingale} to identify patterns in a client's tweeting habits, and this can inform their research or therapy techniques. For example, if a psychologist is interested in studying self-esteem and social networks, they can define the ratio of tweets containing original content to those containing unoriginal content - quotations, retweets, or urls - as a measure of self-esteem. Without \textit{Knightingale}, quantifying metrics like this would be unimaginably complicated.
+\noindent Researchers and academics can use \textit{Knightingale} as a tool to gather information. Psychologists can use \textit{Knightingale} to identify patterns in a client's tweeting habits, and this can inform their research or therapy techniques. For example, if a psychologist is interested in studying self-esteem and social networks, they can define the ratio of tweets containing original content to those containing unoriginal content - quotations, retweets, or urls - as a measure of self-esteem. Without \textit{Knightingale}, quantifying metrics like this would be unimaginably complicated.
 \end{adjustwidth}
 
 \subsection{Operating Environment} \label{sec:operating}
 \begin{adjustwidth}{2em}{0pt}
-Development on \textit{Knightingale} took place on both the \textit{Mac OSx} and \textit{Linux} $12.04$.
+Development on \textit{Knightingale} took place on both the \textit{Mac OS X} and \textit{Ubuntu} $12.04$.
 \end{adjustwidth}
 
 \subsection{Design and Implementation Constraints} \label{sec:constraints}
 \begin{adjustwidth}{2em}{0pt}
-\textit{Knightingale} is designed to run on $Linux 12.04$; however, as was implemented in \textit{Java}, it should be able to run on a variety of platforms. Hardware limitations are not an issue.
+\textit{Knightingale} is designed to run on \textit{Ubuntu} $12.04$; however, as was implemented in \textit{Java}, it should be able to run on a variety of platforms. Hardware limitations are not an issue.
 \end{adjustwidth}
 
 \subsection{Assumptions and Dependencies} \label{sec:and}
 \begin{adjustwidth}{2em}{0pt}
-We assume that \textit{Twitter’s} method of downloading a user’s tweets remains unchanged. 
+We assume that \textit{Twitter's} method of downloading a user's tweets remains unchanged. 
 \end{adjustwidth}
 
 \section{Specific Requirements} \label{sec:specificreq}
@@ -138,7 +138,7 @@ The analytics system is at the heart of \textit{Knightingale}; it is of the high
 
 \subsubsection{Stimulus/Response Sequences} \label{sec:stimulus}
 \begin{adjustwidth}{3em}{0pt}
-Once the user has downloaded their tweets in a $.ZIP$ file from \textit{Twitter}, they can...[put this in]
+Once the user has downloaded their tweets in a \textit{.ZIP} file from \textit{Twitter}, they can...[put this in]
 \end{adjustwidth}
 
 \subsubsection{Functional Requirements} \label{sec:functional}
@@ -150,14 +150,14 @@ Once the user has downloaded their tweets in a $.ZIP$ file from \textit{Twitter}
 \item REQ-1: Must allow user to connect to \textit{Twitter} servers
 \item REQ-2: Must allow user to refresh tweet database
 \begin{itemize}
-\item Includes tweets created since the download of the $.ZIP$
+\item Includes tweets created since the download of the \textit{.ZIP}
 \end{itemize}
-\item REQ-3: Must allow user to specify a new $.ZIP$ file
+\item REQ-3: Must allow user to specify a new \textit{.ZIP} file
 \begin{itemize}
 \item Reloading into the local database
 \item Reinitialize the database by clearing existing tweets
 \end{itemize}
-\item REQ-4: Offer at least 5 metrics about a user’s tweets and tweeting behavior
+\item REQ-4: Offer at least 5 metrics about a user's tweets and tweeting behavior
 \begin {itemize} 
 \item a. Composition of Tweets
 \begin{itemize}
@@ -172,7 +172,7 @@ Once the user has downloaded their tweets in a $.ZIP$ file from \textit{Twitter}
 \item c. User Interactions
 \begin{itemize}
 \item i. To whom does the user most commonly reply?
-\item ii. Who does the user most commonly retweet?
+\item ii. Whom does the user most commonly retweet?
 \end{itemize}
 \item d. Search Functions
 \begin{itemize}
@@ -191,15 +191,15 @@ There are no constraints on the speed, response time, or throughput of \textit{K
 \begin{adjustwidth}{2em}{0pt}
 Security requirements related to \textit{Knightingale} are similar to those related to any password-protected information. It is the responsibility of the user to ensure that their password is secure if they do not want any information stolen. \newline
 
-\noindent Regardless, since \textit{Knightingale} takes it’s data source from information in the public domain - a user’s tweets - this concern may be unfounded. \newline
+\noindent Regardless, since \textit{Knightingale} takes its data source from information in the public domain - a user's tweets - this concern may be unfounded. \newline
 
 \noindent User authentication requirements? \newline
-\noindent \textit{Twitter4j} and \textit{Twitter’s} $API$ using $OAUTH$.
+\noindent \textit{Twitter4j} and \textit{Twitter's} \textit{API} using \textit{OAUTH}.
 \end{adjustwidth} 
 
 \subsection{Software Quality Attributes} \label{sec:quality}
 \begin{adjustwidth}{2em}{0pt}
-A master copy of \textit{Knightingale} will be kept by the development team; it will also be stored on \textit{BitBucket} in our version control repository. The developers will seek faults in the system and try to correct them. We estimate a high $MTTF$ (mean time to failure). \newline
+A master copy of \textit{Knightingale} will be kept by the development team; it will also be stored on \textit{BitBucket} in our version control repository. The developers will seek faults in the system and try to correct them. We estimate a high \textit{MTTF} (mean time to failure). \newline
 
 \noindent Maintenance will be aimed at improving the quality of the system. 
 \end{adjustwidth}
@@ -207,14 +207,14 @@ A master copy of \textit{Knightingale} will be kept by the development team; it 
 \section{Other Requirements} \label{sec:other}
 \subsection{Database Requirements} \label{sec:database}
 \begin{adjustwidth}{2em}{0pt}
-\textit{Knightingale} uses a $SQL$ database to store all the information provided by \textit{Twitter}. The database has two tables: one named $Tweets$, the other named $Users$. The $Tweets$ table contains $10$ columns and the $Users$ table contains $2$ columns. The $Tweets$ tables is constructed in the same order that the information provided by \textit{Twitter} with matching column names. The $Users$ table has $user_id$ as its first column which gets populated with all replied and retweeted user, and $user_name$ being the second column which is populated with a \textit{Twitter4J} call to match user $ids$ to their \textit{Twitter} profile name.
+\textit{Knightingale} uses a \textit{SQLite} database to store all the information provided by \textit{Twitter}. The database has two tables: one named \texttt{Tweets}, the other named \texttt{Users}. The \texttt{Tweets} table contains $10$ columns and the \texttt{Users} table contains $2$ columns. The \texttt{Tweets} tables is constructed in the same order as the information provided by \textit{Twitter}, with matching column names. The \texttt{Users} table has \textit{user\_id} as its first column which gets populated with all replied and retweeted user, and \textit{user\_name} being the second column which is populated with a \textit{Twitter4J} call to match user \texttt{IDs} to their \textit{Twitter} profile name.
 \end{adjustwidth}
 
 \subsection{Deployment Requirements} \label{sec:deployment}
 \begin{adjustwidth}{2em}{0pt}
 \textit{Knightingale} will be available on \textit{Google Code} and from the \textit{GitHub} version control repository. \newline
 \noindent \textbf{Google Code}: https://code.google.com/p/knightingale/ \newline
-\noindent \textbf{Github}: https://code.google.com/p/knightingale/https://code.google.com/p/knightingale/
+\noindent \textbf{Github}: https://code.google.com/p/knightingale/
 \end{adjustwidth}
 
 \subsection{Logistical Requirements} \label{sec:logistic}
@@ -237,27 +237,27 @@ In order to interface with \textit{Twitter}, \textit{Knightingale} must be regis
 \section{Further Requirements} \label{sec:further}
 \subsection{Additional Metrics} \label{sec:metrics}
 \begin{adjustwidth}{2em}{0pt}
-In the future, other metrics may be added to the system. Currently, the developers are considering adding a sentiment analysis metric to the system so that the user can determine whether most of their tweets of happy, sad, angry, neutral, annoyed, etc. If this is implemented, it will be added after the first release of the system.
+In the future, other metrics may be added to the system. Currently, the developers are considering adding a sentiment analysis metric to the system so that the user can determine whether most of their tweets are happy, sad, angry, neutral, annoyed, etc. If this is implemented, it will be added after the first release of the system.
 \end{adjustwidth}
 
 \subsection{Extra Credit Requirements} \label{sec:extracredit}
 \begin{adjustwidth}{2em}{0pt}
-The developers can choose to implement alternative interfaces to the analytics system. For example, the development team may choose to implement a mobile application that allows user to upload $.ZIP$ files and perform analyses. They could implement a web interface with a similar function, or a comprehensive \textit{GUI} for \textit{Knightingale}. 
+The developers can choose to implement alternative interfaces to the analytics system. For example, the development team may choose to implement a mobile application that allows user to upload \textit{.ZIP} files and perform analyses. They could implement a web interface with a similar function, or a comprehensive \textit{GUI} for \textit{Knightingale}. 
 \end{adjustwidth}
 
 \section{Appendix A: Glossary} \label{appendixa}
 \begin{adjustwidth}{1em}{0pt}
 \textbf{API}: Application Programmer Interface \newline
 
-\noindent \textbf{GUI}: Graphical User Interface. The $GUI$ allows the user to interact with the program through images and mouse clicks rather than through the keyboard. \newline
+\noindent \textbf{GUI}: Graphical User Interface. The \textit{GUI} allows the user to interact with the program through images and mouse clicks rather than through the keyboard. \newline
 
 \noindent \textbf{IEEE}: Institute of Electrical and Electronics Engineers \newline
 
-\noindent \textbf{LaTeX}: A document preparation language. More information can be found here: http://www.latex-project.org/ \newline
+\noindent \textbf{\LaTeX}: A document preparation language. More information can be found here: http://www.latex-project.org/ \newline
 
 \noindent \textbf{MTTF}: Mean Time to Failure \newline
 
-\noindent \textbf{SRS}: Software Requirements Specifications: This document is an $SRS$. \newline
+\noindent \textbf{SRS}: Software Requirements Specifications: This document is an \textit{SRS}. \newline
 
 \noindent \textbf{.ZIP}: An archive file format that supports lossless file compression. \newline
 \end{adjustwidth}
@@ -269,6 +269,6 @@ Optionally, include any pertinent analysis models, such as data flow diagrams, c
 
 \section{Appendix C: To Be Determined List} \label{appendixc}
 \begin{adjustwidth}{1em}{0pt}
-Collect a numbered list of the TBD (to be determined) reference that remain in the $SRS$ so they can be tracked to closure. 
+Collect a numbered list of the TBD (to be determined) reference that remain in the \textit{SRS} so they can be tracked to closure. 
 \end{adjustwidth}
 \end{document}
