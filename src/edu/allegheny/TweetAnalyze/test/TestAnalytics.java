@@ -19,7 +19,6 @@ import  static org.junit.Assert.*;
 import twitter4j.*;
 
 import  static org.mockito.Mockito.*;
-import  org.powermock.api.mockito.PowerMockito;
 import  org.mockito.ArgumentCaptor;
 import  org.mockito.stubbing.Answer;
 import  org.mockito.invocation.InvocationOnMock;
