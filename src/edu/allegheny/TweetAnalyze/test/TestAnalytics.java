@@ -130,10 +130,6 @@ public class TestAnalytics
 
         Tweet tweet = new Tweet(247525256951132160l, time, "Me", "Epic Testing Go!", url);
 
-
-
-
-
         ResultSet rsMock = makeResultSet( 
                 Arrays.asList("tweet_id", "in_reply_to_status_id", "in_reply_to_user_id", "timestamp", "source", "text", "retweeted_status_id", "retweeted_status_user_id",
                     "retweeted_status_timestamp", "expanded_urls"),
@@ -387,6 +383,7 @@ public class TestAnalytics
         assertEquals(expected.get(0).getRetweetedUserID(), actual.getLong("retweeted_status_user_id"));
 
     }
+
 
 /**
  * testTweetsWithHashtag()
