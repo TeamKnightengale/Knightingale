@@ -6,7 +6,7 @@
 //              /___/                /___/          
 //  Open-source Twitter analytics...with style!
 
-package edu.allegheny.tweetanalyze.refresh;
+package edu.allegheny.tweetanalyze.io.twitter;
 
 
 import twitter4j.*;
