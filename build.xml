@@ -68,7 +68,7 @@
 
 	<!-- RUNNING TASK - "ant run" -->
 	<target name="run" depends="compile">
-		<java fork="true" classname="edu.allegheny.tweetanalyze.ui.cli.KnightingaleCLI" maxmemory="1024m">
+		<java fork="true" classname="edu.allegheny.knightingale.ui.cli.KnightingaleCLI" maxmemory="1024m">
 			<arg line="${args}"/>
 			<classpath refid="run.classpath" />
         </java>
@@ -78,7 +78,7 @@
 	<!-- RUNNING TASK - "ant test" -->
 	<target name="test" depends="compile">
 		<junit fork="yes">
-			<test name="edu.allegheny.tweetanalyze.test.MasterTestSuite" />
+			<test name="edu.allegheny.knightingale.test.MasterTestSuite" />
 			<classpath refid="run.classpath" />
 			<formatter type="brief" usefile="false" />
 		</junit>
@@ -86,9 +86,9 @@
 
 	<!-- RUNNING TASK - "ant coveragetest" -->
 	<target name="coveragetest" depends="compile">
-		<jacoco:coverage destfile="${result.exec.file}" excludes="edu.allegheny.tweetanalyze.test.*">
+		<jacoco:coverage destfile="${result.exec.file}" excludes="edu.allegheny.knightingale.test.*">
 			<junit fork="yes" forkmode="once">
-				<test name="edu.allegheny.tweetanalyze.test.MasterTestSuite" />
+				<test name="edu.allegheny.knightingale.test.MasterTestSuite" />
 				<classpath refid="run.classpath" />
 				<formatter type="brief" usefile="false" />
 			</junit>
@@ -141,9 +141,9 @@
 
 	<!-- Based on the demo Javadoc settings on the Ant web page. -->
 	<target name="javadoc">
-		<javadoc packagenames="edu.allegheny.tweetanalyze.*"
+		<javadoc packagenames="edu.allegheny.knightingale.*"
 				 sourcepath="src"
-				 excludepackagenames="edu.allegheny.tweetanalyze.test"
+				 excludepackagenames="edu.allegheny.knightingale.test"
 				 defaultexcludes="yes"
 				 destdir="bin/doc/api"
 				 author="true"
