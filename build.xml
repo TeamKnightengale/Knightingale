@@ -59,6 +59,10 @@
 		</javac>
 	</target>
 
+	<!-- COMPILING TASK - "ant build" - alias of "ant compile" -->
+	<target name ="build" depends = "compile" />
+
+
 	<!-- RUNNING TARGETS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
 
 
