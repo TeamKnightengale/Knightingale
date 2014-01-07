@@ -8,6 +8,8 @@
  */Open-source Twitter analytics...with style!
 ```
 
+[![Build Status](https://travis-ci.org/TeamKnightengale/Knightingale.png?branch=master)](https://travis-ci.org/TeamKnightengale/Knightingale)
+
 To run the nightingale application you must first unpack the nightingale.jar file which holds all source code and test suites so you can test any future additions.
 
 After unpacking the JAR file you will want to call ```ant clean``` to set up a clean base directory for running the application.  Build Knightingale using ```ant compile```. To run Knightingale, you may use the ant command ```ant run -Dargs="<arguments>"```, putting command-line arguments in <arguments>.  
